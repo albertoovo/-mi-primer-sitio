@@ -3,6 +3,19 @@
 <body>
   <h1>Práctica de Negociación</h1>
   <p id="frase">Aquí va a aparecer una frase</p>
-  <button>Nueva frase</button>
+  <button onclick="nuevaFrase()">Nueva frase</button>
+
+  <script>
+    const frases = [
+      "Entiendo su posición, pero necesito revisar el precio.",
+      "¿Qué tal si encontramos un punto medio?",
+      "Esta es mi oferta final, ¿qué piensa?"
+    ];
+
+    function nuevaFrase() {
+      const random = frases[Math.floor(Math.random() * frases.length)];
+      document.getElementById("frase").innerText = random;
+    }
+  </script>
 </body>
 </html>
