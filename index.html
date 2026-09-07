@@ -26,8 +26,10 @@
   <h1>Práctica de Negociación</h1>
   <p id="frase">Aquí va a aparecer una frase</p>
   <button onclick="nuevaFrase()">Nueva frase</button>
+  <p id="contador">Frases practicadas: 0</p>
 
   <script>
+    let contador = 0;
     const frases = [
       "Entiendo su posición, pero necesito revisar el precio.",
       "¿Qué tal si encontramos un punto medio?",
@@ -37,6 +39,8 @@
     function nuevaFrase() {
       const random = frases[Math.floor(Math.random() * frases.length)];
       document.getElementById("frase").innerText = random;
+      contador = contador + 1;
+      document.getElementById("contador").innerText = "Frases practicadas: " + contador;
     }
   </script>
 </body>
