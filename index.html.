@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
 <body>
-  <h1>Hola, soy Daniel</h1>
-  <p>Estoy aprendiendo a programar.</p>
-  <button>Haz clic aquí</button>
+  <h1>Práctica de Negociación</h1>
+  <p id="frase">Aquí va a aparecer una frase</p>
+  <button>Nueva frase</button>
 </body>
 </html>
