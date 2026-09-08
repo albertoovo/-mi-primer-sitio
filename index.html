@@ -55,7 +55,12 @@
 
     function verRespuesta() {
       const texto = document.getElementById("respuesta").value;
-      document.getElementById("mostrarRespuesta").innerText = "Escribiste: " + texto;
+
+      if (texto.trim() === "") {
+        document.getElementById("mostrarRespuesta").innerText = "Por favor escribe algo antes de enviar.";
+      } else {
+        document.getElementById("mostrarRespuesta").innerText = "Escribiste: " + texto;
+      }
     }
   </script>
 </body>
