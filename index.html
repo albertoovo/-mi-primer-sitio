@@ -66,9 +66,20 @@
         document.getElementById("mostrarRespuesta").innerText = "Escribiste: " + texto;
         historial.push(texto);
         document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
+        localStorage.setItem("historial", JSON.stringify(historial));
+        localStorage.setItem("contador", contador);
         document.getElementById("respuesta").value = "";
         nuevaFrase();
       }
+    }
+
+    if (localStorage.getItem("historial")) {
+      historial = JSON.parse(localStorage.getItem("historial"));
+      document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
+    }
+    if (localStorage.getItem("contador")) {
+      contador = parseInt(localStorage.getItem("contador"));
+      document.getElementById("contador").innerText = "Frases practicadas: " + contador;
     }
   </script>
 </body>
