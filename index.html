@@ -34,6 +34,7 @@
 
   <h3>Historial</h3>
   <ul id="historial"></ul>
+  <button onclick="reiniciar()">Reiniciar progreso</button>
 
   <script>
     let contador = 0;
@@ -71,6 +72,16 @@
         document.getElementById("respuesta").value = "";
         nuevaFrase();
       }
+    }
+
+    function reiniciar() {
+      localStorage.removeItem("historial");
+      localStorage.removeItem("contador");
+      historial = [];
+      contador = 0;
+      document.getElementById("historial").innerHTML = "";
+      document.getElementById("contador").innerText = "Frases practicadas: 0";
+      document.getElementById("mostrarRespuesta").innerText = "";
     }
 
     if (localStorage.getItem("historial")) {
