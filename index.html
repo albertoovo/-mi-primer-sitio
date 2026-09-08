@@ -32,9 +32,13 @@
   <button onclick="verRespuesta()">Enviar respuesta</button>
   <p id="mostrarRespuesta"></p>
 
+  <h3>Historial</h3>
+  <ul id="historial"></ul>
+
   <script>
     let contador = 0;
     let ultimaFrase = "";
+    let historial = [];
     const frases = [
       "Entiendo su posición, pero necesito revisar el precio.",
       "¿Qué tal si encontramos un punto medio?",
@@ -60,6 +64,8 @@
         document.getElementById("mostrarRespuesta").innerText = "Por favor escribe algo antes de enviar.";
       } else {
         document.getElementById("mostrarRespuesta").innerText = "Escribiste: " + texto;
+        historial.push(texto);
+        document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
         document.getElementById("respuesta").value = "";
         nuevaFrase();
       }
