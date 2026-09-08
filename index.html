@@ -28,6 +28,10 @@
   <button onclick="nuevaFrase()">Nueva frase</button>
   <p id="contador">Frases practicadas: 0</p>
 
+  <textarea id="respuesta" placeholder="Escribe tu respuesta aquí..."></textarea>
+  <button onclick="verRespuesta()">Enviar respuesta</button>
+  <p id="mostrarRespuesta"></p>
+
   <script>
     let contador = 0;
     let ultimaFrase = "";
@@ -47,6 +51,11 @@
       document.getElementById("frase").innerText = random;
       contador = contador + 1;
       document.getElementById("contador").innerText = "Frases practicadas: " + contador;
+    }
+
+    function verRespuesta() {
+      const texto = document.getElementById("respuesta").value;
+      document.getElementById("mostrarRespuesta").innerText = "Escribiste: " + texto;
     }
   </script>
 </body>
