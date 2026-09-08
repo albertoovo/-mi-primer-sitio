@@ -8,10 +8,12 @@
       padding-top: 80px;
       background-color: #f2f2f2;
     }
+
     #frase {
       font-size: 20px;
       margin: 20px;
     }
+
     button {
       background-color: #3E63C7;
       color: white;
@@ -22,65 +24,82 @@
     }
   </style>
 </head>
+
 <body>
   <h1>Práctica de Negociación</h1>
-  <select id="filtro" onchange="nuevaFrase()">
+
+  <select id="filtro">
     <option value="todos">Todos los contextos</option>
     <option value="Negociación de precio">Negociación de precio</option>
     <option value="Buscando acuerdo">Buscando acuerdo</option>
     <option value="Cerrando el trato">Cerrando el trato</option>
   </select>
+
   <p id="frase">Aquí va a aparecer una frase</p>
+
   <button onclick="nuevaFrase()">Nueva frase</button>
+
   <p id="contador">Frases practicadas: 0</p>
 
   <textarea id="respuesta" placeholder="Escribe tu respuesta aquí..."></textarea>
+
   <button onclick="verRespuesta()">Enviar respuesta</button>
+
   <p id="mostrarRespuesta"></p>
 
   <h3>Historial</h3>
   <ul id="historial"></ul>
+
   <button onclick="reiniciar()">Reiniciar progreso</button>
 
   <script>
     let contador = 0;
-    let ultimaFrase = "";
     let historial = [];
-    const frases = [
-      { texto: "Entiendo su posición, pero necesito revisar el precio.", contexto: "Negociación de precio" },
-      { texto: "¿Qué tal si encontramos un punto medio?", contexto: "Buscando acuerdo" },
-      { texto: "Esta es mi oferta final, ¿qué piensa?", contexto: "Cerrando el trato" }
-    ];
 
-    function nuevaFrase() {
-      const filtroSeleccionado = document.getElementById("filtro").value;
-      const frasesFiltradas = filtroSeleccionado === "todos"
-        ? frases
-        : frases.filter(f => f.contexto === filtroSeleccionado);
+    async function nuevaFrase() {
+      document.getElementById("frase").innerText = "Generando frase...";
 
-      let random;
-      do {
-        random = frasesFiltradas[Math.floor(Math.random() * frasesFiltradas.length)];
-      } while (random.texto === ultimaFrase);
+      const respuesta = await fetch(
+        "https://academia-negociacion-api.aispuroalberto546.workers.dev/"
+      );
 
-      ultimaFrase = random.texto;
-      document.getElementById("frase").innerText = random.texto + " (" + random.contexto + ")";
+      const texto = await respuesta.text();
+
+      document.getElementById("frase").innerText = texto;
+
       contador = contador + 1;
-      document.getElementById("contador").innerText = "Frases practicadas: " + contador;
+
+      document.getElementById("contador").innerText =
+        "Frases practicadas: " + contador;
     }
 
     function verRespuesta() {
       const texto = document.getElementById("respuesta").value;
 
       if (texto.trim() === "") {
-        document.getElementById("mostrarRespuesta").innerText = "Por favor escribe algo antes de enviar.";
+        document.getElementById("mostrarRespuesta").innerText =
+          "Por favor escribe algo antes de enviar.";
       } else {
-        document.getElementById("mostrarRespuesta").innerText = "Escribiste: " + texto;
+        document.getElementById("mostrarRespuesta").innerText =
+          "Escribiste: " + texto;
+
         historial.push(texto);
-        document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
-        localStorage.setItem("historial", JSON.stringify(historial));
-        localStorage.setItem("contador", contador);
+
+        document.getElementById("historial").innerHTML =
+          historial.map(r => "<li>" + r + "</li>").join("");
+
+        localStorage.setItem(
+          "historial",
+          JSON.stringify(historial)
+        );
+
+        localStorage.setItem(
+          "contador",
+          contador
+        );
+
         document.getElementById("respuesta").value = "";
+
         nuevaFrase();
       }
     }
@@ -88,20 +107,34 @@
     function reiniciar() {
       localStorage.removeItem("historial");
       localStorage.removeItem("contador");
+
       historial = [];
       contador = 0;
+
       document.getElementById("historial").innerHTML = "";
-      document.getElementById("contador").innerText = "Frases practicadas: 0";
+
+      document.getElementById("contador").innerText =
+        "Frases practicadas: 0";
+
       document.getElementById("mostrarRespuesta").innerText = "";
     }
 
     if (localStorage.getItem("historial")) {
-      historial = JSON.parse(localStorage.getItem("historial"));
-      document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
+      historial = JSON.parse(
+        localStorage.getItem("historial")
+      );
+
+      document.getElementById("historial").innerHTML =
+        historial.map(r => "<li>" + r + "</li>").join("");
     }
+
     if (localStorage.getItem("contador")) {
-      contador = parseInt(localStorage.getItem("contador"));
-      document.getElementById("contador").innerText = "Frases practicadas: " + contador;
+      contador = parseInt(
+        localStorage.getItem("contador")
+      );
+
+      document.getElementById("contador").innerText =
+        "Frases practicadas: " + contador;
     }
   </script>
 </body>
