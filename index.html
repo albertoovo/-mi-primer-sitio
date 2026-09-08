@@ -41,19 +41,19 @@
     let ultimaFrase = "";
     let historial = [];
     const frases = [
-      "Entiendo su posición, pero necesito revisar el precio.",
-      "¿Qué tal si encontramos un punto medio?",
-      "Esta es mi oferta final, ¿qué piensa?"
+      { texto: "Entiendo su posición, pero necesito revisar el precio.", contexto: "Negociación de precio" },
+      { texto: "¿Qué tal si encontramos un punto medio?", contexto: "Buscando acuerdo" },
+      { texto: "Esta es mi oferta final, ¿qué piensa?", contexto: "Cerrando el trato" }
     ];
 
     function nuevaFrase() {
       let random;
       do {
         random = frases[Math.floor(Math.random() * frases.length)];
-      } while (random === ultimaFrase);
+      } while (random.texto === ultimaFrase);
 
-      ultimaFrase = random;
-      document.getElementById("frase").innerText = random;
+      ultimaFrase = random.texto;
+      document.getElementById("frase").innerText = random.texto + " (" + random.contexto + ")";
       contador = contador + 1;
       document.getElementById("contador").innerText = "Frases practicadas: " + contador;
     }
