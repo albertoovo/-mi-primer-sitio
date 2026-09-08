@@ -60,6 +60,8 @@
         document.getElementById("mostrarRespuesta").innerText = "Por favor escribe algo antes de enviar.";
       } else {
         document.getElementById("mostrarRespuesta").innerText = "Escribiste: " + texto;
+        document.getElementById("respuesta").value = "";
+        nuevaFrase();
       }
     }
   </script>
