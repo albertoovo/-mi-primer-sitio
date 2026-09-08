@@ -30,6 +30,7 @@
 
   <script>
     let contador = 0;
+    let ultimaFrase = "";
     const frases = [
       "Entiendo su posición, pero necesito revisar el precio.",
       "¿Qué tal si encontramos un punto medio?",
@@ -37,7 +38,12 @@
     ];
 
     function nuevaFrase() {
-      const random = frases[Math.floor(Math.random() * frases.length)];
+      let random;
+      do {
+        random = frases[Math.floor(Math.random() * frases.length)];
+      } while (random === ultimaFrase);
+
+      ultimaFrase = random;
       document.getElementById("frase").innerText = random;
       contador = contador + 1;
       document.getElementById("contador").innerText = "Frases practicadas: " + contador;
