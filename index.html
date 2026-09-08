@@ -24,6 +24,12 @@
 </head>
 <body>
   <h1>Práctica de Negociación</h1>
+  <select id="filtro" onchange="nuevaFrase()">
+    <option value="todos">Todos los contextos</option>
+    <option value="Negociación de precio">Negociación de precio</option>
+    <option value="Buscando acuerdo">Buscando acuerdo</option>
+    <option value="Cerrando el trato">Cerrando el trato</option>
+  </select>
   <p id="frase">Aquí va a aparecer una frase</p>
   <button onclick="nuevaFrase()">Nueva frase</button>
   <p id="contador">Frases practicadas: 0</p>
@@ -47,9 +53,14 @@
     ];
 
     function nuevaFrase() {
+      const filtroSeleccionado = document.getElementById("filtro").value;
+      const frasesFiltradas = filtroSeleccionado === "todos"
+        ? frases
+        : frases.filter(f => f.contexto === filtroSeleccionado);
+
       let random;
       do {
-        random = frases[Math.floor(Math.random() * frases.length)];
+        random = frasesFiltradas[Math.floor(Math.random() * frasesFiltradas.length)];
       } while (random.texto === ultimaFrase);
 
       ultimaFrase = random.texto;
