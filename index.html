@@ -30,6 +30,11 @@
     <option value="Buscando acuerdo">Buscando acuerdo</option>
     <option value="Cerrando el trato">Cerrando el trato</option>
   </select>
+  <select id="dificultad">
+    <option value="facil">Fácil</option>
+    <option value="medio" selected>Medio</option>
+    <option value="dificil">Difícil</option>
+  </select>
   <p id="frase">Aquí va a aparecer una frase</p>
   <button onclick="nuevaFrase()">Nueva frase</button>
   <p id="contador">Frases practicadas: 0</p>
@@ -53,7 +58,8 @@
       document.getElementById("frase").innerText = "Generando frase...";
       try {
         const contexto = document.getElementById("filtro").value;
-        const respuesta = await fetch("https://academia-negociacion-api.aispuroalberto546.workers.dev/?contexto=" + encodeURIComponent(contexto));
+        const dificultad = document.getElementById("dificultad").value;
+        const respuesta = await fetch("https://academia-negociacion-api.aispuroalberto546.workers.dev/?contexto=" + encodeURIComponent(contexto) + "&dificultad=" + encodeURIComponent(dificultad));
         const texto = await respuesta.text();
         document.getElementById("frase").innerText = texto;
         ultimaFrase = texto;
