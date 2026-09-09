@@ -70,18 +70,22 @@
       } else {
         document.getElementById("mostrarRespuesta").innerText = "Evaluando tu respuesta...";
 
-        const url = "https://academia-negociacion-api.aispuroalberto546.workers.dev/?accion=evaluar&frase="
-          + encodeURIComponent(ultimaFrase) + "&respuesta=" + encodeURIComponent(texto);
-        const resultado = await fetch(url);
-        const feedback = await resultado.text();
+        try {
+          const url = "https://academia-negociacion-api.aispuroalberto546.workers.dev/?accion=evaluar&frase="
+            + encodeURIComponent(ultimaFrase) + "&respuesta=" + encodeURIComponent(texto);
+          const resultado = await fetch(url);
+          const feedback = await resultado.text();
 
-        document.getElementById("mostrarRespuesta").innerText = feedback;
-        historial.push(texto);
-        document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
-        localStorage.setItem("historial", JSON.stringify(historial));
-        localStorage.setItem("contador", contador);
-        document.getElementById("respuesta").value = "";
-        nuevaFrase();
+          document.getElementById("mostrarRespuesta").innerText = feedback;
+          historial.push(texto);
+          document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
+          localStorage.setItem("historial", JSON.stringify(historial));
+          localStorage.setItem("contador", contador);
+          document.getElementById("respuesta").value = "";
+          nuevaFrase();
+        } catch (error) {
+          document.getElementById("mostrarRespuesta").innerText = "Hubo un error evaluando tu respuesta. Intenta de nuevo.";
+        }
       }
     }
 
