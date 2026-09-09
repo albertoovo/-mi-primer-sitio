@@ -33,6 +33,7 @@
   <p id="frase">Aquí va a aparecer una frase</p>
   <button onclick="nuevaFrase()">Nueva frase</button>
   <p id="contador">Frases practicadas: 0</p>
+  <p id="promedio">Promedio: sin datos aún</p>
 
   <textarea id="respuesta" placeholder="Escribe tu respuesta aquí..."></textarea>
   <button onclick="verRespuesta()">Enviar respuesta</button>
@@ -46,6 +47,7 @@
     let contador = 0;
     let historial = [];
     let ultimaFrase = "";
+    let puntajes = [];
 
     async function nuevaFrase() {
       document.getElementById("frase").innerText = "Generando frase...";
