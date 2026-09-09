@@ -74,9 +74,9 @@
           const url = "https://academia-negociacion-api.aispuroalberto546.workers.dev/?accion=evaluar&frase="
             + encodeURIComponent(ultimaFrase) + "&respuesta=" + encodeURIComponent(texto);
           const resultado = await fetch(url);
-          const feedback = await resultado.text();
+          const datos = await resultado.json();
 
-          document.getElementById("mostrarRespuesta").innerText = feedback;
+          document.getElementById("mostrarRespuesta").innerText = "Puntaje: " + datos.puntaje + "/10 — " + datos.feedback;
           historial.push(texto);
           document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
           localStorage.setItem("historial", JSON.stringify(historial));
