@@ -79,8 +79,9 @@
         document.getElementById("mostrarRespuesta").innerText = "Evaluando tu respuesta...";
 
         try {
+          const dificultad = document.getElementById("dificultad").value;
           const url = "https://academia-negociacion-api.aispuroalberto546.workers.dev/?accion=evaluar&frase="
-            + encodeURIComponent(ultimaFrase) + "&respuesta=" + encodeURIComponent(texto);
+            + encodeURIComponent(ultimaFrase) + "&respuesta=" + encodeURIComponent(texto) + "&dificultad=" + encodeURIComponent(dificultad);
           const resultado = await fetch(url);
           const datos = await resultado.json();
 
