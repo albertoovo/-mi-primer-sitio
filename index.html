@@ -49,13 +49,17 @@
 
     async function nuevaFrase() {
       document.getElementById("frase").innerText = "Generando frase...";
-      const contexto = document.getElementById("filtro").value;
-      const respuesta = await fetch("https://academia-negociacion-api.aispuroalberto546.workers.dev/?contexto=" + encodeURIComponent(contexto));
-      const texto = await respuesta.text();
-      document.getElementById("frase").innerText = texto;
-      ultimaFrase = texto;
-      contador = contador + 1;
-      document.getElementById("contador").innerText = "Frases practicadas: " + contador;
+      try {
+        const contexto = document.getElementById("filtro").value;
+        const respuesta = await fetch("https://academia-negociacion-api.aispuroalberto546.workers.dev/?contexto=" + encodeURIComponent(contexto));
+        const texto = await respuesta.text();
+        document.getElementById("frase").innerText = texto;
+        ultimaFrase = texto;
+        contador = contador + 1;
+        document.getElementById("contador").innerText = "Frases practicadas: " + contador;
+      } catch (error) {
+        document.getElementById("frase").innerText = "Hubo un error generando la frase. Intenta de nuevo.";
+      }
     }
 
     async function verRespuesta() {
