@@ -79,6 +79,13 @@
           const datos = await resultado.json();
 
           document.getElementById("mostrarRespuesta").innerText = "Puntaje: " + datos.puntaje + "/10 — " + datos.feedback;
+
+          puntajes.push(datos.puntaje);
+          const suma = puntajes.reduce((total, p) => total + p, 0);
+          const promedio = (suma / puntajes.length).toFixed(1);
+          document.getElementById("promedio").innerText = "Promedio: " + promedio + "/10 (" + puntajes.length + " respuestas)";
+          localStorage.setItem("puntajes", JSON.stringify(puntajes));
+
           historial.push(texto);
           document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
           localStorage.setItem("historial", JSON.stringify(historial));
