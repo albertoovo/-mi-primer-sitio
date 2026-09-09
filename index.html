@@ -58,13 +58,20 @@
       document.getElementById("contador").innerText = "Frases practicadas: " + contador;
     }
 
-    function verRespuesta() {
+    async function verRespuesta() {
       const texto = document.getElementById("respuesta").value;
 
       if (texto.trim() === "") {
         document.getElementById("mostrarRespuesta").innerText = "Por favor escribe algo antes de enviar.";
       } else {
-        document.getElementById("mostrarRespuesta").innerText = "Escribiste: " + texto;
+        document.getElementById("mostrarRespuesta").innerText = "Evaluando tu respuesta...";
+
+        const url = "https://academia-negociacion-api.aispuroalberto546.workers.dev/?accion=evaluar&frase="
+          + encodeURIComponent(ultimaFrase) + "&respuesta=" + encodeURIComponent(texto);
+        const resultado = await fetch(url);
+        const feedback = await resultado.text();
+
+        document.getElementById("mostrarRespuesta").innerText = feedback;
         historial.push(texto);
         document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
         localStorage.setItem("historial", JSON.stringify(historial));
