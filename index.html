@@ -107,10 +107,13 @@
     function reiniciar() {
       localStorage.removeItem("historial");
       localStorage.removeItem("contador");
+      localStorage.removeItem("puntajes");
       historial = [];
       contador = 0;
+      puntajes = [];
       document.getElementById("historial").innerHTML = "";
       document.getElementById("contador").innerText = "Frases practicadas: 0";
+      document.getElementById("promedio").innerText = "Promedio: sin datos aún";
       document.getElementById("mostrarRespuesta").innerText = "";
     }
 
@@ -121,6 +124,12 @@
     if (localStorage.getItem("contador")) {
       contador = parseInt(localStorage.getItem("contador"));
       document.getElementById("contador").innerText = "Frases practicadas: " + contador;
+    }
+    if (localStorage.getItem("puntajes")) {
+      puntajes = JSON.parse(localStorage.getItem("puntajes"));
+      const suma = puntajes.reduce((total, p) => total + p, 0);
+      const promedio = (suma / puntajes.length).toFixed(1);
+      document.getElementById("promedio").innerText = "Promedio: " + promedio + "/10 (" + puntajes.length + " respuestas)";
     }
   </script>
 </body>
