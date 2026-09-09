@@ -45,6 +45,7 @@
   <script>
     let contador = 0;
     let historial = [];
+    let ultimaFrase = "";
 
     async function nuevaFrase() {
       document.getElementById("frase").innerText = "Generando frase...";
@@ -52,6 +53,7 @@
       const respuesta = await fetch("https://academia-negociacion-api.aispuroalberto546.workers.dev/?contexto=" + encodeURIComponent(contexto));
       const texto = await respuesta.text();
       document.getElementById("frase").innerText = texto;
+      ultimaFrase = texto;
       contador = contador + 1;
       document.getElementById("contador").innerText = "Frases practicadas: " + contador;
     }
