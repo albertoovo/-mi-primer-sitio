@@ -28,6 +28,7 @@
     }
     .cliente { color: #b03030; margin: 8px 0; }
     .usuario { color: #3E63C7; margin: 8px 0; }
+    #resultado { max-width: 500px; margin: 15px auto; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -50,9 +51,18 @@
 
   <textarea id="mensaje" placeholder="Escribe tu respuesta aquí..."></textarea><br>
   <button onclick="enviarMensaje()">Enviar</button>
+  <button onclick="finalizarNegociacion()">Finalizar negociación</button>
+
+  <p id="resultado"></p>
+  <p id="promedio">Promedio: sin datos aún</p>
+  <h3>Historial de negociaciones</h3>
+  <ul id="historial"></ul>
+  <button onclick="reiniciar()">Reiniciar progreso</button>
 
   <script>
     let conversacion = [];
+    let puntajes = [];
+    let historial = [];
     const WORKER = "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
 
     function renderChat() {
@@ -63,7 +73,7 @@
 
     async function iniciarNegociacion() {
       conversacion = [];
-      renderChat();
+      document.getElementById("resultado").innerText = "";
       document.getElementById("chat").innerText = "Iniciando negociación...";
       try {
         const contexto = document.getElementById("filtro").value;
@@ -96,6 +106,58 @@
       } catch (error) {
         document.getElementById("chat").innerHTML += "<p>Hubo un error continuando la negociación. Intenta de nuevo.</p>";
       }
+    }
+
+    async function finalizarNegociacion() {
+      if (conversacion.length === 0) {
+        document.getElementById("resultado").innerText = "Primero inicia una negociación.";
+        return;
+      }
+      document.getElementById("resultado").innerText = "Evaluando negociación completa...";
+      try {
+        const dificultad = document.getElementById("dificultad").value;
+        const url = WORKER + "?accion=evaluar&dificultad=" + encodeURIComponent(dificultad)
+          + "&historial=" + encodeURIComponent(JSON.stringify(conversacion));
+        const respuesta = await fetch(url);
+        const datos = await respuesta.json();
+
+        document.getElementById("resultado").innerText = "Puntaje: " + datos.puntaje + "/10 — " + datos.feedback;
+
+        puntajes.push(datos.puntaje);
+        const suma = puntajes.reduce((total, p) => total + p, 0);
+        const promedio = (suma / puntajes.length).toFixed(1);
+        document.getElementById("promedio").innerText = "Promedio: " + promedio + "/10 (" + puntajes.length + " negociaciones)";
+        localStorage.setItem("puntajes", JSON.stringify(puntajes));
+
+        historial.push("Puntaje " + datos.puntaje + "/10: " + datos.feedback);
+        document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
+        localStorage.setItem("historial", JSON.stringify(historial));
+      } catch (error) {
+        document.getElementById("resultado").innerText = "Hubo un error evaluando la negociación. Intenta de nuevo.";
+      }
+    }
+
+    function reiniciar() {
+      localStorage.removeItem("historial");
+      localStorage.removeItem("puntajes");
+      historial = [];
+      puntajes = [];
+      conversacion = [];
+      document.getElementById("historial").innerHTML = "";
+      document.getElementById("promedio").innerText = "Promedio: sin datos aún";
+      document.getElementById("resultado").innerText = "";
+      document.getElementById("chat").innerHTML = "";
+    }
+
+    if (localStorage.getItem("historial")) {
+      historial = JSON.parse(localStorage.getItem("historial"));
+      document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
+    }
+    if (localStorage.getItem("puntajes")) {
+      puntajes = JSON.parse(localStorage.getItem("puntajes"));
+      const suma = puntajes.reduce((total, p) => total + p, 0);
+      const promedio = (suma / puntajes.length).toFixed(1);
+      document.getElementById("promedio").innerText = "Promedio: " + promedio + "/10 (" + puntajes.length + " negociaciones)";
     }
   </script>
 </body>
