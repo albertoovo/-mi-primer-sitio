@@ -65,6 +65,17 @@
     let historial = [];
     const WORKER = "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
 
+    function calcularYMostrarPromedio() {
+      const validos = puntajes.filter(p => typeof p === "number" && !isNaN(p));
+      if (validos.length === 0) {
+        document.getElementById("promedio").innerText = "Promedio: sin datos aún";
+        return;
+      }
+      const suma = validos.reduce((total, p) => total + p, 0);
+      const promedio = (suma / validos.length).toFixed(1);
+      document.getElementById("promedio").innerText = "Promedio: " + promedio + "/10 (" + validos.length + " negociaciones)";
+    }
+
     function renderChat() {
       document.getElementById("chat").innerHTML = conversacion.map(m =>
         `<p class="${m.rol}"><strong>${m.rol === "cliente" ? "Cliente" : "Tú"}:</strong> ${m.texto}</p>`
@@ -121,13 +132,16 @@
         const respuesta = await fetch(url);
         const datos = await respuesta.json();
 
+        if (typeof datos.puntaje !== "number" || isNaN(datos.puntaje)) {
+          document.getElementById("resultado").innerText = "No se pudo obtener un puntaje válido. Intenta de nuevo.";
+          return;
+        }
+
         document.getElementById("resultado").innerText = "Puntaje: " + datos.puntaje + "/10 — " + datos.feedback;
 
         puntajes.push(datos.puntaje);
-        const suma = puntajes.reduce((total, p) => total + p, 0);
-        const promedio = (suma / puntajes.length).toFixed(1);
-        document.getElementById("promedio").innerText = "Promedio: " + promedio + "/10 (" + puntajes.length + " negociaciones)";
         localStorage.setItem("puntajes", JSON.stringify(puntajes));
+        calcularYMostrarPromedio();
 
         historial.push("Puntaje " + datos.puntaje + "/10: " + datos.feedback);
         document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
@@ -155,9 +169,7 @@
     }
     if (localStorage.getItem("puntajes")) {
       puntajes = JSON.parse(localStorage.getItem("puntajes"));
-      const suma = puntajes.reduce((total, p) => total + p, 0);
-      const promedio = (suma / puntajes.length).toFixed(1);
-      document.getElementById("promedio").innerText = "Promedio: " + promedio + "/10 (" + puntajes.length + " negociaciones)";
+      calcularYMostrarPromedio();
     }
   </script>
 </body>
