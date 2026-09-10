@@ -61,11 +61,22 @@
       font-size: 14px;
       color: #666;
     }
+    #limiteDiario {
+      max-width: 500px;
+      margin: 10px auto;
+      font-size: 14px;
+      color: #555;
+    }
+    #limiteDiario.alcanzado {
+      color: #b03030;
+      font-weight: bold;
+    }
     #resultado { max-width: 500px; margin: 15px auto; font-weight: bold; }
   </style>
 </head>
 <body>
   <h1>Práctica de Negociación</h1>
+  <p id="limiteDiario"></p>
   <select id="filtro">
     <option value="todos">Todos los contextos</option>
     <option value="Negociación de precio">Negociación de precio</option>
@@ -78,7 +89,7 @@
     <option value="dificil">Difícil</option>
   </select>
   <br>
-  <button onclick="iniciarNegociacion()">Iniciar negociación</button>
+  <button id="btnIniciar" onclick="iniciarNegociacion()">Iniciar negociación</button>
 
   <div id="chat"></div>
   <p id="sugerencia"></p>
@@ -98,6 +109,43 @@
     let puntajes = [];
     let historial = [];
     const WORKER = "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
+    const LIMITE_DIARIO = 15;
+
+    function fechaHoy() {
+      return new Date().toISOString().split("T")[0];
+    }
+
+    function obtenerUsoHoy() {
+      const fechaGuardada = localStorage.getItem("fechaUso");
+      if (fechaGuardada !== fechaHoy()) {
+        localStorage.setItem("fechaUso", fechaHoy());
+        localStorage.setItem("usoHoy", "0");
+        return 0;
+      }
+      return parseInt(localStorage.getItem("usoHoy") || "0");
+    }
+
+    function mostrarLimiteDiario() {
+      const usoHoy = obtenerUsoHoy();
+      const elemento = document.getElementById("limiteDiario");
+      const btnIniciar = document.getElementById("btnIniciar");
+
+      if (usoHoy >= LIMITE_DIARIO) {
+        elemento.innerText = "Alcanzaste tu límite diario de práctica (" + LIMITE_DIARIO + "). Vuelve mañana para seguir.";
+        elemento.classList.add("alcanzado");
+        btnIniciar.disabled = true;
+      } else {
+        elemento.innerText = "Negociaciones usadas hoy: " + usoHoy + "/" + LIMITE_DIARIO;
+        elemento.classList.remove("alcanzado");
+        btnIniciar.disabled = false;
+      }
+    }
+
+    function registrarUso() {
+      const usoHoy = obtenerUsoHoy();
+      localStorage.setItem("usoHoy", (usoHoy + 1).toString());
+      mostrarLimiteDiario();
+    }
 
     function calcularYMostrarPromedio() {
       const validos = puntajes.filter(p => typeof p === "number" && !isNaN(p));
@@ -126,6 +174,11 @@
     }
 
     async function iniciarNegociacion() {
+      if (obtenerUsoHoy() >= LIMITE_DIARIO) {
+        mostrarLimiteDiario();
+        return;
+      }
+
       conversacion = [];
       document.getElementById("resultado").innerText = "";
       document.getElementById("sugerencia").innerText = "";
@@ -137,6 +190,7 @@
         const texto = await respuesta.text();
         conversacion.push({ rol: "cliente", texto: texto });
         renderChat(false);
+        registrarUso();
       } catch (error) {
         document.getElementById("chat").innerText = "Hubo un error iniciando la negociación. Intenta de nuevo.";
       }
@@ -220,6 +274,7 @@
       puntajes = JSON.parse(localStorage.getItem("puntajes"));
       calcularYMostrarPromedio();
     }
+    mostrarLimiteDiario();
   </script>
 </body>
 </html>
