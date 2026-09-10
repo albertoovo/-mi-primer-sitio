@@ -16,6 +16,11 @@
       border-radius: 8px;
       font-size: 16px;
       margin: 5px;
+      cursor: pointer;
+    }
+    button:disabled {
+      background-color: #b0b8d1;
+      cursor: not-allowed;
     }
     #chat {
       max-width: 500px;
@@ -26,8 +31,36 @@
       padding: 15px;
       min-height: 100px;
     }
-    .cliente { color: #b03030; margin: 8px 0; }
-    .usuario { color: #3E63C7; margin: 8px 0; }
+    .burbuja {
+      max-width: 75%;
+      padding: 10px 14px;
+      border-radius: 14px;
+      margin: 8px 0;
+      line-height: 1.4;
+    }
+    .cliente {
+      background-color: #f0e0e0;
+      color: #7a2020;
+      margin-right: auto;
+      border-bottom-left-radius: 2px;
+    }
+    .usuario {
+      background-color: #dce4f7;
+      color: #1f3a8a;
+      margin-left: auto;
+      border-bottom-right-radius: 2px;
+    }
+    .escribiendo {
+      font-style: italic;
+      color: #888;
+      margin: 8px 0;
+    }
+    #sugerencia {
+      max-width: 500px;
+      margin: 10px auto;
+      font-size: 14px;
+      color: #666;
+    }
     #resultado { max-width: 500px; margin: 15px auto; font-weight: bold; }
   </style>
 </head>
@@ -48,9 +81,10 @@
   <button onclick="iniciarNegociacion()">Iniciar negociación</button>
 
   <div id="chat"></div>
+  <p id="sugerencia"></p>
 
   <textarea id="mensaje" placeholder="Escribe tu respuesta aquí..."></textarea><br>
-  <button onclick="enviarMensaje()">Enviar</button>
+  <button id="btnEnviar" onclick="enviarMensaje()">Enviar</button>
   <button onclick="finalizarNegociacion()">Finalizar negociación</button>
 
   <p id="resultado"></p>
@@ -76,23 +110,33 @@
       document.getElementById("promedio").innerText = "Promedio: " + promedio + "/10 (" + validos.length + " negociaciones)";
     }
 
-    function renderChat() {
-      document.getElementById("chat").innerHTML = conversacion.map(m =>
-        `<p class="${m.rol}"><strong>${m.rol === "cliente" ? "Cliente" : "Tú"}:</strong> ${m.texto}</p>`
+    function renderChat(escribiendo) {
+      let html = conversacion.map(m =>
+        `<div class="burbuja ${m.rol}"><strong>${m.rol === "cliente" ? "Cliente" : "Tú"}:</strong> ${m.texto}</div>`
       ).join("");
+      if (escribiendo) {
+        html += `<p class="escribiendo">El cliente está escribiendo...</p>`;
+      }
+      document.getElementById("chat").innerHTML = html;
+
+      const turnosUsuario = conversacion.filter(m => m.rol === "usuario").length;
+      document.getElementById("sugerencia").innerText = turnosUsuario >= 3
+        ? "Si sientes que llegaron a un acuerdo o a un punto muerto, puedes finalizar la negociación."
+        : "";
     }
 
     async function iniciarNegociacion() {
       conversacion = [];
       document.getElementById("resultado").innerText = "";
-      document.getElementById("chat").innerText = "Iniciando negociación...";
+      document.getElementById("sugerencia").innerText = "";
+      document.getElementById("chat").innerHTML = `<p class="escribiendo">Iniciando negociación...</p>`;
       try {
         const contexto = document.getElementById("filtro").value;
         const dificultad = document.getElementById("dificultad").value;
         const respuesta = await fetch(WORKER + "?contexto=" + encodeURIComponent(contexto) + "&dificultad=" + encodeURIComponent(dificultad));
         const texto = await respuesta.text();
         conversacion.push({ rol: "cliente", texto: texto });
-        renderChat();
+        renderChat(false);
       } catch (error) {
         document.getElementById("chat").innerText = "Hubo un error iniciando la negociación. Intenta de nuevo.";
       }
@@ -103,8 +147,9 @@
       if (texto.trim() === "") return;
 
       conversacion.push({ rol: "usuario", texto: texto });
-      renderChat();
       document.getElementById("mensaje").value = "";
+      document.getElementById("btnEnviar").disabled = true;
+      renderChat(true);
 
       try {
         const dificultad = document.getElementById("dificultad").value;
@@ -113,9 +158,12 @@
         const respuesta = await fetch(url);
         const respuestaCliente = await respuesta.text();
         conversacion.push({ rol: "cliente", texto: respuestaCliente });
-        renderChat();
+        renderChat(false);
       } catch (error) {
+        renderChat(false);
         document.getElementById("chat").innerHTML += "<p>Hubo un error continuando la negociación. Intenta de nuevo.</p>";
+      } finally {
+        document.getElementById("btnEnviar").disabled = false;
       }
     }
 
@@ -161,6 +209,7 @@
       document.getElementById("promedio").innerText = "Promedio: sin datos aún";
       document.getElementById("resultado").innerText = "";
       document.getElementById("chat").innerHTML = "";
+      document.getElementById("sugerencia").innerText = "";
     }
 
     if (localStorage.getItem("historial")) {
