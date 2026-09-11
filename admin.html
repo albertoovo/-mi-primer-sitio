@@ -40,7 +40,7 @@
       margin: 5px;
     }
 
-    #resumen, #estadisticas {
+    #resumen, #estadisticas, #controles {
       display: none;
       background: white;
       padding: 20px;
@@ -58,11 +58,6 @@
       font-size: 17px;
     }
 
-    #controles {
-      display: none;
-      margin: 20px 0;
-    }
-
     #resultado {
       margin-top: 25px;
       text-align: left;
@@ -78,6 +73,11 @@
     .rating {
       font-size: 20px;
       font-weight: bold;
+    }
+
+    #busqueda {
+      width: 90%;
+      max-width: 500px;
     }
   </style>
 </head>
@@ -154,6 +154,15 @@
     </div>
 
     <div id="controles">
+
+      <input
+        type="text"
+        id="busqueda"
+        placeholder="Buscar en comentarios..."
+        oninput="mostrarFeedbacks()"
+      >
+
+      <br>
 
       <select id="filtroRating" onchange="mostrarFeedbacks()">
 
@@ -340,12 +349,27 @@
       const orden =
         document.getElementById("orden").value;
 
+      const busqueda =
+        document.getElementById("busqueda").value
+          .trim()
+          .toLowerCase();
+
       if (filtro !== "todos") {
 
         feedbacks =
           feedbacks.filter(
             feedback =>
               Number(feedback.rating) === Number(filtro)
+          );
+      }
+
+      if (busqueda !== "") {
+
+        feedbacks =
+          feedbacks.filter(feedback =>
+            (feedback.comentario || "")
+              .toLowerCase()
+              .includes(busqueda)
           );
       }
 
@@ -365,7 +389,7 @@
       if (feedbacks.length === 0) {
 
         document.getElementById("resultado").innerHTML =
-          "<p>No hay feedbacks que coincidan con el filtro.</p>";
+          "<p>No hay feedbacks que coincidan con la búsqueda.</p>";
 
         return;
       }
