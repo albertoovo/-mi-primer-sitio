@@ -1,426 +1,449 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Panel de Feedback</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Feedback</title>
 
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      padding: 40px 20px;
-      text-align: center;
-    }
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
+    margin: 0;
+    padding: 40px 20px;
+  }
 
-    .contenedor {
-      max-width: 700px;
-      margin: auto;
-    }
+  .contenedor {
+    max-width: 900px;
+    margin: auto;
+  }
 
-    input, select {
-      padding: 12px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-      margin: 5px;
-    }
+  h1 {
+    text-align: center;
+  }
 
-    input {
-      width: 250px;
-    }
+  .panel {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+  }
 
-    button {
-      background-color: #3E63C7;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-      margin: 5px;
-    }
+  input, select, button {
+    padding: 10px;
+    margin: 5px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+  }
 
-    #resumen, #estadisticas, #controles {
-      display: none;
-      background: white;
-      padding: 20px;
-      margin: 20px 0;
-      border-radius: 10px;
-    }
+  button {
+    cursor: pointer;
+    background: #3E63C7;
+    color: white;
+    border: none;
+  }
 
-    .numero {
-      font-size: 28px;
-      font-weight: bold;
-    }
+  button:hover {
+    opacity: 0.9;
+  }
 
-    .estadistica {
-      margin: 8px 0;
-      font-size: 17px;
-    }
+  .estadisticas {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+  }
 
-    #resultado {
-      margin-top: 25px;
-      text-align: left;
-    }
+  .stat {
+    flex: 1;
+    min-width: 150px;
+    background: #f7f7f7;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+  }
 
-    .feedback {
-      background: white;
-      padding: 18px;
-      margin: 12px 0;
-      border-radius: 10px;
-    }
+  .numero {
+    font-size: 28px;
+    font-weight: bold;
+  }
 
-    .rating {
-      font-size: 20px;
-      font-weight: bold;
-    }
+  .feedback {
+    border-top: 1px solid #ddd;
+    padding: 15px 0;
+  }
 
-    #busqueda {
-      width: 90%;
-      max-width: 500px;
-    }
-  </style>
+  .rating {
+    font-weight: bold;
+  }
+
+  .fecha {
+    color: #777;
+    font-size: 13px;
+  }
+
+  #mensaje {
+    margin-top: 10px;
+    font-weight: bold;
+  }
+</style>
 </head>
 
 <body>
 
-  <div class="contenedor">
+<div class="contenedor">
 
-    <h1>Panel de Feedback</h1>
+  <h1>Panel de Feedback</h1>
 
-    <p>Introduce tu contraseña de administrador.</p>
+  <div class="panel">
 
     <input
       type="password"
       id="password"
-      placeholder="Contraseña"
+      placeholder="Contraseña de administrador"
     >
 
-    <br>
-
     <button onclick="cargarFeedbacks()">
-      Ver feedbacks
+      Cargar feedbacks
     </button>
 
-    <p id="mensaje"></p>
+    <button onclick="exportarCSV()">
+      Exportar CSV
+    </button>
 
-    <div id="resumen">
+    <button onclick="cargarFeedbacks()">
+      Actualizar
+    </button>
 
-      <div>Promedio</div>
-
-      <div class="numero" id="promedio">
-        0/5
-      </div>
-
-      <br>
-
-      <div>Total de respuestas</div>
-
-      <div class="numero" id="total">
-        0
-      </div>
-
-    </div>
-
-    <div id="estadisticas">
-
-      <h3>Distribución de calificaciones</h3>
-
-      <div class="estadistica">
-        ⭐ 5 estrellas:
-        <strong id="cantidad5">0</strong>
-      </div>
-
-      <div class="estadistica">
-        ⭐ 4 estrellas:
-        <strong id="cantidad4">0</strong>
-      </div>
-
-      <div class="estadistica">
-        ⭐ 3 estrellas:
-        <strong id="cantidad3">0</strong>
-      </div>
-
-      <div class="estadistica">
-        ⭐ 2 estrellas:
-        <strong id="cantidad2">0</strong>
-      </div>
-
-      <div class="estadistica">
-        ⭐ 1 estrella:
-        <strong id="cantidad1">0</strong>
-      </div>
-
-    </div>
-
-    <div id="controles">
-
-      <input
-        type="text"
-        id="busqueda"
-        placeholder="Buscar en comentarios..."
-        oninput="mostrarFeedbacks()"
-      >
-
-      <br>
-
-      <select id="filtroRating" onchange="mostrarFeedbacks()">
-
-        <option value="todos">
-          Todas las calificaciones
-        </option>
-
-        <option value="5">5 estrellas</option>
-        <option value="4">4 estrellas</option>
-        <option value="3">3 estrellas</option>
-        <option value="2">2 estrellas</option>
-        <option value="1">1 estrella</option>
-
-      </select>
-
-      <select id="orden" onchange="mostrarFeedbacks()">
-
-        <option value="recientes">
-          Más recientes
-        </option>
-
-        <option value="antiguos">
-          Más antiguos
-        </option>
-
-      </select>
-
-      <br>
-
-      <button onclick="cargarFeedbacks()">
-        Actualizar datos
-      </button>
-
-    </div>
-
-    <div id="resultado"></div>
+    <div id="mensaje"></div>
 
   </div>
 
-  <script>
+  <div class="panel">
 
-    const WORKER =
-      "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
+    <div class="estadisticas">
 
-    let todosLosFeedbacks = [];
+      <div class="stat">
+        <div>Promedio</div>
+        <div class="numero" id="promedio">-</div>
+      </div>
 
-    async function cargarFeedbacks() {
+      <div class="stat">
+        <div>Total</div>
+        <div class="numero" id="total">0</div>
+      </div>
 
-      const password =
-        document.getElementById("password").value;
+      <div class="stat">
+        <div>5 estrellas</div>
+        <div class="numero" id="cinco">0</div>
+      </div>
 
-      if (password.trim() === "") {
+      <div class="stat">
+        <div>1 estrella</div>
+        <div class="numero" id="uno">0</div>
+      </div>
 
-        document.getElementById("mensaje").innerText =
-          "Escribe la contraseña.";
+    </div>
 
-        return;
-      }
+  </div>
 
-      document.getElementById("mensaje").innerText =
-        "Cargando feedbacks...";
+  <div class="panel">
 
-      try {
+    <select id="filtroRating" onchange="mostrarFeedbacks()">
+      <option value="todos">Todas las calificaciones</option>
+      <option value="5">5 estrellas</option>
+      <option value="4">4 estrellas</option>
+      <option value="3">3 estrellas</option>
+      <option value="2">2 estrellas</option>
+      <option value="1">1 estrella</option>
+    </select>
 
-        const url =
-          WORKER +
-          "?accion=feedbacks" +
-          "&password=" +
-          encodeURIComponent(password);
+    <select id="orden" onchange="mostrarFeedbacks()">
+      <option value="reciente">Más recientes</option>
+      <option value="antiguo">Más antiguos</option>
+    </select>
 
-        const respuesta =
-          await fetch(url);
+    <input
+      type="text"
+      id="busqueda"
+      placeholder="Buscar en comentarios..."
+      oninput="mostrarFeedbacks()"
+    >
 
-        const datos =
-          await respuesta.json();
+  </div>
 
-        if (!respuesta.ok) {
+  <div class="panel">
+    <div id="listaFeedbacks">
+      No hay feedbacks cargados.
+    </div>
+  </div>
 
-          document.getElementById("mensaje").innerText =
-            "Contraseña incorrecta.";
+</div>
 
-          return;
-        }
+<script>
 
-        todosLosFeedbacks =
-          datos.feedbacks || [];
+const WORKER =
+"https://academia-negociacion-api.aispuroalberto546.workers.dev/";
 
-        actualizarEstadisticas();
+let todosLosFeedbacks = [];
 
-        document.getElementById("resumen").style.display =
-          "block";
 
-        document.getElementById("estadisticas").style.display =
-          "block";
+async function cargarFeedbacks() {
 
-        document.getElementById("controles").style.display =
-          "block";
+  const password =
+    document.getElementById("password").value;
 
-        document.getElementById("mensaje").innerText =
-          "Datos cargados correctamente.";
+  if (!password) {
+    document.getElementById("mensaje").textContent =
+      "Escribe la contraseña.";
+    return;
+  }
 
-        mostrarFeedbacks();
+  try {
 
-      } catch (error) {
+    const respuesta = await fetch(
+      WORKER +
+      "?accion=feedbacks&password=" +
+      encodeURIComponent(password)
+    );
 
-        document.getElementById("mensaje").innerText =
-          "Hubo un error conectando con el servidor.";
+    const datos = await respuesta.json();
 
-      }
+    if (datos.error) {
+      document.getElementById("mensaje").textContent =
+        datos.error;
+      return;
     }
 
-    function actualizarEstadisticas() {
+    todosLosFeedbacks = datos.feedbacks || [];
 
-      const total =
-        todosLosFeedbacks.length;
+    document.getElementById("mensaje").textContent =
+      "Feedbacks cargados correctamente.";
 
-      document.getElementById("total").innerText =
-        total;
+    actualizarEstadisticas();
+    mostrarFeedbacks();
 
-      if (total === 0) {
+  } catch (error) {
 
-        document.getElementById("promedio").innerText =
-          "0/5";
+    document.getElementById("mensaje").textContent =
+      "Error al cargar los feedbacks.";
 
-      } else {
+    console.error(error);
+  }
+}
 
-        const suma =
-          todosLosFeedbacks.reduce(
-            (total, feedback) =>
-              total + Number(feedback.rating),
-            0
-          );
 
-        const promedio =
-          (suma / total).toFixed(1);
+function actualizarEstadisticas() {
 
-        document.getElementById("promedio").innerText =
-          promedio + "/5";
-      }
+  const total = todosLosFeedbacks.length;
 
-      const cantidades = {
-        1: 0,
-        2: 0,
-        3: 0,
-        4: 0,
-        5: 0
-      };
+  document.getElementById("total").textContent = total;
 
-      todosLosFeedbacks.forEach(feedback => {
+  if (total === 0) {
+    document.getElementById("promedio").textContent = "-";
+    document.getElementById("uno").textContent = "0";
+    document.getElementById("cinco").textContent = "0";
+    return;
+  }
 
-        const rating =
-          Number(feedback.rating);
+  const suma = todosLosFeedbacks.reduce(
+    (total, feedback) =>
+      total + Number(feedback.rating || 0),
+    0
+  );
 
-        if (cantidades[rating] !== undefined) {
-          cantidades[rating]++;
-        }
+  const promedio = suma / total;
 
-      });
+  document.getElementById("promedio").textContent =
+    promedio.toFixed(1);
 
-      document.getElementById("cantidad1").innerText =
-        cantidades[1];
+  document.getElementById("uno").textContent =
+    todosLosFeedbacks.filter(
+      feedback => Number(feedback.rating) === 1
+    ).length;
 
-      document.getElementById("cantidad2").innerText =
-        cantidades[2];
+  document.getElementById("cinco").textContent =
+    todosLosFeedbacks.filter(
+      feedback => Number(feedback.rating) === 5
+    ).length;
+}
 
-      document.getElementById("cantidad3").innerText =
-        cantidades[3];
 
-      document.getElementById("cantidad4").innerText =
-        cantidades[4];
+function mostrarFeedbacks() {
 
-      document.getElementById("cantidad5").innerText =
-        cantidades[5];
+  const filtro =
+    document.getElementById("filtroRating").value;
+
+  const orden =
+    document.getElementById("orden").value;
+
+  const busqueda =
+    document.getElementById("busqueda").value
+      .toLowerCase()
+      .trim();
+
+  let feedbacks = [...todosLosFeedbacks];
+
+
+  if (filtro !== "todos") {
+
+    feedbacks = feedbacks.filter(
+      feedback =>
+        Number(feedback.rating) === Number(filtro)
+    );
+
+  }
+
+
+  if (busqueda) {
+
+    feedbacks = feedbacks.filter(
+      feedback =>
+        (feedback.comentario || "")
+          .toLowerCase()
+          .includes(busqueda)
+    );
+
+  }
+
+
+  feedbacks.sort((a, b) => {
+
+    const fechaA = new Date(a.fecha || 0);
+    const fechaB = new Date(b.fecha || 0);
+
+    return orden === "reciente"
+      ? fechaB - fechaA
+      : fechaA - fechaB;
+
+  });
+
+
+  const lista =
+    document.getElementById("listaFeedbacks");
+
+
+  if (feedbacks.length === 0) {
+
+    lista.innerHTML =
+      "No hay feedbacks que coincidan.";
+
+    return;
+  }
+
+
+  lista.innerHTML = feedbacks.map(feedback => {
+
+    const rating =
+      Number(feedback.rating || 0);
+
+    const comentario =
+      feedback.comentario || "Sin comentario";
+
+    const fecha =
+      feedback.fecha
+        ? new Date(feedback.fecha).toLocaleString("es-MX")
+        : "Sin fecha";
+
+
+    return `
+      <div class="feedback">
+
+        <div class="rating">
+          ⭐ ${rating}/5
+        </div>
+
+        <div>
+          ${comentario}
+        </div>
+
+        <div class="fecha">
+          ${fecha}
+        </div>
+
+      </div>
+    `;
+
+  }).join("");
+
+}
+
+
+function exportarCSV() {
+
+  if (todosLosFeedbacks.length === 0) {
+
+    alert("Primero carga los feedbacks.");
+
+    return;
+  }
+
+
+  const filas = [];
+
+  filas.push([
+    "Calificación",
+    "Comentario",
+    "Fecha"
+  ]);
+
+
+  todosLosFeedbacks.forEach(feedback => {
+
+    filas.push([
+      feedback.rating || "",
+      feedback.comentario || "",
+      feedback.fecha || ""
+    ]);
+
+  });
+
+
+  const csv = filas.map(fila => {
+
+    return fila.map(campo => {
+
+      const texto =
+        String(campo)
+          .replace(/"/g, '""');
+
+      return `"${texto}"`;
+
+    }).join(",");
+
+  }).join("\n");
+
+
+  const blob = new Blob(
+    ["\uFEFF" + csv],
+    {
+      type: "text/csv;charset=utf-8;"
     }
+  );
 
-    function mostrarFeedbacks() {
 
-      let feedbacks =
-        [...todosLosFeedbacks];
+  const url =
+    URL.createObjectURL(blob);
 
-      const filtro =
-        document.getElementById("filtroRating").value;
 
-      const orden =
-        document.getElementById("orden").value;
+  const enlace =
+    document.createElement("a");
 
-      const busqueda =
-        document.getElementById("busqueda").value
-          .trim()
-          .toLowerCase();
+  enlace.href = url;
 
-      if (filtro !== "todos") {
+  enlace.download =
+    "feedback_negociacion.csv";
 
-        feedbacks =
-          feedbacks.filter(
-            feedback =>
-              Number(feedback.rating) === Number(filtro)
-          );
-      }
+  document.body.appendChild(enlace);
 
-      if (busqueda !== "") {
+  enlace.click();
 
-        feedbacks =
-          feedbacks.filter(feedback =>
-            (feedback.comentario || "")
-              .toLowerCase()
-              .includes(busqueda)
-          );
-      }
+  document.body.removeChild(enlace);
 
-      feedbacks.sort((a, b) => {
+  URL.revokeObjectURL(url);
 
-        const fechaA =
-          new Date(a.fecha).getTime();
+}
 
-        const fechaB =
-          new Date(b.fecha).getTime();
-
-        return orden === "recientes"
-          ? fechaB - fechaA
-          : fechaA - fechaB;
-      });
-
-      if (feedbacks.length === 0) {
-
-        document.getElementById("resultado").innerHTML =
-          "<p>No hay feedbacks que coincidan con la búsqueda.</p>";
-
-        return;
-      }
-
-      document.getElementById("resultado").innerHTML =
-        feedbacks.map(feedback => `
-
-          <div class="feedback">
-
-            <div class="rating">
-              ⭐ ${feedback.rating}/5
-            </div>
-
-            <p>
-              <strong>Comentario:</strong>
-              ${feedback.comentario || "Sin comentario"}
-            </p>
-
-            <p>
-              <small>
-                Fecha:
-                ${new Date(feedback.fecha).toLocaleString()}
-              </small>
-            </p>
-
-          </div>
-
-        `).join("");
-    }
-
-  </script>
+</script>
 
 </body>
 </html>
