@@ -14,12 +14,13 @@
   }
 
   .contenedor {
-    max-width: 900px;
+    max-width: 1000px;
     margin: auto;
   }
 
   h1 {
     text-align: center;
+    margin-bottom: 30px;
   }
 
   .panel {
@@ -48,16 +49,14 @@
   }
 
   .estadisticas {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
     gap: 15px;
-    flex-wrap: wrap;
   }
 
   .stat {
-    flex: 1;
-    min-width: 150px;
     background: #f7f7f7;
-    padding: 15px;
+    padding: 18px;
     border-radius: 10px;
     text-align: center;
   }
@@ -65,6 +64,35 @@
   .numero {
     font-size: 28px;
     font-weight: bold;
+    margin-top: 8px;
+  }
+
+  .distribucion {
+    margin-top: 20px;
+  }
+
+  .barra-contenedor {
+    margin: 12px 0;
+  }
+
+  .barra-info {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 5px;
+  }
+
+  .barra {
+    width: 100%;
+    height: 12px;
+    background: #e5e5e5;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .barra-interna {
+    height: 100%;
+    background: #3E63C7;
+    border-radius: 10px;
   }
 
   .feedback {
@@ -79,11 +107,18 @@
   .fecha {
     color: #777;
     font-size: 13px;
+    margin-top: 5px;
   }
 
   #mensaje {
     margin-top: 10px;
     font-weight: bold;
+  }
+
+  .botones {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
   }
 </style>
 </head>
@@ -96,71 +131,188 @@
 
   <div class="panel">
 
-    <input
-      type="password"
-      id="password"
-      placeholder="Contraseña de administrador"
-    >
+    <div class="botones">
 
-    <button onclick="cargarFeedbacks()">
-      Cargar feedbacks
-    </button>
+      <input
+        type="password"
+        id="password"
+        placeholder="Contraseña de administrador"
+      >
 
-    <button onclick="exportarCSV()">
-      Exportar CSV
-    </button>
+      <button onclick="cargarFeedbacks()">
+        Cargar feedbacks
+      </button>
 
-    <button onclick="cargarFeedbacks()">
-      Actualizar
-    </button>
+      <button onclick="exportarCSV()">
+        Exportar CSV
+      </button>
+
+      <button onclick="cargarFeedbacks()">
+        Actualizar
+      </button>
+
+    </div>
 
     <div id="mensaje"></div>
 
   </div>
 
+
+  <!-- MÉTRICAS -->
+
   <div class="panel">
+
+    <h2>Resumen</h2>
 
     <div class="estadisticas">
 
       <div class="stat">
-        <div>Promedio</div>
+        <div>⭐ Promedio</div>
         <div class="numero" id="promedio">-</div>
       </div>
 
       <div class="stat">
-        <div>Total</div>
+        <div>👥 Total usuarios</div>
         <div class="numero" id="total">0</div>
       </div>
 
       <div class="stat">
-        <div>5 estrellas</div>
-        <div class="numero" id="cinco">0</div>
+        <div>😊 Satisfechos</div>
+        <div class="numero" id="satisfechos">0%</div>
       </div>
 
       <div class="stat">
-        <div>1 estrella</div>
-        <div class="numero" id="uno">0</div>
+        <div>⚠️ Insatisfechos</div>
+        <div class="numero" id="insatisfechos">0%</div>
+      </div>
+
+      <div class="stat">
+        <div>💬 Con comentario</div>
+        <div class="numero" id="conComentario">0%</div>
+      </div>
+
+    </div>
+
+
+    <div class="distribucion">
+
+      <h3>Distribución de calificaciones</h3>
+
+      <div class="barra-contenedor">
+        <div class="barra-info">
+          <span>⭐ 5</span>
+          <span id="cantidad5">0</span>
+        </div>
+
+        <div class="barra">
+          <div
+            class="barra-interna"
+            id="barra5"
+            style="width:0%"
+          ></div>
+        </div>
+      </div>
+
+
+      <div class="barra-contenedor">
+        <div class="barra-info">
+          <span>⭐ 4</span>
+          <span id="cantidad4">0</span>
+        </div>
+
+        <div class="barra">
+          <div
+            class="barra-interna"
+            id="barra4"
+            style="width:0%"
+          ></div>
+        </div>
+      </div>
+
+
+      <div class="barra-contenedor">
+        <div class="barra-info">
+          <span>⭐ 3</span>
+          <span id="cantidad3">0</span>
+        </div>
+
+        <div class="barra">
+          <div
+            class="barra-interna"
+            id="barra3"
+            style="width:0%"
+          ></div>
+        </div>
+      </div>
+
+
+      <div class="barra-contenedor">
+        <div class="barra-info">
+          <span>⭐ 2</span>
+          <span id="cantidad2">0</span>
+        </div>
+
+        <div class="barra">
+          <div
+            class="barra-interna"
+            id="barra2"
+            style="width:0%"
+          ></div>
+        </div>
+      </div>
+
+
+      <div class="barra-contenedor">
+        <div class="barra-info">
+          <span>⭐ 1</span>
+          <span id="cantidad1">0</span>
+        </div>
+
+        <div class="barra">
+          <div
+            class="barra-interna"
+            id="barra1"
+            style="width:0%"
+          ></div>
+        </div>
       </div>
 
     </div>
 
   </div>
 
+
+  <!-- FILTROS -->
+
   <div class="panel">
 
     <select id="filtroRating" onchange="mostrarFeedbacks()">
-      <option value="todos">Todas las calificaciones</option>
+
+      <option value="todos">
+        Todas las calificaciones
+      </option>
+
       <option value="5">5 estrellas</option>
       <option value="4">4 estrellas</option>
       <option value="3">3 estrellas</option>
       <option value="2">2 estrellas</option>
       <option value="1">1 estrella</option>
+
     </select>
 
+
     <select id="orden" onchange="mostrarFeedbacks()">
-      <option value="reciente">Más recientes</option>
-      <option value="antiguo">Más antiguos</option>
+
+      <option value="reciente">
+        Más recientes
+      </option>
+
+      <option value="antiguo">
+        Más antiguos
+      </option>
+
     </select>
+
 
     <input
       type="text"
@@ -171,13 +323,21 @@
 
   </div>
 
+
+  <!-- FEEDBACKS -->
+
   <div class="panel">
+
+    <h2>Comentarios</h2>
+
     <div id="listaFeedbacks">
       No hay feedbacks cargados.
     </div>
+
   </div>
 
 </div>
+
 
 <script>
 
@@ -193,10 +353,13 @@ async function cargarFeedbacks() {
     document.getElementById("password").value;
 
   if (!password) {
+
     document.getElementById("mensaje").textContent =
       "Escribe la contraseña.";
+
     return;
   }
+
 
   try {
 
@@ -206,21 +369,31 @@ async function cargarFeedbacks() {
       encodeURIComponent(password)
     );
 
+
     const datos = await respuesta.json();
 
+
     if (datos.error) {
+
       document.getElementById("mensaje").textContent =
         datos.error;
+
       return;
     }
 
-    todosLosFeedbacks = datos.feedbacks || [];
+
+    todosLosFeedbacks =
+      datos.feedbacks || [];
+
 
     document.getElementById("mensaje").textContent =
       "Feedbacks cargados correctamente.";
 
+
     actualizarEstadisticas();
+
     mostrarFeedbacks();
+
 
   } catch (error) {
 
@@ -228,43 +401,118 @@ async function cargarFeedbacks() {
       "Error al cargar los feedbacks.";
 
     console.error(error);
+
   }
+
 }
 
 
 function actualizarEstadisticas() {
 
-  const total = todosLosFeedbacks.length;
+  const total =
+    todosLosFeedbacks.length;
 
-  document.getElementById("total").textContent = total;
+
+  document.getElementById("total").textContent =
+    total;
+
 
   if (total === 0) {
+
     document.getElementById("promedio").textContent = "-";
-    document.getElementById("uno").textContent = "0";
-    document.getElementById("cinco").textContent = "0";
+
+    document.getElementById("satisfechos").textContent = "0%";
+
+    document.getElementById("insatisfechos").textContent = "0%";
+
+    document.getElementById("conComentario").textContent = "0%";
+
+    for (let i = 1; i <= 5; i++) {
+
+      document.getElementById("cantidad" + i).textContent = "0";
+
+      document.getElementById("barra" + i).style.width = "0%";
+
+    }
+
     return;
   }
 
-  const suma = todosLosFeedbacks.reduce(
-    (total, feedback) =>
-      total + Number(feedback.rating || 0),
-    0
-  );
 
-  const promedio = suma / total;
+  const suma =
+    todosLosFeedbacks.reduce(
+      (total, feedback) =>
+        total + Number(feedback.rating || 0),
+      0
+    );
+
+
+  const promedio =
+    suma / total;
+
 
   document.getElementById("promedio").textContent =
     promedio.toFixed(1);
 
-  document.getElementById("uno").textContent =
+
+  const satisfechos =
     todosLosFeedbacks.filter(
-      feedback => Number(feedback.rating) === 1
+      feedback =>
+        Number(feedback.rating) >= 4
     ).length;
 
-  document.getElementById("cinco").textContent =
+
+  const insatisfechos =
     todosLosFeedbacks.filter(
-      feedback => Number(feedback.rating) === 5
+      feedback =>
+        Number(feedback.rating) <= 2
     ).length;
+
+
+  const conComentario =
+    todosLosFeedbacks.filter(
+      feedback =>
+        feedback.comentario &&
+        feedback.comentario.trim() !== ""
+    ).length;
+
+
+  document.getElementById("satisfechos").textContent =
+    Math.round((satisfechos / total) * 100) + "%";
+
+
+  document.getElementById("insatisfechos").textContent =
+    Math.round((insatisfechos / total) * 100) + "%";
+
+
+  document.getElementById("conComentario").textContent =
+    Math.round((conComentario / total) * 100) + "%";
+
+
+  for (let i = 1; i <= 5; i++) {
+
+    const cantidad =
+      todosLosFeedbacks.filter(
+        feedback =>
+          Number(feedback.rating) === i
+      ).length;
+
+
+    const porcentaje =
+      (cantidad / total) * 100;
+
+
+    document.getElementById(
+      "cantidad" + i
+    ).textContent = cantidad;
+
+
+    document.getElementById(
+      "barra" + i
+    ).style.width = porcentaje + "%";
+
+  }
+
 }
 
 
@@ -273,43 +521,54 @@ function mostrarFeedbacks() {
   const filtro =
     document.getElementById("filtroRating").value;
 
+
   const orden =
     document.getElementById("orden").value;
+
 
   const busqueda =
     document.getElementById("busqueda").value
       .toLowerCase()
       .trim();
 
-  let feedbacks = [...todosLosFeedbacks];
+
+  let feedbacks =
+    [...todosLosFeedbacks];
 
 
   if (filtro !== "todos") {
 
-    feedbacks = feedbacks.filter(
-      feedback =>
-        Number(feedback.rating) === Number(filtro)
-    );
+    feedbacks =
+      feedbacks.filter(
+        feedback =>
+          Number(feedback.rating) ===
+          Number(filtro)
+      );
 
   }
 
 
   if (busqueda) {
 
-    feedbacks = feedbacks.filter(
-      feedback =>
-        (feedback.comentario || "")
-          .toLowerCase()
-          .includes(busqueda)
-    );
+    feedbacks =
+      feedbacks.filter(
+        feedback =>
+          (feedback.comentario || "")
+            .toLowerCase()
+            .includes(busqueda)
+      );
 
   }
 
 
   feedbacks.sort((a, b) => {
 
-    const fechaA = new Date(a.fecha || 0);
-    const fechaB = new Date(b.fecha || 0);
+    const fechaA =
+      new Date(a.fecha || 0);
+
+    const fechaB =
+      new Date(b.fecha || 0);
+
 
     return orden === "reciente"
       ? fechaB - fechaA
@@ -319,7 +578,9 @@ function mostrarFeedbacks() {
 
 
   const lista =
-    document.getElementById("listaFeedbacks");
+    document.getElementById(
+      "listaFeedbacks"
+    );
 
 
   if (feedbacks.length === 0) {
@@ -328,42 +589,49 @@ function mostrarFeedbacks() {
       "No hay feedbacks que coincidan.";
 
     return;
+
   }
 
 
-  lista.innerHTML = feedbacks.map(feedback => {
+  lista.innerHTML =
+    feedbacks.map(feedback => {
 
-    const rating =
-      Number(feedback.rating || 0);
-
-    const comentario =
-      feedback.comentario || "Sin comentario";
-
-    const fecha =
-      feedback.fecha
-        ? new Date(feedback.fecha).toLocaleString("es-MX")
-        : "Sin fecha";
+      const rating =
+        Number(feedback.rating || 0);
 
 
-    return `
-      <div class="feedback">
+      const comentario =
+        feedback.comentario ||
+        "Sin comentario";
 
-        <div class="rating">
-          ⭐ ${rating}/5
+
+      const fecha =
+        feedback.fecha
+          ? new Date(
+              feedback.fecha
+            ).toLocaleString("es-MX")
+          : "Sin fecha";
+
+
+      return `
+        <div class="feedback">
+
+          <div class="rating">
+            ⭐ ${rating}/5
+          </div>
+
+          <div>
+            ${comentario}
+          </div>
+
+          <div class="fecha">
+            ${fecha}
+          </div>
+
         </div>
+      `;
 
-        <div>
-          ${comentario}
-        </div>
-
-        <div class="fecha">
-          ${fecha}
-        </div>
-
-      </div>
-    `;
-
-  }).join("");
+    }).join("");
 
 }
 
@@ -372,13 +640,17 @@ function exportarCSV() {
 
   if (todosLosFeedbacks.length === 0) {
 
-    alert("Primero carga los feedbacks.");
+    alert(
+      "Primero carga los feedbacks."
+    );
 
     return;
+
   }
 
 
   const filas = [];
+
 
   filas.push([
     "Calificación",
@@ -387,38 +659,43 @@ function exportarCSV() {
   ]);
 
 
-  todosLosFeedbacks.forEach(feedback => {
+  todosLosFeedbacks.forEach(
+    feedback => {
 
-    filas.push([
-      feedback.rating || "",
-      feedback.comentario || "",
-      feedback.fecha || ""
-    ]);
+      filas.push([
+        feedback.rating || "",
+        feedback.comentario || "",
+        feedback.fecha || ""
+      ]);
 
-  });
-
-
-  const csv = filas.map(fila => {
-
-    return fila.map(campo => {
-
-      const texto =
-        String(campo)
-          .replace(/"/g, '""');
-
-      return `"${texto}"`;
-
-    }).join(",");
-
-  }).join("\n");
-
-
-  const blob = new Blob(
-    ["\uFEFF" + csv],
-    {
-      type: "text/csv;charset=utf-8;"
     }
   );
+
+
+  const csv =
+    filas.map(fila => {
+
+      return fila.map(campo => {
+
+        const texto =
+          String(campo)
+            .replace(/"/g, '""');
+
+        return `"${texto}"`;
+
+      }).join(",");
+
+    }).join("\n");
+
+
+  const blob =
+    new Blob(
+      ["\uFEFF" + csv],
+      {
+        type:
+          "text/csv;charset=utf-8;"
+      }
+    );
 
 
   const url =
@@ -428,10 +705,12 @@ function exportarCSV() {
   const enlace =
     document.createElement("a");
 
+
   enlace.href = url;
 
   enlace.download =
     "feedback_negociacion.csv";
+
 
   document.body.appendChild(enlace);
 
