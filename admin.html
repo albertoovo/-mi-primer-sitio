@@ -40,6 +40,19 @@
       opacity: 0.9;
     }
 
+    #resumen {
+      display: none;
+      background: white;
+      padding: 20px;
+      margin: 25px 0;
+      border-radius: 10px;
+    }
+
+    .numero {
+      font-size: 28px;
+      font-weight: bold;
+    }
+
     #resultado {
       margin-top: 25px;
       text-align: left;
@@ -86,6 +99,22 @@
 
     <p id="mensaje"></p>
 
+    <div id="resumen">
+
+      <div>
+        <div>Promedio</div>
+        <div class="numero" id="promedio">0/5</div>
+      </div>
+
+      <br>
+
+      <div>
+        <div>Total de respuestas</div>
+        <div class="numero" id="total">0</div>
+      </div>
+
+    </div>
+
     <div id="resultado"></div>
 
   </div>
@@ -112,6 +141,9 @@
 
       document.getElementById("resultado").innerHTML = "";
 
+      document.getElementById("resumen").style.display =
+        "none";
+
       try {
 
         const url =
@@ -135,10 +167,42 @@
         }
 
         document.getElementById("mensaje").innerText =
-          "Feedbacks encontrados: " +
-          datos.total;
+          "Feedbacks cargados correctamente.";
 
-        if (datos.feedbacks.length === 0) {
+        const feedbacks =
+          datos.feedbacks || [];
+
+        document.getElementById("total").innerText =
+          feedbacks.length;
+
+        if (feedbacks.length > 0) {
+
+          const suma =
+            feedbacks.reduce(
+              (total, feedback) =>
+                total + Number(feedback.rating),
+              0
+            );
+
+          const promedio =
+            (suma / feedbacks.length).toFixed(1);
+
+          document.getElementById("promedio").innerText =
+            promedio + "/5";
+
+          document.getElementById("resumen").style.display =
+            "block";
+
+        } else {
+
+          document.getElementById("promedio").innerText =
+            "0/5";
+
+          document.getElementById("resumen").style.display =
+            "block";
+        }
+
+        if (feedbacks.length === 0) {
 
           document.getElementById("resultado").innerHTML =
             "<p>No hay feedbacks todavía.</p>";
@@ -147,7 +211,7 @@
         }
 
         document.getElementById("resultado").innerHTML =
-          datos.feedbacks.map(feedback => `
+          feedbacks.map(feedback => `
 
             <div class="feedback">
 
@@ -162,7 +226,8 @@
 
               <p>
                 <small>
-                  Fecha: ${new Date(feedback.fecha).toLocaleString()}
+                  Fecha:
+                  ${new Date(feedback.fecha).toLocaleString()}
                 </small>
               </p>
 
