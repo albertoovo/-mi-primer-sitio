@@ -310,10 +310,6 @@
       margin: 25px 0;
     }
 
-    .oculto {
-      display: none;
-    }
-
     @media (max-width: 700px) {
       .app {
         padding: 22px 12px 50px;
@@ -342,12 +338,15 @@
 
   <header>
     <div class="logo">AI Business Academy</div>
+
     <h1>Laboratorio de Negociación</h1>
+
     <p class="subtitulo">
       Entrena con conversaciones dinámicas, aprende a defender tu posición
       y mejora tus decisiones de negociación.
     </p>
   </header>
+
 
   <!-- CONFIGURACIÓN -->
 
@@ -363,11 +362,13 @@
         onclick="seleccionarModo('rapido')"
       >
         <strong>⚡ Partida rápida</strong>
+
         <span>
           El sistema prepara automáticamente una situación de negociación
           para que puedas empezar inmediatamente.
         </span>
       </div>
+
 
       <div
         id="modoPersonalizado"
@@ -375,6 +376,7 @@
         onclick="seleccionarModo('personalizado')"
       >
         <strong>🎯 Personalizar</strong>
+
         <span>
           Define qué quieres negociar, tu objetivo, presupuesto y condiciones.
         </span>
@@ -382,114 +384,215 @@
 
     </div>
 
-    <div id="configuracionPersonalizada" class="configuracion">
+
+    <div
+      id="configuracionPersonalizada"
+      class="configuracion"
+    >
 
       <div class="separador"></div>
 
+
       <div class="campo">
-        <label for="objetivo">¿Qué quieres conseguir?</label>
+
+        <label for="objetivo">
+          ¿Qué quieres conseguir?
+        </label>
 
         <input
           id="objetivo"
           maxlength="120"
           placeholder="Ej. Comprar 500 relojes por menos de $7,000"
         >
+
       </div>
+
 
       <div class="fila">
 
         <div class="campo">
-          <label for="tipoNegociacion">Tipo de negociación</label>
+
+          <label for="tipoNegociacion">
+            Tipo de negociación
+          </label>
 
           <select id="tipoNegociacion">
-            <option value="Comprar">Comprar</option>
-            <option value="Vender">Vender</option>
-            <option value="Llegar a un acuerdo">Llegar a un acuerdo</option>
-            <option value="Contrato">Negociar contrato</option>
-            <option value="Trabajo">Negociar empleo/salario</option>
-            <option value="Inversion">Conseguir inversión</option>
-            <option value="Sociedad">Negociar sociedad</option>
-            <option value="Conflicto">Resolver conflicto</option>
-            <option value="Otro">Otro</option>
+
+            <option value="Comprar">
+              Comprar
+            </option>
+
+            <option value="Vender">
+              Vender
+            </option>
+
+            <option value="Llegar a un acuerdo">
+              Llegar a un acuerdo
+            </option>
+
+            <option value="Contrato">
+              Negociar contrato
+            </option>
+
+            <option value="Trabajo">
+              Negociar empleo/salario
+            </option>
+
+            <option value="Inversion">
+              Conseguir inversión
+            </option>
+
+            <option value="Sociedad">
+              Negociar sociedad
+            </option>
+
+            <option value="Conflicto">
+              Resolver conflicto
+            </option>
+
+            <option value="Otro">
+              Otro
+            </option>
+
           </select>
+
         </div>
 
+
         <div class="campo">
-          <label for="articulo">Producto / servicio</label>
+
+          <label for="articulo">
+            Producto / servicio
+          </label>
 
           <input
             id="articulo"
             maxlength="100"
             placeholder="Ej. relojes, casa, servicio de IA..."
           >
+
         </div>
 
       </div>
 
+
       <div class="fila">
 
         <div class="campo">
-          <label for="presupuesto">Presupuesto / precio objetivo</label>
+
+          <label for="presupuesto">
+            Presupuesto / precio objetivo
+          </label>
 
           <input
             id="presupuesto"
             maxlength="50"
             placeholder="Ej. $7,000"
           >
+
         </div>
 
+
         <div class="campo">
-          <label for="cantidad">Cantidad</label>
+
+          <label for="cantidad">
+            Cantidad
+          </label>
 
           <input
             id="cantidad"
             maxlength="30"
             placeholder="Ej. 500 unidades"
           >
+
         </div>
 
       </div>
 
+
       <div class="campo">
-        <label for="condiciones">Condiciones importantes</label>
+
+        <label for="condiciones">
+          Condiciones importantes
+        </label>
 
         <textarea
           id="condiciones"
           maxlength="180"
           placeholder="Ej. No puedo superar mi presupuesto y necesito entrega en 30 días."
         ></textarea>
+
       </div>
 
     </div>
 
+
     <div class="separador"></div>
+
 
     <div class="fila">
 
       <div class="campo">
-        <label for="filtro">Contexto</label>
+
+        <label for="filtro">
+          Contexto
+        </label>
 
         <select id="filtro">
-          <option value="todos">Todos los contextos</option>
-          <option value="Negociación de precio">Negociación de precio</option>
-          <option value="Buscando acuerdo">Buscando acuerdo</option>
-          <option value="Cerrando el trato">Cerrando el trato</option>
+
+          <option value="todos">
+            Todos los contextos
+          </option>
+
+          <option value="Negociación de precio">
+            Negociación de precio
+          </option>
+
+          <option value="Buscando acuerdo">
+            Buscando acuerdo
+          </option>
+
+          <option value="Cerrando el trato">
+            Cerrando el trato
+          </option>
+
         </select>
+
       </div>
 
+
       <div class="campo">
-        <label for="dificultad">Dificultad</label>
+
+        <label for="dificultad">
+          Dificultad
+        </label>
 
         <select id="dificultad">
-          <option value="facil">Fácil</option>
-          <option value="medio" selected>Medio</option>
-          <option value="dificil">Difícil</option>
+
+          <option value="facil">
+            Fácil
+          </option>
+
+          <option value="medio" selected>
+            Medio
+          </option>
+
+          <option value="dificil">
+            Difícil
+          </option>
+
         </select>
+
       </div>
 
     </div>
 
-    <p id="limiteDiario" class="estado"></p>
+
+    <p
+      id="limiteDiario"
+      class="estado"
+    ></p>
+
 
     <button
       id="btnIniciar"
@@ -502,38 +605,52 @@
   </section>
 
 
-  <!-- LABORATORIO -->
+  <!-- NEGOCIACIÓN -->
 
   <section class="card">
 
     <h2>💬 Negociación</h2>
 
+
     <div id="chat">
+
       <p class="estado">
         Tu negociación aparecerá aquí.
       </p>
+
     </div>
 
-    <p id="sugerencia" class="estado"></p>
+
+    <p
+      id="sugerencia"
+      class="estado"
+    ></p>
+
 
     <div class="chat-controles">
 
       <textarea
         id="mensaje"
         placeholder="Escribe lo que dirías en una negociación real..."
+        disabled
       ></textarea>
+
 
       <div class="acciones">
 
         <button
           id="btnEnviar"
           onclick="enviarMensaje()"
+          disabled
         >
           Enviar
         </button>
 
+
         <button
+          id="btnFinalizar"
           onclick="finalizarNegociacion()"
+          disabled
         >
           Finalizar negociación
         </button>
@@ -542,6 +659,7 @@
 
     </div>
 
+
     <div id="resultado"></div>
 
   </section>
@@ -549,24 +667,46 @@
 
   <!-- FEEDBACK -->
 
-  <section id="feedback" class="card">
+  <section
+    id="feedback"
+    class="card"
+  >
 
-    <h2>¿Qué tan útil fue esta práctica?</h2>
+    <h2>
+      ¿Qué tan útil fue esta práctica?
+    </h2>
+
 
     <div class="estrellas">
 
-      <button onclick="seleccionarFeedback(1)">1</button>
-      <button onclick="seleccionarFeedback(2)">2</button>
-      <button onclick="seleccionarFeedback(3)">3</button>
-      <button onclick="seleccionarFeedback(4)">4</button>
-      <button onclick="seleccionarFeedback(5)">5</button>
+      <button onclick="seleccionarFeedback(1)">
+        1
+      </button>
+
+      <button onclick="seleccionarFeedback(2)">
+        2
+      </button>
+
+      <button onclick="seleccionarFeedback(3)">
+        3
+      </button>
+
+      <button onclick="seleccionarFeedback(4)">
+        4
+      </button>
+
+      <button onclick="seleccionarFeedback(5)">
+        5
+      </button>
 
     </div>
+
 
     <textarea
       id="comentarioFeedback"
       placeholder="Comentario opcional..."
     ></textarea>
+
 
     <div class="acciones">
 
@@ -578,6 +718,7 @@
       </button>
 
     </div>
+
 
     <p
       id="mensajeFeedback"
@@ -593,15 +734,22 @@
 
     <h2>📈 Tu progreso</h2>
 
+
     <p id="promedio">
       Promedio: sin datos aún
     </p>
 
+
     <div class="separador"></div>
 
-    <h3>Historial</h3>
+
+    <h3>
+      Historial
+    </h3>
+
 
     <ul id="historial"></ul>
+
 
     <button onclick="reiniciar()">
       Reiniciar progreso
@@ -614,56 +762,86 @@
 
 <script>
 
+  // =========================================================
+  // ESTADO
+  // =========================================================
+
   let conversacion = [];
+
   let puntajes = [];
+
   let historial = [];
+
   let feedbackSeleccionado = 0;
 
   let modoActual = "rapido";
 
+  let negociacionActiva = false;
+
+  let negociacionFinalizada = false;
+
+  let escenarioActual = null;
+
+
   const WORKER =
     "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
+
 
   const LIMITE_DIARIO = 15;
 
 
-  /* =========================
-     MODO
-  ========================= */
+  // =========================================================
+  // MODO
+  // =========================================================
 
   function seleccionarModo(modo) {
 
+    if (negociacionActiva) {
+      return;
+    }
+
     modoActual = modo;
+
 
     const rapido =
       document.getElementById("modoRapido");
 
+
     const personalizado =
       document.getElementById("modoPersonalizado");
 
+
     const configuracion =
-      document.getElementById("configuracionPersonalizada");
+      document.getElementById(
+        "configuracionPersonalizada"
+      );
+
 
     rapido.classList.remove("activo");
+
     personalizado.classList.remove("activo");
+
 
     if (modo === "rapido") {
 
       rapido.classList.add("activo");
+
       configuracion.classList.remove("visible");
 
     } else {
 
       personalizado.classList.add("activo");
+
       configuracion.classList.add("visible");
 
     }
+
   }
 
 
-  /* =========================
-     FECHA / LÍMITE
-  ========================= */
+  // =========================================================
+  // FECHA / LÍMITE
+  // =========================================================
 
   function fechaHoy() {
 
@@ -679,6 +857,7 @@
     const fechaGuardada =
       localStorage.getItem("fechaUso");
 
+
     if (fechaGuardada !== fechaHoy()) {
 
       localStorage.setItem(
@@ -686,13 +865,17 @@
         fechaHoy()
       );
 
+
       localStorage.setItem(
         "usoHoy",
         "0"
       );
 
+
       return 0;
+
     }
+
 
     return parseInt(
       localStorage.getItem("usoHoy") || "0"
@@ -706,20 +889,32 @@
     const usoHoy =
       obtenerUsoHoy();
 
+
     const elemento =
-      document.getElementById("limiteDiario");
+      document.getElementById(
+        "limiteDiario"
+      );
+
 
     const boton =
-      document.getElementById("btnIniciar");
+      document.getElementById(
+        "btnIniciar"
+      );
 
-    if (usoHoy >= LIMITE_DIARIO) {
+
+    if (
+      usoHoy >= LIMITE_DIARIO &&
+      !negociacionActiva
+    ) {
 
       elemento.innerText =
         "Alcanzaste tu límite diario de práctica (" +
         LIMITE_DIARIO +
         "). Vuelve mañana para seguir.";
 
+
       elemento.classList.add("alcanzado");
+
 
       boton.disabled = true;
 
@@ -731,9 +926,13 @@
         "/" +
         LIMITE_DIARIO;
 
+
       elemento.classList.remove("alcanzado");
 
-      boton.disabled = false;
+
+      if (!negociacionActiva) {
+        boton.disabled = false;
+      }
 
     }
 
@@ -745,19 +944,21 @@
     const usoHoy =
       obtenerUsoHoy();
 
+
     localStorage.setItem(
       "usoHoy",
       (usoHoy + 1).toString()
     );
+
 
     mostrarLimiteDiario();
 
   }
 
 
-  /* =========================
-     PROMEDIO
-  ========================= */
+  // =========================================================
+  // PROMEDIO
+  // =========================================================
 
   function calcularYMostrarPromedio() {
 
@@ -768,6 +969,7 @@
           !isNaN(p)
       );
 
+
     if (validos.length === 0) {
 
       document.getElementById(
@@ -776,7 +978,9 @@
         "Promedio: sin datos aún";
 
       return;
+
     }
+
 
     const suma =
       validos.reduce(
@@ -785,9 +989,11 @@
         0
       );
 
+
     const promedio =
       (suma / validos.length)
       .toFixed(1);
+
 
     document.getElementById(
       "promedio"
@@ -801,24 +1007,26 @@
   }
 
 
-  /* =========================
-     CHAT
-  ========================= */
+  // =========================================================
+  // CHAT
+  // =========================================================
 
   function escaparHTML(texto) {
 
     const div =
       document.createElement("div");
 
+
     div.textContent =
       texto;
+
 
     return div.innerHTML;
 
   }
 
 
-  function renderChat(escribiendo) {
+  function renderChat(escribiendo = false) {
 
     let html =
       conversacion.map(m => {
@@ -827,6 +1035,7 @@
           m.rol === "cliente"
             ? "Cliente"
             : "Tú";
+
 
         return `
           <div class="burbuja ${m.rol}">
@@ -851,8 +1060,10 @@
     const chat =
       document.getElementById("chat");
 
+
     chat.innerHTML =
       html;
+
 
     chat.scrollTop =
       chat.scrollHeight;
@@ -874,36 +1085,53 @@
   }
 
 
-  /* =========================
-     CREAR DESCRIPCIÓN
-  ========================= */
+  // =========================================================
+  // OBTENER ESCENARIO
+  // =========================================================
 
-  function crearDescripcionPersonalizada() {
+  function obtenerEscenario() {
+
+    const contexto =
+      document.getElementById(
+        "filtro"
+      ).value;
+
+
+    const dificultad =
+      document.getElementById(
+        "dificultad"
+      ).value;
+
 
     const objetivo =
       document.getElementById(
         "objetivo"
       ).value.trim();
 
+
     const tipo =
       document.getElementById(
         "tipoNegociacion"
       ).value;
+
 
     const articulo =
       document.getElementById(
         "articulo"
       ).value.trim();
 
+
     const presupuesto =
       document.getElementById(
         "presupuesto"
       ).value.trim();
 
+
     const cantidad =
       document.getElementById(
         "cantidad"
       ).value.trim();
+
 
     const condiciones =
       document.getElementById(
@@ -911,35 +1139,201 @@
       ).value.trim();
 
 
-    const partes = [];
+    return {
 
-    if (tipo)
-      partes.push("Tipo: " + tipo);
+      modo: modoActual,
 
-    if (articulo)
-      partes.push("Producto/servicio: " + articulo);
+      contexto,
 
-    if (objetivo)
-      partes.push("Objetivo: " + objetivo);
+      dificultad,
 
-    if (presupuesto)
-      partes.push("Presupuesto: " + presupuesto);
+      objetivo,
 
-    if (cantidad)
-      partes.push("Cantidad: " + cantidad);
+      tipo,
 
-    if (condiciones)
-      partes.push("Condiciones: " + condiciones);
+      articulo,
 
+      presupuesto,
 
-    return partes.join(". ");
+      cantidad,
+
+      condiciones
+
+    };
 
   }
 
 
-  /* =========================
-     INICIAR
-  ========================= */
+  // =========================================================
+  // CREAR URL DEL ESCENARIO
+  // =========================================================
+
+  function construirParametrosEscenario() {
+
+    const escenario =
+      escenarioActual;
+
+
+    const parametros =
+      new URLSearchParams();
+
+
+    parametros.set(
+      "contexto",
+      escenario.contexto
+    );
+
+
+    parametros.set(
+      "dificultad",
+      escenario.dificultad
+    );
+
+
+    parametros.set(
+      "objetivo",
+      escenario.objetivo
+    );
+
+
+    parametros.set(
+      "tipo",
+      escenario.tipo
+    );
+
+
+    parametros.set(
+      "articulo",
+      escenario.articulo
+    );
+
+
+    parametros.set(
+      "presupuesto",
+      escenario.presupuesto
+    );
+
+
+    parametros.set(
+      "cantidad",
+      escenario.cantidad
+    );
+
+
+    parametros.set(
+      "condiciones",
+      escenario.condiciones
+    );
+
+
+    return parametros;
+
+  }
+
+
+  // =========================================================
+  // BLOQUEAR / DESBLOQUEAR INTERFAZ
+  // =========================================================
+
+  function actualizarInterfazNegociacion(activa) {
+
+    negociacionActiva =
+      activa;
+
+
+    document.getElementById(
+      "mensaje"
+    ).disabled =
+      !activa;
+
+
+    document.getElementById(
+      "btnEnviar"
+    ).disabled =
+      !activa;
+
+
+    document.getElementById(
+      "btnFinalizar"
+    ).disabled =
+      !activa;
+
+
+    document.getElementById(
+      "btnIniciar"
+    ).disabled =
+      activa;
+
+
+    document.getElementById(
+      "modoRapido"
+    ).style.pointerEvents =
+      activa
+        ? "none"
+        : "auto";
+
+
+    document.getElementById(
+      "modoPersonalizado"
+    ).style.pointerEvents =
+      activa
+        ? "none"
+        : "auto";
+
+
+    document.getElementById(
+      "filtro"
+    ).disabled =
+      activa;
+
+
+    document.getElementById(
+      "dificultad"
+    ).disabled =
+      activa;
+
+
+    document.getElementById(
+      "objetivo"
+    ).disabled =
+      activa;
+
+
+    document.getElementById(
+      "tipoNegociacion"
+    ).disabled =
+      activa;
+
+
+    document.getElementById(
+      "articulo"
+    ).disabled =
+      activa;
+
+
+    document.getElementById(
+      "presupuesto"
+    ).disabled =
+      activa;
+
+
+    document.getElementById(
+      "cantidad"
+    ).disabled =
+      activa;
+
+
+    document.getElementById(
+      "condiciones"
+    ).disabled =
+      activa;
+
+  }
+
+
+  // =========================================================
+  // INICIAR NEGOCIACIÓN
+  // =========================================================
 
   async function iniciarNegociacion() {
 
@@ -949,6 +1343,7 @@
     ) {
 
       mostrarLimiteDiario();
+
       return;
 
     }
@@ -956,121 +1351,119 @@
 
     conversacion = [];
 
+    negociacionFinalizada = false;
+
+
+    escenarioActual =
+      obtenerEscenario();
+
+
     document.getElementById(
       "resultado"
     ).innerText = "";
+
 
     document.getElementById(
       "sugerencia"
     ).innerText = "";
 
+
     document.getElementById(
       "chat"
     ).innerHTML =
       `<p class="escribiendo">
-        Iniciando negociación...
+        Creando escenario...
       </p>`;
+
 
     document.getElementById(
       "feedback"
     ).style.display =
       "none";
 
-    document.getElementById(
-      "mensajeFeedback"
-    ).innerText = "";
 
     feedbackSeleccionado = 0;
 
 
-    const contextoBase =
-      document.getElementById(
-        "filtro"
-      ).value;
-
-    const dificultad =
-      document.getElementById(
-        "dificultad"
-      ).value;
+    const botonesFeedback =
+      document.querySelectorAll(
+        ".estrellas button"
+      );
 
 
-    /*
-      Por ahora mantenemos el contexto
-      compatible con el Worker actual.
-
-      La configuración personalizada
-      queda preparada para conectarse
-      al nuevo Scenario Engine en la
-      siguiente fase.
-    */
-
-    let contexto =
-      contextoBase;
+    botonesFeedback.forEach(
+      boton =>
+        boton.classList.remove(
+          "seleccionada"
+        )
+    );
 
 
-    if (
-      modoActual ===
-      "personalizado"
-    ) {
-
-      const descripcion =
-        crearDescripcionPersonalizada();
-
-      if (descripcion.length > 0) {
-
-        contexto =
-          contextoBase === "todos"
-            ? descripcion.substring(0, 150)
-            : contextoBase;
-
-      }
-
-    }
+    actualizarInterfazNegociacion(true);
 
 
     try {
 
+      const parametros =
+        construirParametrosEscenario();
+
+
+      const url =
+        WORKER +
+        "?" +
+        parametros.toString();
+
+
       const respuesta =
-        await fetch(
-          WORKER +
-          "?contexto=" +
-          encodeURIComponent(
-            contexto
-          ) +
-          "&dificultad=" +
-          encodeURIComponent(
-            dificultad
-          )
-        );
+        await fetch(url);
 
 
       if (!respuesta.ok) {
 
         throw new Error(
-          "Error del servidor"
+          "Error del servidor."
         );
 
       }
 
 
-      const texto =
-        await respuesta.text();
+      const datos =
+        await respuesta.json();
+
+
+      if (
+        !datos.respuesta
+      ) {
+
+        throw new Error(
+          "El servidor no devolvió una negociación válida."
+        );
+
+      }
 
 
       conversacion.push({
 
         rol: "cliente",
-        texto: texto
+
+        texto: datos.respuesta
 
       });
 
 
       renderChat(false);
 
+
       registrarUso();
 
 
     } catch (error) {
+
+      console.error(error);
+
+
+      actualizarInterfazNegociacion(false);
+
 
       document.getElementById(
         "chat"
@@ -1085,37 +1478,56 @@
   }
 
 
-  /* =========================
-     ENVIAR MENSAJE
-  ========================= */
+  // =========================================================
+  // ENVIAR MENSAJE
+  // =========================================================
 
   async function enviarMensaje() {
+
+    if (
+      !negociacionActiva ||
+      negociacionFinalizada
+    ) {
+      return;
+    }
+
 
     const elemento =
       document.getElementById(
         "mensaje"
       );
 
+
     const texto =
       elemento.value.trim();
 
 
-    if (texto === "")
+    if (texto === "") {
+
       return;
+
+    }
 
 
     conversacion.push({
 
       rol: "usuario",
-      texto: texto
+
+      texto
 
     });
 
 
     elemento.value = "";
 
+
     document.getElementById(
       "btnEnviar"
+    ).disabled = true;
+
+
+    document.getElementById(
+      "btnFinalizar"
     ).disabled = true;
 
 
@@ -1124,25 +1536,28 @@
 
     try {
 
-      const dificultad =
-        document.getElementById(
-          "dificultad"
-        ).value;
+      const parametros =
+        construirParametrosEscenario();
+
+
+      parametros.set(
+        "accion",
+        "continuar"
+      );
+
+
+      parametros.set(
+        "historial",
+        JSON.stringify(
+          conversacion
+        )
+      );
 
 
       const url =
         WORKER +
-        "?accion=continuar" +
-        "&dificultad=" +
-        encodeURIComponent(
-          dificultad
-        ) +
-        "&historial=" +
-        encodeURIComponent(
-          JSON.stringify(
-            conversacion
-          )
-        );
+        "?" +
+        parametros.toString();
 
 
       const respuesta =
@@ -1152,108 +1567,7 @@
       if (!respuesta.ok) {
 
         throw new Error(
-          "Error del servidor"
-        );
-
-      }
-
-
-      const respuestaCliente =
-        await respuesta.text();
-
-
-      conversacion.push({
-
-        rol: "cliente",
-        texto: respuestaCliente
-
-      });
-
-
-      renderChat(false);
-
-
-    } catch (error) {
-
-      renderChat(false);
-
-      document.getElementById(
-        "chat"
-      ).innerHTML +=
-        `<p>
-          Hubo un error continuando
-          la negociación.
-          Intenta de nuevo.
-        </p>`;
-
-    } finally {
-
-      document.getElementById(
-        "btnEnviar"
-      ).disabled = false;
-
-    }
-
-  }
-
-
-  /* =========================
-     FINALIZAR
-  ========================= */
-
-  async function finalizarNegociacion() {
-
-    if (
-      conversacion.length === 0
-    ) {
-
-      document.getElementById(
-        "resultado"
-      ).innerText =
-        "Primero inicia una negociación.";
-
-      return;
-
-    }
-
-
-    document.getElementById(
-      "resultado"
-    ).innerText =
-      "Evaluando negociación completa...";
-
-
-    try {
-
-      const dificultad =
-        document.getElementById(
-          "dificultad"
-        ).value;
-
-
-      const url =
-        WORKER +
-        "?accion=evaluar" +
-        "&dificultad=" +
-        encodeURIComponent(
-          dificultad
-        ) +
-        "&historial=" +
-        encodeURIComponent(
-          JSON.stringify(
-            conversacion
-          )
-        );
-
-
-      const respuesta =
-        await fetch(url);
-
-
-      if (!respuesta.ok) {
-
-        throw new Error(
-          "Error del servidor"
+          "Error del servidor."
         );
 
       }
@@ -1264,17 +1578,162 @@
 
 
       if (
-        typeof datos.puntaje !==
-        "number" ||
-        isNaN(datos.puntaje)
+        !datos.respuesta
+      ) {
+
+        throw new Error(
+          "El servidor no devolvió una respuesta válida."
+        );
+
+      }
+
+
+      conversacion.push({
+
+        rol: "cliente",
+
+        texto: datos.respuesta
+
+      });
+
+
+      renderChat(false);
+
+
+    } catch (error) {
+
+      console.error(error);
+
+
+      renderChat(false);
+
+
+      document.getElementById(
+        "chat"
+      ).innerHTML +=
+        `<p>
+          Hubo un error continuando la negociación.
+          Intenta de nuevo.
+        </p>`;
+
+    } finally {
+
+      if (
+        negociacionActiva &&
+        !negociacionFinalizada
       ) {
 
         document.getElementById(
-          "resultado"
-        ).innerText =
-          "No se pudo obtener un puntaje válido.";
+          "btnEnviar"
+        ).disabled = false;
 
-        return;
+
+        document.getElementById(
+          "btnFinalizar"
+        ).disabled = false;
+
+      }
+
+    }
+
+  }
+
+
+  // =========================================================
+  // FINALIZAR
+  // =========================================================
+
+  async function finalizarNegociacion() {
+
+    if (
+      !negociacionActiva ||
+      negociacionFinalizada
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      conversacion.length === 0
+    ) {
+
+      return;
+
+    }
+
+
+    negociacionFinalizada = true;
+
+
+    document.getElementById(
+      "btnEnviar"
+    ).disabled = true;
+
+
+    document.getElementById(
+      "btnFinalizar"
+    ).disabled = true;
+
+
+    document.getElementById(
+      "resultado"
+    ).innerText =
+      "Evaluando negociación completa...";
+
+
+    try {
+
+      const parametros =
+        construirParametrosEscenario();
+
+
+      parametros.set(
+        "accion",
+        "evaluar"
+      );
+
+
+      parametros.set(
+        "historial",
+        JSON.stringify(
+          conversacion
+        )
+      );
+
+
+      const url =
+        WORKER +
+        "?" +
+        parametros.toString();
+
+
+      const respuesta =
+        await fetch(url);
+
+
+      if (!respuesta.ok) {
+
+        throw new Error(
+          "Error del servidor."
+        );
+
+      }
+
+
+      const datos =
+        await respuesta.json();
+
+
+      if (
+        typeof datos.puntaje !== "number" ||
+        isNaN(datos.puntaje)
+      ) {
+
+        throw new Error(
+          "No se obtuvo un puntaje válido."
+        );
 
       }
 
@@ -1312,6 +1771,14 @@
       );
 
 
+      localStorage.setItem(
+        "historial",
+        JSON.stringify(
+          historial
+        )
+      );
+
+
       renderHistorial();
 
 
@@ -1321,21 +1788,40 @@
         "block";
 
 
+      actualizarInterfazNegociacion(false);
+
+
     } catch (error) {
+
+      console.error(error);
+
+
+      negociacionFinalizada = false;
+
 
       document.getElementById(
         "resultado"
       ).innerText =
         "Hubo un error evaluando la negociación. Intenta de nuevo.";
 
+
+      document.getElementById(
+        "btnEnviar"
+      ).disabled = false;
+
+
+      document.getElementById(
+        "btnFinalizar"
+      ).disabled = false;
+
     }
 
   }
 
 
-  /* =========================
-     HISTORIAL
-  ========================= */
+  // =========================================================
+  // HISTORIAL
+  // =========================================================
 
   function renderHistorial() {
 
@@ -1343,6 +1829,7 @@
       document.getElementById(
         "historial"
       );
+
 
     lista.innerHTML = "";
 
@@ -1355,8 +1842,10 @@
             "li"
           );
 
+
         li.textContent =
           r;
+
 
         lista.appendChild(li);
 
@@ -1366,9 +1855,9 @@
   }
 
 
-  /* =========================
-     FEEDBACK
-  ========================= */
+  // =========================================================
+  // FEEDBACK
+  // =========================================================
 
   function seleccionarFeedback(
     valor
@@ -1430,7 +1919,7 @@
     const comentario =
       document.getElementById(
         "comentarioFeedback"
-      ).value;
+      ).value.trim();
 
 
     const btn =
@@ -1450,19 +1939,29 @@
 
     try {
 
-      const url =
-        WORKER +
-        "?accion=feedback" +
-        "&rating=" +
-        feedbackSeleccionado +
-        "&comentario=" +
-        encodeURIComponent(
-          comentario
-        );
-
-
       const respuesta =
-        await fetch(url);
+        await fetch(
+          WORKER +
+          "?accion=feedback",
+          {
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+
+              rating:
+                feedbackSeleccionado,
+
+              comentario
+
+            })
+
+          }
+        );
 
 
       const datos =
@@ -1494,10 +1993,14 @@
 
     } catch (error) {
 
+      console.error(error);
+
+
       document.getElementById(
         "mensajeFeedback"
       ).innerText =
         "Hubo un error enviando el feedback. Intenta de nuevo.";
+
 
       btn.disabled = false;
 
@@ -1506,9 +2009,9 @@
   }
 
 
-  /* =========================
-     REINICIAR
-  ========================= */
+  // =========================================================
+  // REINICIAR
+  // =========================================================
 
   function reiniciar() {
 
@@ -1516,14 +2019,23 @@
       "historial"
     );
 
+
     localStorage.removeItem(
       "puntajes"
     );
 
 
     historial = [];
+
     puntajes = [];
+
     conversacion = [];
+
+    escenarioActual = null;
+
+    negociacionActiva = false;
+
+    negociacionFinalizada = false;
 
 
     renderHistorial();
@@ -1580,12 +2092,17 @@
         )
     );
 
+
+    actualizarInterfazNegociacion(false);
+
+    mostrarLimiteDiario();
+
   }
 
 
-  /* =========================
-     CARGAR DATOS
-  ========================= */
+  // =========================================================
+  // CARGAR DATOS
+  // =========================================================
 
   if (
     localStorage.getItem(
@@ -1601,6 +2118,12 @@
             "historial"
           )
         );
+
+
+      if (!Array.isArray(historial)) {
+        historial = [];
+      }
+
 
       renderHistorial();
 
@@ -1627,6 +2150,12 @@
             "puntajes"
           )
         );
+
+
+      if (!Array.isArray(puntajes)) {
+        puntajes = [];
+      }
+
 
       calcularYMostrarPromedio();
 
