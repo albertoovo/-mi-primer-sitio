@@ -40,17 +40,22 @@
       margin: 5px;
     }
 
-    #resumen {
+    #resumen, #estadisticas {
       display: none;
       background: white;
       padding: 20px;
-      margin: 25px 0;
+      margin: 20px 0;
       border-radius: 10px;
     }
 
     .numero {
       font-size: 28px;
       font-weight: bold;
+    }
+
+    .estadistica {
+      margin: 8px 0;
+      font-size: 17px;
     }
 
     #controles {
@@ -101,16 +106,49 @@
 
     <div id="resumen">
 
-      <div>
-        <div>Promedio</div>
-        <div class="numero" id="promedio">0/5</div>
+      <div>Promedio</div>
+
+      <div class="numero" id="promedio">
+        0/5
       </div>
 
       <br>
 
-      <div>
-        <div>Total de respuestas</div>
-        <div class="numero" id="total">0</div>
+      <div>Total de respuestas</div>
+
+      <div class="numero" id="total">
+        0
+      </div>
+
+    </div>
+
+    <div id="estadisticas">
+
+      <h3>Distribución de calificaciones</h3>
+
+      <div class="estadistica">
+        ⭐ 5 estrellas:
+        <strong id="cantidad5">0</strong>
+      </div>
+
+      <div class="estadistica">
+        ⭐ 4 estrellas:
+        <strong id="cantidad4">0</strong>
+      </div>
+
+      <div class="estadistica">
+        ⭐ 3 estrellas:
+        <strong id="cantidad3">0</strong>
+      </div>
+
+      <div class="estadistica">
+        ⭐ 2 estrellas:
+        <strong id="cantidad2">0</strong>
+      </div>
+
+      <div class="estadistica">
+        ⭐ 1 estrella:
+        <strong id="cantidad1">0</strong>
       </div>
 
     </div>
@@ -118,23 +156,35 @@
     <div id="controles">
 
       <select id="filtroRating" onchange="mostrarFeedbacks()">
-        <option value="todos">Todas las calificaciones</option>
+
+        <option value="todos">
+          Todas las calificaciones
+        </option>
+
         <option value="5">5 estrellas</option>
         <option value="4">4 estrellas</option>
         <option value="3">3 estrellas</option>
         <option value="2">2 estrellas</option>
         <option value="1">1 estrella</option>
+
       </select>
 
       <select id="orden" onchange="mostrarFeedbacks()">
-        <option value="recientes">Más recientes</option>
-        <option value="antiguos">Más antiguos</option>
+
+        <option value="recientes">
+          Más recientes
+        </option>
+
+        <option value="antiguos">
+          Más antiguos
+        </option>
+
       </select>
 
       <br>
 
-      <button onclick="mostrarFeedbacks()">
-        Actualizar lista
+      <button onclick="cargarFeedbacks()">
+        Actualizar datos
       </button>
 
     </div>
@@ -156,15 +206,15 @@
         document.getElementById("password").value;
 
       if (password.trim() === "") {
+
         document.getElementById("mensaje").innerText =
           "Escribe la contraseña.";
+
         return;
       }
 
       document.getElementById("mensaje").innerText =
         "Cargando feedbacks...";
-
-      document.getElementById("resultado").innerHTML = "";
 
       try {
 
@@ -191,38 +241,19 @@
         todosLosFeedbacks =
           datos.feedbacks || [];
 
-        document.getElementById("total").innerText =
-          todosLosFeedbacks.length;
-
-        if (todosLosFeedbacks.length > 0) {
-
-          const suma =
-            todosLosFeedbacks.reduce(
-              (total, feedback) =>
-                total + Number(feedback.rating),
-              0
-            );
-
-          const promedio =
-            (suma / todosLosFeedbacks.length).toFixed(1);
-
-          document.getElementById("promedio").innerText =
-            promedio + "/5";
-
-        } else {
-
-          document.getElementById("promedio").innerText =
-            "0/5";
-        }
+        actualizarEstadisticas();
 
         document.getElementById("resumen").style.display =
+          "block";
+
+        document.getElementById("estadisticas").style.display =
           "block";
 
         document.getElementById("controles").style.display =
           "block";
 
         document.getElementById("mensaje").innerText =
-          "Feedbacks cargados correctamente.";
+          "Datos cargados correctamente.";
 
         mostrarFeedbacks();
 
@@ -230,7 +261,72 @@
 
         document.getElementById("mensaje").innerText =
           "Hubo un error conectando con el servidor.";
+
       }
+    }
+
+    function actualizarEstadisticas() {
+
+      const total =
+        todosLosFeedbacks.length;
+
+      document.getElementById("total").innerText =
+        total;
+
+      if (total === 0) {
+
+        document.getElementById("promedio").innerText =
+          "0/5";
+
+      } else {
+
+        const suma =
+          todosLosFeedbacks.reduce(
+            (total, feedback) =>
+              total + Number(feedback.rating),
+            0
+          );
+
+        const promedio =
+          (suma / total).toFixed(1);
+
+        document.getElementById("promedio").innerText =
+          promedio + "/5";
+      }
+
+      const cantidades = {
+        1: 0,
+        2: 0,
+        3: 0,
+        4: 0,
+        5: 0
+      };
+
+      todosLosFeedbacks.forEach(feedback => {
+
+        const rating =
+          Number(feedback.rating);
+
+        if (cantidades[rating] !== undefined) {
+          cantidades[rating]++;
+        }
+
+      });
+
+      document.getElementById("cantidad1").innerText =
+        cantidades[1];
+
+      document.getElementById("cantidad2").innerText =
+        cantidades[2];
+
+      document.getElementById("cantidad3").innerText =
+        cantidades[3];
+
+      document.getElementById("cantidad4").innerText =
+        cantidades[4];
+
+      document.getElementById("cantidad5").innerText =
+        cantidades[5];
     }
 
     function mostrarFeedbacks() {
