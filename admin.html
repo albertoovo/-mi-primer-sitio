@@ -17,12 +17,16 @@
       margin: auto;
     }
 
-    input {
+    input, select {
       padding: 12px;
-      width: 250px;
       border: 1px solid #ccc;
       border-radius: 8px;
       font-size: 16px;
+      margin: 5px;
+    }
+
+    input {
+      width: 250px;
     }
 
     button {
@@ -34,10 +38,6 @@
       font-size: 16px;
       cursor: pointer;
       margin: 5px;
-    }
-
-    button:hover {
-      opacity: 0.9;
     }
 
     #resumen {
@@ -53,6 +53,11 @@
       font-weight: bold;
     }
 
+    #controles {
+      display: none;
+      margin: 20px 0;
+    }
+
     #resultado {
       margin-top: 25px;
       text-align: left;
@@ -63,11 +68,6 @@
       padding: 18px;
       margin: 12px 0;
       border-radius: 10px;
-    }
-
-    .error {
-      color: #b03030;
-      font-weight: bold;
     }
 
     .rating {
@@ -115,6 +115,30 @@
 
     </div>
 
+    <div id="controles">
+
+      <select id="filtroRating" onchange="mostrarFeedbacks()">
+        <option value="todos">Todas las calificaciones</option>
+        <option value="5">5 estrellas</option>
+        <option value="4">4 estrellas</option>
+        <option value="3">3 estrellas</option>
+        <option value="2">2 estrellas</option>
+        <option value="1">1 estrella</option>
+      </select>
+
+      <select id="orden" onchange="mostrarFeedbacks()">
+        <option value="recientes">Más recientes</option>
+        <option value="antiguos">Más antiguos</option>
+      </select>
+
+      <br>
+
+      <button onclick="mostrarFeedbacks()">
+        Actualizar lista
+      </button>
+
+    </div>
+
     <div id="resultado"></div>
 
   </div>
@@ -124,6 +148,8 @@
     const WORKER =
       "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
 
+    let todosLosFeedbacks = [];
+
     async function cargarFeedbacks() {
 
       const password =
@@ -132,7 +158,6 @@
       if (password.trim() === "") {
         document.getElementById("mensaje").innerText =
           "Escribe la contraseña.";
-
         return;
       }
 
@@ -140,9 +165,6 @@
         "Cargando feedbacks...";
 
       document.getElementById("resultado").innerHTML = "";
-
-      document.getElementById("resumen").style.display =
-        "none";
 
       try {
 
@@ -166,81 +188,116 @@
           return;
         }
 
-        document.getElementById("mensaje").innerText =
-          "Feedbacks cargados correctamente.";
-
-        const feedbacks =
+        todosLosFeedbacks =
           datos.feedbacks || [];
 
         document.getElementById("total").innerText =
-          feedbacks.length;
+          todosLosFeedbacks.length;
 
-        if (feedbacks.length > 0) {
+        if (todosLosFeedbacks.length > 0) {
 
           const suma =
-            feedbacks.reduce(
+            todosLosFeedbacks.reduce(
               (total, feedback) =>
                 total + Number(feedback.rating),
               0
             );
 
           const promedio =
-            (suma / feedbacks.length).toFixed(1);
+            (suma / todosLosFeedbacks.length).toFixed(1);
 
           document.getElementById("promedio").innerText =
             promedio + "/5";
-
-          document.getElementById("resumen").style.display =
-            "block";
 
         } else {
 
           document.getElementById("promedio").innerText =
             "0/5";
-
-          document.getElementById("resumen").style.display =
-            "block";
         }
 
-        if (feedbacks.length === 0) {
+        document.getElementById("resumen").style.display =
+          "block";
 
-          document.getElementById("resultado").innerHTML =
-            "<p>No hay feedbacks todavía.</p>";
+        document.getElementById("controles").style.display =
+          "block";
 
-          return;
-        }
+        document.getElementById("mensaje").innerText =
+          "Feedbacks cargados correctamente.";
 
-        document.getElementById("resultado").innerHTML =
-          feedbacks.map(feedback => `
-
-            <div class="feedback">
-
-              <div class="rating">
-                ⭐ ${feedback.rating}/5
-              </div>
-
-              <p>
-                <strong>Comentario:</strong>
-                ${feedback.comentario || "Sin comentario"}
-              </p>
-
-              <p>
-                <small>
-                  Fecha:
-                  ${new Date(feedback.fecha).toLocaleString()}
-                </small>
-              </p>
-
-            </div>
-
-          `).join("");
+        mostrarFeedbacks();
 
       } catch (error) {
 
         document.getElementById("mensaje").innerText =
           "Hubo un error conectando con el servidor.";
-
       }
+    }
+
+    function mostrarFeedbacks() {
+
+      let feedbacks =
+        [...todosLosFeedbacks];
+
+      const filtro =
+        document.getElementById("filtroRating").value;
+
+      const orden =
+        document.getElementById("orden").value;
+
+      if (filtro !== "todos") {
+
+        feedbacks =
+          feedbacks.filter(
+            feedback =>
+              Number(feedback.rating) === Number(filtro)
+          );
+      }
+
+      feedbacks.sort((a, b) => {
+
+        const fechaA =
+          new Date(a.fecha).getTime();
+
+        const fechaB =
+          new Date(b.fecha).getTime();
+
+        return orden === "recientes"
+          ? fechaB - fechaA
+          : fechaA - fechaB;
+      });
+
+      if (feedbacks.length === 0) {
+
+        document.getElementById("resultado").innerHTML =
+          "<p>No hay feedbacks que coincidan con el filtro.</p>";
+
+        return;
+      }
+
+      document.getElementById("resultado").innerHTML =
+        feedbacks.map(feedback => `
+
+          <div class="feedback">
+
+            <div class="rating">
+              ⭐ ${feedback.rating}/5
+            </div>
+
+            <p>
+              <strong>Comentario:</strong>
+              ${feedback.comentario || "Sin comentario"}
+            </p>
+
+            <p>
+              <small>
+                Fecha:
+                ${new Date(feedback.fecha).toLocaleString()}
+              </small>
+            </p>
+
+          </div>
+
+        `).join("");
     }
 
   </script>
