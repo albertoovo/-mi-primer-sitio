@@ -1,585 +1,1648 @@
 ```html
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>AI Business Academy — Negociación</title>
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
-      font-family: Arial, sans-serif;
+      margin: 0;
+      font-family: Inter, Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, #eef3ff 0%, transparent 35%),
+        #f6f7fb;
+      color: #111827;
+    }
+
+    .app {
+      max-width: 1050px;
+      margin: 0 auto;
+      padding: 35px 18px 70px;
+    }
+
+    header {
       text-align: center;
-      padding-top: 40px;
-      background-color: #f2f2f2;
+      margin-bottom: 30px;
     }
-    button {
-      background-color: #3E63C7;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      font-size: 16px;
-      margin: 5px;
-      cursor: pointer;
+
+    .logo {
+      display: inline-block;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 1.5px;
+      color: #3E63C7;
+      margin-bottom: 10px;
+      text-transform: uppercase;
     }
-    button:disabled {
-      background-color: #b0b8d1;
-      cursor: not-allowed;
+
+    h1 {
+      margin: 0;
+      font-size: clamp(30px, 5vw, 46px);
+      letter-spacing: -1.5px;
     }
-    #chat {
-      max-width: 500px;
-      margin: 20px auto;
-      text-align: left;
+
+    .subtitulo {
+      max-width: 650px;
+      margin: 12px auto 0;
+      color: #667085;
+      line-height: 1.6;
+    }
+
+    .card {
+      background: rgba(255,255,255,.94);
+      border: 1px solid #e6e8ef;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 12px 35px rgba(16,24,40,.06);
+      margin-bottom: 20px;
+    }
+
+    .modo-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-top: 15px;
+    }
+
+    .modo {
+      border: 2px solid #e5e7eb;
       background: white;
-      border-radius: 8px;
-      padding: 15px;
-      min-height: 100px;
+      border-radius: 16px;
+      padding: 20px;
+      text-align: left;
+      cursor: pointer;
+      transition: .2s;
     }
+
+    .modo:hover {
+      transform: translateY(-2px);
+      border-color: #b9c6ee;
+    }
+
+    .modo.activo {
+      border-color: #3E63C7;
+      background: #f5f7ff;
+    }
+
+    .modo strong {
+      display: block;
+      font-size: 17px;
+      margin-bottom: 6px;
+    }
+
+    .modo span {
+      color: #667085;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .configuracion {
+      display: none;
+      margin-top: 20px;
+    }
+
+    .configuracion.visible {
+      display: block;
+    }
+
+    .campo {
+      margin-bottom: 16px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      font-size: 14px;
+      margin-bottom: 7px;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      border: 1px solid #d8dce5;
+      border-radius: 11px;
+      padding: 12px 13px;
+      font-size: 15px;
+      font-family: inherit;
+      background: white;
+      outline: none;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: #3E63C7;
+      box-shadow: 0 0 0 3px rgba(62,99,199,.10);
+    }
+
+    .fila {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .boton-principal,
+    button {
+      border: 0;
+      border-radius: 11px;
+      padding: 12px 18px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .boton-principal {
+      background: #3E63C7;
+      color: white;
+      width: 100%;
+      margin-top: 5px;
+    }
+
+    .boton-principal:hover {
+      transform: translateY(-1px);
+      background: #3154b5;
+    }
+
+    button {
+      background: #3E63C7;
+      color: white;
+      margin: 4px;
+    }
+
+    button:hover {
+      opacity: .92;
+    }
+
+    button:disabled {
+      background: #b5bdd2;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .estado {
+      text-align: center;
+      color: #667085;
+      font-size: 14px;
+      margin: 10px 0;
+    }
+
+    #limiteDiario.alcanzado {
+      color: #b42318;
+      font-weight: 700;
+    }
+
+    #chat {
+      min-height: 160px;
+      max-height: 600px;
+      overflow-y: auto;
+      text-align: left;
+      background: #fafbfc;
+      border-radius: 16px;
+      padding: 18px;
+      border: 1px solid #eaecf0;
+    }
+
     .burbuja {
-      max-width: 75%;
-      padding: 10px 14px;
-      border-radius: 14px;
-      margin: 8px 0;
-      line-height: 1.4;
+      max-width: 78%;
+      padding: 12px 15px;
+      border-radius: 16px;
+      margin: 10px 0;
+      line-height: 1.55;
+      white-space: pre-wrap;
     }
+
     .cliente {
-      background-color: #f0e0e0;
+      background: #fff0f0;
       color: #7a2020;
       margin-right: auto;
-      border-bottom-left-radius: 2px;
+      border-bottom-left-radius: 4px;
     }
+
     .usuario {
-      background-color: #dce4f7;
-      color: #1f3a8a;
+      background: #e8edff;
+      color: #20377e;
       margin-left: auto;
-      border-bottom-right-radius: 2px;
+      border-bottom-right-radius: 4px;
     }
+
     .escribiendo {
       font-style: italic;
-      color: #888;
+      color: #98a2b3;
       margin: 8px 0;
     }
-    #sugerencia {
-      max-width: 500px;
-      margin: 10px auto;
-      font-size: 14px;
-      color: #666;
+
+    .chat-controles {
+      margin-top: 14px;
     }
-    #limiteDiario {
-      max-width: 500px;
-      margin: 10px auto;
-      font-size: 14px;
-      color: #555;
+
+    #mensaje {
+      min-height: 90px;
+      resize: vertical;
     }
-    #limiteDiario.alcanzado {
-      color: #b03030;
-      font-weight: bold;
+
+    .acciones {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px;
+      margin-top: 8px;
     }
+
     #resultado {
-      max-width: 500px;
-      margin: 15px auto;
-      font-weight: bold;
+      margin-top: 18px;
+      padding: 16px;
+      border-radius: 14px;
+      background: #f5f7ff;
+      line-height: 1.6;
+      text-align: left;
     }
+
     #feedback {
       display: none;
-      max-width: 500px;
-      margin: 20px auto;
-      padding: 20px;
-      background: white;
-      border-radius: 8px;
     }
-    #feedback h3 {
-      margin-top: 0;
+
+    .estrellas {
+      display: flex;
+      justify-content: center;
+      gap: 6px;
+      margin: 15px 0;
     }
+
     .estrellas button {
-      background-color: #ddd;
-      color: #333;
-      padding: 8px 12px;
+      background: #e5e7eb;
+      color: #344054;
+      min-width: 45px;
     }
+
     .estrellas button.seleccionada {
-      background-color: #3E63C7;
+      background: #3E63C7;
       color: white;
     }
+
     #comentarioFeedback {
-      width: 90%;
-      min-height: 70px;
-      margin: 10px 0;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
+      min-height: 80px;
       resize: vertical;
+    }
+
+    #historial {
+      text-align: left;
+      padding-left: 20px;
+    }
+
+    #historial li {
+      margin-bottom: 10px;
+      line-height: 1.5;
+    }
+
+    .separador {
+      height: 1px;
+      background: #eaecf0;
+      margin: 25px 0;
+    }
+
+    .oculto {
+      display: none;
+    }
+
+    @media (max-width: 700px) {
+      .app {
+        padding: 22px 12px 50px;
+      }
+
+      .card {
+        padding: 18px;
+        border-radius: 16px;
+      }
+
+      .modo-grid,
+      .fila {
+        grid-template-columns: 1fr;
+      }
+
+      .burbuja {
+        max-width: 90%;
+      }
     }
   </style>
 </head>
+
 <body>
-  <h1>Práctica de Negociación</h1>
 
-  <p id="limiteDiario"></p>
+<div class="app">
 
-  <select id="filtro">
-    <option value="todos">Todos los contextos</option>
-    <option value="Negociación de precio">Negociación de precio</option>
-    <option value="Buscando acuerdo">Buscando acuerdo</option>
-    <option value="Cerrando el trato">Cerrando el trato</option>
-  </select>
+  <header>
+    <div class="logo">AI Business Academy</div>
+    <h1>Laboratorio de Negociación</h1>
+    <p class="subtitulo">
+      Entrena con conversaciones dinámicas, aprende a defender tu posición
+      y mejora tus decisiones de negociación.
+    </p>
+  </header>
 
-  <select id="dificultad">
-    <option value="facil">Fácil</option>
-    <option value="medio" selected>Medio</option>
-    <option value="dificil">Difícil</option>
-  </select>
+  <!-- CONFIGURACIÓN -->
 
-  <br>
+  <section class="card">
 
-  <button id="btnIniciar" onclick="iniciarNegociacion()">Iniciar negociación</button>
+    <h2>¿Cómo quieres practicar?</h2>
 
-  <div id="chat"></div>
+    <div class="modo-grid">
 
-  <p id="sugerencia"></p>
+      <div
+        id="modoRapido"
+        class="modo activo"
+        onclick="seleccionarModo('rapido')"
+      >
+        <strong>⚡ Partida rápida</strong>
+        <span>
+          El sistema prepara automáticamente una situación de negociación
+          para que puedas empezar inmediatamente.
+        </span>
+      </div>
 
-  <textarea id="mensaje" placeholder="Escribe tu respuesta aquí..."></textarea><br>
+      <div
+        id="modoPersonalizado"
+        class="modo"
+        onclick="seleccionarModo('personalizado')"
+      >
+        <strong>🎯 Personalizar</strong>
+        <span>
+          Define qué quieres negociar, tu objetivo, presupuesto y condiciones.
+        </span>
+      </div>
 
-  <button id="btnEnviar" onclick="enviarMensaje()">Enviar</button>
-  <button onclick="finalizarNegociacion()">Finalizar negociación</button>
+    </div>
 
-  <p id="resultado"></p>
+    <div id="configuracionPersonalizada" class="configuracion">
 
-  <div id="feedback">
-    <h3>¿Qué tan útil fue esta práctica?</h3>
+      <div class="separador"></div>
+
+      <div class="campo">
+        <label for="objetivo">¿Qué quieres conseguir?</label>
+
+        <input
+          id="objetivo"
+          maxlength="120"
+          placeholder="Ej. Comprar 500 relojes por menos de $7,000"
+        >
+      </div>
+
+      <div class="fila">
+
+        <div class="campo">
+          <label for="tipoNegociacion">Tipo de negociación</label>
+
+          <select id="tipoNegociacion">
+            <option value="Comprar">Comprar</option>
+            <option value="Vender">Vender</option>
+            <option value="Llegar a un acuerdo">Llegar a un acuerdo</option>
+            <option value="Contrato">Negociar contrato</option>
+            <option value="Trabajo">Negociar empleo/salario</option>
+            <option value="Inversion">Conseguir inversión</option>
+            <option value="Sociedad">Negociar sociedad</option>
+            <option value="Conflicto">Resolver conflicto</option>
+            <option value="Otro">Otro</option>
+          </select>
+        </div>
+
+        <div class="campo">
+          <label for="articulo">Producto / servicio</label>
+
+          <input
+            id="articulo"
+            maxlength="100"
+            placeholder="Ej. relojes, casa, servicio de IA..."
+          >
+        </div>
+
+      </div>
+
+      <div class="fila">
+
+        <div class="campo">
+          <label for="presupuesto">Presupuesto / precio objetivo</label>
+
+          <input
+            id="presupuesto"
+            maxlength="50"
+            placeholder="Ej. $7,000"
+          >
+        </div>
+
+        <div class="campo">
+          <label for="cantidad">Cantidad</label>
+
+          <input
+            id="cantidad"
+            maxlength="30"
+            placeholder="Ej. 500 unidades"
+          >
+        </div>
+
+      </div>
+
+      <div class="campo">
+        <label for="condiciones">Condiciones importantes</label>
+
+        <textarea
+          id="condiciones"
+          maxlength="180"
+          placeholder="Ej. No puedo superar mi presupuesto y necesito entrega en 30 días."
+        ></textarea>
+      </div>
+
+    </div>
+
+    <div class="separador"></div>
+
+    <div class="fila">
+
+      <div class="campo">
+        <label for="filtro">Contexto</label>
+
+        <select id="filtro">
+          <option value="todos">Todos los contextos</option>
+          <option value="Negociación de precio">Negociación de precio</option>
+          <option value="Buscando acuerdo">Buscando acuerdo</option>
+          <option value="Cerrando el trato">Cerrando el trato</option>
+        </select>
+      </div>
+
+      <div class="campo">
+        <label for="dificultad">Dificultad</label>
+
+        <select id="dificultad">
+          <option value="facil">Fácil</option>
+          <option value="medio" selected>Medio</option>
+          <option value="dificil">Difícil</option>
+        </select>
+      </div>
+
+    </div>
+
+    <p id="limiteDiario" class="estado"></p>
+
+    <button
+      id="btnIniciar"
+      class="boton-principal"
+      onclick="iniciarNegociacion()"
+    >
+      Iniciar negociación
+    </button>
+
+  </section>
+
+
+  <!-- LABORATORIO -->
+
+  <section class="card">
+
+    <h2>💬 Negociación</h2>
+
+    <div id="chat">
+      <p class="estado">
+        Tu negociación aparecerá aquí.
+      </p>
+    </div>
+
+    <p id="sugerencia" class="estado"></p>
+
+    <div class="chat-controles">
+
+      <textarea
+        id="mensaje"
+        placeholder="Escribe lo que dirías en una negociación real..."
+      ></textarea>
+
+      <div class="acciones">
+
+        <button
+          id="btnEnviar"
+          onclick="enviarMensaje()"
+        >
+          Enviar
+        </button>
+
+        <button
+          onclick="finalizarNegociacion()"
+        >
+          Finalizar negociación
+        </button>
+
+      </div>
+
+    </div>
+
+    <div id="resultado"></div>
+
+  </section>
+
+
+  <!-- FEEDBACK -->
+
+  <section id="feedback" class="card">
+
+    <h2>¿Qué tan útil fue esta práctica?</h2>
 
     <div class="estrellas">
+
       <button onclick="seleccionarFeedback(1)">1</button>
       <button onclick="seleccionarFeedback(2)">2</button>
       <button onclick="seleccionarFeedback(3)">3</button>
       <button onclick="seleccionarFeedback(4)">4</button>
       <button onclick="seleccionarFeedback(5)">5</button>
+
     </div>
 
-    <textarea id="comentarioFeedback" placeholder="Comentario opcional..."></textarea><br>
+    <textarea
+      id="comentarioFeedback"
+      placeholder="Comentario opcional..."
+    ></textarea>
 
-    <button id="btnFeedback" onclick="enviarFeedback()">Enviar feedback</button>
+    <div class="acciones">
 
-    <p id="mensajeFeedback"></p>
-  </div>
+      <button
+        id="btnFeedback"
+        onclick="enviarFeedback()"
+      >
+        Enviar feedback
+      </button>
 
-  <p id="promedio">Promedio: sin datos aún</p>
+    </div>
 
-  <h3>Historial de negociaciones</h3>
+    <p
+      id="mensajeFeedback"
+      class="estado"
+    ></p>
 
-  <ul id="historial"></ul>
+  </section>
 
-  <button onclick="reiniciar()">Reiniciar progreso</button>
 
-  <script>
-    let conversacion = [];
-    let puntajes = [];
-    let historial = [];
-    let feedbackSeleccionado = 0;
+  <!-- PROGRESO -->
 
-    const WORKER = "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
-    const LIMITE_DIARIO = 15;
+  <section class="card">
 
-    function fechaHoy() {
-      return new Date().toISOString().split("T")[0];
+    <h2>📈 Tu progreso</h2>
+
+    <p id="promedio">
+      Promedio: sin datos aún
+    </p>
+
+    <div class="separador"></div>
+
+    <h3>Historial</h3>
+
+    <ul id="historial"></ul>
+
+    <button onclick="reiniciar()">
+      Reiniciar progreso
+    </button>
+
+  </section>
+
+</div>
+
+
+<script>
+
+  let conversacion = [];
+  let puntajes = [];
+  let historial = [];
+  let feedbackSeleccionado = 0;
+
+  let modoActual = "rapido";
+
+  const WORKER =
+    "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
+
+  const LIMITE_DIARIO = 15;
+
+
+  /* =========================
+     MODO
+  ========================= */
+
+  function seleccionarModo(modo) {
+
+    modoActual = modo;
+
+    const rapido =
+      document.getElementById("modoRapido");
+
+    const personalizado =
+      document.getElementById("modoPersonalizado");
+
+    const configuracion =
+      document.getElementById("configuracionPersonalizada");
+
+    rapido.classList.remove("activo");
+    personalizado.classList.remove("activo");
+
+    if (modo === "rapido") {
+
+      rapido.classList.add("activo");
+      configuracion.classList.remove("visible");
+
+    } else {
+
+      personalizado.classList.add("activo");
+      configuracion.classList.add("visible");
+
     }
+  }
 
-    function obtenerUsoHoy() {
-      const fechaGuardada = localStorage.getItem("fechaUso");
 
-      if (fechaGuardada !== fechaHoy()) {
-        localStorage.setItem("fechaUso", fechaHoy());
-        localStorage.setItem("usoHoy", "0");
-        return 0;
-      }
+  /* =========================
+     FECHA / LÍMITE
+  ========================= */
 
-      return parseInt(localStorage.getItem("usoHoy") || "0");
-    }
+  function fechaHoy() {
 
-    function mostrarLimiteDiario() {
-      const usoHoy = obtenerUsoHoy();
-      const elemento = document.getElementById("limiteDiario");
-      const btnIniciar = document.getElementById("btnIniciar");
+    return new Date()
+      .toISOString()
+      .split("T")[0];
 
-      if (usoHoy >= LIMITE_DIARIO) {
-        elemento.innerText =
-          "Alcanzaste tu límite diario de práctica (" +
-          LIMITE_DIARIO +
-          "). Vuelve mañana para seguir.";
+  }
 
-        elemento.classList.add("alcanzado");
-        btnIniciar.disabled = true;
-      } else {
-        elemento.innerText =
-          "Negociaciones usadas hoy: " +
-          usoHoy +
-          "/" +
-          LIMITE_DIARIO;
 
-        elemento.classList.remove("alcanzado");
-        btnIniciar.disabled = false;
-      }
-    }
+  function obtenerUsoHoy() {
 
-    function registrarUso() {
-      const usoHoy = obtenerUsoHoy();
+    const fechaGuardada =
+      localStorage.getItem("fechaUso");
+
+    if (fechaGuardada !== fechaHoy()) {
+
+      localStorage.setItem(
+        "fechaUso",
+        fechaHoy()
+      );
 
       localStorage.setItem(
         "usoHoy",
-        (usoHoy + 1).toString()
+        "0"
       );
 
-      mostrarLimiteDiario();
+      return 0;
     }
 
-    function calcularYMostrarPromedio() {
-      const validos = puntajes.filter(
-        p => typeof p === "number" && !isNaN(p)
+    return parseInt(
+      localStorage.getItem("usoHoy") || "0"
+    );
+
+  }
+
+
+  function mostrarLimiteDiario() {
+
+    const usoHoy =
+      obtenerUsoHoy();
+
+    const elemento =
+      document.getElementById("limiteDiario");
+
+    const boton =
+      document.getElementById("btnIniciar");
+
+    if (usoHoy >= LIMITE_DIARIO) {
+
+      elemento.innerText =
+        "Alcanzaste tu límite diario de práctica (" +
+        LIMITE_DIARIO +
+        "). Vuelve mañana para seguir.";
+
+      elemento.classList.add("alcanzado");
+
+      boton.disabled = true;
+
+    } else {
+
+      elemento.innerText =
+        "Negociaciones usadas hoy: " +
+        usoHoy +
+        "/" +
+        LIMITE_DIARIO;
+
+      elemento.classList.remove("alcanzado");
+
+      boton.disabled = false;
+
+    }
+
+  }
+
+
+  function registrarUso() {
+
+    const usoHoy =
+      obtenerUsoHoy();
+
+    localStorage.setItem(
+      "usoHoy",
+      (usoHoy + 1).toString()
+    );
+
+    mostrarLimiteDiario();
+
+  }
+
+
+  /* =========================
+     PROMEDIO
+  ========================= */
+
+  function calcularYMostrarPromedio() {
+
+    const validos =
+      puntajes.filter(
+        p =>
+          typeof p === "number" &&
+          !isNaN(p)
       );
 
-      if (validos.length === 0) {
-        document.getElementById("promedio").innerText =
-          "Promedio: sin datos aún";
-        return;
-      }
+    if (validos.length === 0) {
 
-      const suma = validos.reduce(
-        (total, p) => total + p,
+      document.getElementById(
+        "promedio"
+      ).innerText =
+        "Promedio: sin datos aún";
+
+      return;
+    }
+
+    const suma =
+      validos.reduce(
+        (total, p) =>
+          total + p,
         0
       );
 
-      const promedio = (suma / validos.length).toFixed(1);
+    const promedio =
+      (suma / validos.length)
+      .toFixed(1);
 
-      document.getElementById("promedio").innerText =
-        "Promedio: " +
-        promedio +
-        "/10 (" +
-        validos.length +
-        " negociaciones)";
+    document.getElementById(
+      "promedio"
+    ).innerText =
+      "Promedio: " +
+      promedio +
+      "/10 (" +
+      validos.length +
+      " negociaciones)";
+
+  }
+
+
+  /* =========================
+     CHAT
+  ========================= */
+
+  function escaparHTML(texto) {
+
+    const div =
+      document.createElement("div");
+
+    div.textContent =
+      texto;
+
+    return div.innerHTML;
+
+  }
+
+
+  function renderChat(escribiendo) {
+
+    let html =
+      conversacion.map(m => {
+
+        const nombre =
+          m.rol === "cliente"
+            ? "Cliente"
+            : "Tú";
+
+        return `
+          <div class="burbuja ${m.rol}">
+            <strong>${nombre}:</strong><br>
+            ${escaparHTML(m.texto)}
+          </div>
+        `;
+
+      }).join("");
+
+
+    if (escribiendo) {
+
+      html +=
+        `<p class="escribiendo">
+          El cliente está escribiendo...
+        </p>`;
+
     }
 
-    function renderChat(escribiendo) {
-      let html = conversacion.map(m =>
-        `<div class="burbuja ${m.rol}">
-          <strong>${m.rol === "cliente" ? "Cliente" : "Tú"}:</strong>
-          ${m.texto}
-        </div>`
-      ).join("");
 
-      if (escribiendo) {
-        html += `<p class="escribiendo">El cliente está escribiendo...</p>`;
-      }
+    const chat =
+      document.getElementById("chat");
 
-      document.getElementById("chat").innerHTML = html;
+    chat.innerHTML =
+      html;
 
-      const turnosUsuario = conversacion.filter(
+    chat.scrollTop =
+      chat.scrollHeight;
+
+
+    const turnosUsuario =
+      conversacion.filter(
         m => m.rol === "usuario"
       ).length;
 
-      document.getElementById("sugerencia").innerText =
-        turnosUsuario >= 3
-          ? "Si sientes que llegaron a un acuerdo o a un punto muerto, puedes finalizar la negociación."
-          : "";
+
+    document.getElementById(
+      "sugerencia"
+    ).innerText =
+      turnosUsuario >= 3
+        ? "Si llegaron a un acuerdo o a un punto muerto, puedes finalizar la negociación."
+        : "";
+
+  }
+
+
+  /* =========================
+     CREAR DESCRIPCIÓN
+  ========================= */
+
+  function crearDescripcionPersonalizada() {
+
+    const objetivo =
+      document.getElementById(
+        "objetivo"
+      ).value.trim();
+
+    const tipo =
+      document.getElementById(
+        "tipoNegociacion"
+      ).value;
+
+    const articulo =
+      document.getElementById(
+        "articulo"
+      ).value.trim();
+
+    const presupuesto =
+      document.getElementById(
+        "presupuesto"
+      ).value.trim();
+
+    const cantidad =
+      document.getElementById(
+        "cantidad"
+      ).value.trim();
+
+    const condiciones =
+      document.getElementById(
+        "condiciones"
+      ).value.trim();
+
+
+    const partes = [];
+
+    if (tipo)
+      partes.push("Tipo: " + tipo);
+
+    if (articulo)
+      partes.push("Producto/servicio: " + articulo);
+
+    if (objetivo)
+      partes.push("Objetivo: " + objetivo);
+
+    if (presupuesto)
+      partes.push("Presupuesto: " + presupuesto);
+
+    if (cantidad)
+      partes.push("Cantidad: " + cantidad);
+
+    if (condiciones)
+      partes.push("Condiciones: " + condiciones);
+
+
+    return partes.join(". ");
+
+  }
+
+
+  /* =========================
+     INICIAR
+  ========================= */
+
+  async function iniciarNegociacion() {
+
+    if (
+      obtenerUsoHoy() >=
+      LIMITE_DIARIO
+    ) {
+
+      mostrarLimiteDiario();
+      return;
+
     }
 
-    async function iniciarNegociacion() {
-      if (obtenerUsoHoy() >= LIMITE_DIARIO) {
-        mostrarLimiteDiario();
-        return;
+
+    conversacion = [];
+
+    document.getElementById(
+      "resultado"
+    ).innerText = "";
+
+    document.getElementById(
+      "sugerencia"
+    ).innerText = "";
+
+    document.getElementById(
+      "chat"
+    ).innerHTML =
+      `<p class="escribiendo">
+        Iniciando negociación...
+      </p>`;
+
+    document.getElementById(
+      "feedback"
+    ).style.display =
+      "none";
+
+    document.getElementById(
+      "mensajeFeedback"
+    ).innerText = "";
+
+    feedbackSeleccionado = 0;
+
+
+    const contextoBase =
+      document.getElementById(
+        "filtro"
+      ).value;
+
+    const dificultad =
+      document.getElementById(
+        "dificultad"
+      ).value;
+
+
+    /*
+      Por ahora mantenemos el contexto
+      compatible con el Worker actual.
+
+      La configuración personalizada
+      queda preparada para conectarse
+      al nuevo Scenario Engine en la
+      siguiente fase.
+    */
+
+    let contexto =
+      contextoBase;
+
+
+    if (
+      modoActual ===
+      "personalizado"
+    ) {
+
+      const descripcion =
+        crearDescripcionPersonalizada();
+
+      if (descripcion.length > 0) {
+
+        contexto =
+          contextoBase === "todos"
+            ? descripcion.substring(0, 150)
+            : contextoBase;
+
       }
 
-      conversacion = [];
+    }
 
-      document.getElementById("resultado").innerText = "";
-      document.getElementById("sugerencia").innerText = "";
-      document.getElementById("chat").innerHTML =
-        `<p class="escribiendo">Iniciando negociación...</p>`;
 
-      document.getElementById("feedback").style.display = "none";
-      document.getElementById("mensajeFeedback").innerText = "";
-      feedbackSeleccionado = 0;
+    try {
 
-      try {
-        const contexto =
-          document.getElementById("filtro").value;
-
-        const dificultad =
-          document.getElementById("dificultad").value;
-
-        const respuesta = await fetch(
+      const respuesta =
+        await fetch(
           WORKER +
           "?contexto=" +
-          encodeURIComponent(contexto) +
+          encodeURIComponent(
+            contexto
+          ) +
           "&dificultad=" +
-          encodeURIComponent(dificultad)
+          encodeURIComponent(
+            dificultad
+          )
         );
 
-        const texto = await respuesta.text();
 
-        conversacion.push({
-          rol: "cliente",
-          texto: texto
-        });
+      if (!respuesta.ok) {
 
-        renderChat(false);
+        throw new Error(
+          "Error del servidor"
+        );
 
-        registrarUso();
-
-      } catch (error) {
-        document.getElementById("chat").innerText =
-          "Hubo un error iniciando la negociación. Intenta de nuevo.";
       }
-    }
 
-    async function enviarMensaje() {
+
       const texto =
-        document.getElementById("mensaje").value;
+        await respuesta.text();
 
-      if (texto.trim() === "") return;
 
       conversacion.push({
-        rol: "usuario",
+
+        rol: "cliente",
         texto: texto
+
       });
 
-      document.getElementById("mensaje").value = "";
-      document.getElementById("btnEnviar").disabled = true;
 
-      renderChat(true);
+      renderChat(false);
 
-      try {
-        const dificultad =
-          document.getElementById("dificultad").value;
+      registrarUso();
 
-        const url =
-          WORKER +
-          "?accion=continuar" +
-          "&dificultad=" +
-          encodeURIComponent(dificultad) +
-          "&historial=" +
-          encodeURIComponent(
-            JSON.stringify(conversacion)
-          );
 
-        const respuesta = await fetch(url);
+    } catch (error) {
 
-        const respuestaCliente =
-          await respuesta.text();
+      document.getElementById(
+        "chat"
+      ).innerHTML =
+        `<p>
+          Hubo un error iniciando la negociación.
+          Intenta de nuevo.
+        </p>`;
 
-        conversacion.push({
-          rol: "cliente",
-          texto: respuestaCliente
-        });
-
-        renderChat(false);
-
-      } catch (error) {
-        renderChat(false);
-
-        document.getElementById("chat").innerHTML +=
-          "<p>Hubo un error continuando la negociación. Intenta de nuevo.</p>";
-
-      } finally {
-        document.getElementById("btnEnviar").disabled = false;
-      }
     }
 
-    async function finalizarNegociacion() {
-      if (conversacion.length === 0) {
-        document.getElementById("resultado").innerText =
-          "Primero inicia una negociación.";
-        return;
+  }
+
+
+  /* =========================
+     ENVIAR MENSAJE
+  ========================= */
+
+  async function enviarMensaje() {
+
+    const elemento =
+      document.getElementById(
+        "mensaje"
+      );
+
+    const texto =
+      elemento.value.trim();
+
+
+    if (texto === "")
+      return;
+
+
+    conversacion.push({
+
+      rol: "usuario",
+      texto: texto
+
+    });
+
+
+    elemento.value = "";
+
+    document.getElementById(
+      "btnEnviar"
+    ).disabled = true;
+
+
+    renderChat(true);
+
+
+    try {
+
+      const dificultad =
+        document.getElementById(
+          "dificultad"
+        ).value;
+
+
+      const url =
+        WORKER +
+        "?accion=continuar" +
+        "&dificultad=" +
+        encodeURIComponent(
+          dificultad
+        ) +
+        "&historial=" +
+        encodeURIComponent(
+          JSON.stringify(
+            conversacion
+          )
+        );
+
+
+      const respuesta =
+        await fetch(url);
+
+
+      if (!respuesta.ok) {
+
+        throw new Error(
+          "Error del servidor"
+        );
+
       }
 
-      document.getElementById("resultado").innerText =
-        "Evaluando negociación completa...";
 
-      try {
-        const dificultad =
-          document.getElementById("dificultad").value;
+      const respuestaCliente =
+        await respuesta.text();
 
-        const url =
-          WORKER +
-          "?accion=evaluar" +
-          "&dificultad=" +
-          encodeURIComponent(dificultad) +
-          "&historial=" +
-          encodeURIComponent(
-            JSON.stringify(conversacion)
+
+      conversacion.push({
+
+        rol: "cliente",
+        texto: respuestaCliente
+
+      });
+
+
+      renderChat(false);
+
+
+    } catch (error) {
+
+      renderChat(false);
+
+      document.getElementById(
+        "chat"
+      ).innerHTML +=
+        `<p>
+          Hubo un error continuando
+          la negociación.
+          Intenta de nuevo.
+        </p>`;
+
+    } finally {
+
+      document.getElementById(
+        "btnEnviar"
+      ).disabled = false;
+
+    }
+
+  }
+
+
+  /* =========================
+     FINALIZAR
+  ========================= */
+
+  async function finalizarNegociacion() {
+
+    if (
+      conversacion.length === 0
+    ) {
+
+      document.getElementById(
+        "resultado"
+      ).innerText =
+        "Primero inicia una negociación.";
+
+      return;
+
+    }
+
+
+    document.getElementById(
+      "resultado"
+    ).innerText =
+      "Evaluando negociación completa...";
+
+
+    try {
+
+      const dificultad =
+        document.getElementById(
+          "dificultad"
+        ).value;
+
+
+      const url =
+        WORKER +
+        "?accion=evaluar" +
+        "&dificultad=" +
+        encodeURIComponent(
+          dificultad
+        ) +
+        "&historial=" +
+        encodeURIComponent(
+          JSON.stringify(
+            conversacion
+          )
+        );
+
+
+      const respuesta =
+        await fetch(url);
+
+
+      if (!respuesta.ok) {
+
+        throw new Error(
+          "Error del servidor"
+        );
+
+      }
+
+
+      const datos =
+        await respuesta.json();
+
+
+      if (
+        typeof datos.puntaje !==
+        "number" ||
+        isNaN(datos.puntaje)
+      ) {
+
+        document.getElementById(
+          "resultado"
+        ).innerText =
+          "No se pudo obtener un puntaje válido.";
+
+        return;
+
+      }
+
+
+      document.getElementById(
+        "resultado"
+      ).innerText =
+        "Puntaje: " +
+        datos.puntaje +
+        "/10 — " +
+        datos.feedback;
+
+
+      puntajes.push(
+        datos.puntaje
+      );
+
+
+      localStorage.setItem(
+        "puntajes",
+        JSON.stringify(
+          puntajes
+        )
+      );
+
+
+      calcularYMostrarPromedio();
+
+
+      historial.push(
+        "Puntaje " +
+        datos.puntaje +
+        "/10: " +
+        datos.feedback
+      );
+
+
+      renderHistorial();
+
+
+      document.getElementById(
+        "feedback"
+      ).style.display =
+        "block";
+
+
+    } catch (error) {
+
+      document.getElementById(
+        "resultado"
+      ).innerText =
+        "Hubo un error evaluando la negociación. Intenta de nuevo.";
+
+    }
+
+  }
+
+
+  /* =========================
+     HISTORIAL
+  ========================= */
+
+  function renderHistorial() {
+
+    const lista =
+      document.getElementById(
+        "historial"
+      );
+
+    lista.innerHTML = "";
+
+
+    historial.forEach(
+      r => {
+
+        const li =
+          document.createElement(
+            "li"
           );
 
-        const respuesta = await fetch(url);
+        li.textContent =
+          r;
 
-        const datos = await respuesta.json();
+        lista.appendChild(li);
+
+      }
+    );
+
+  }
+
+
+  /* =========================
+     FEEDBACK
+  ========================= */
+
+  function seleccionarFeedback(
+    valor
+  ) {
+
+    feedbackSeleccionado =
+      valor;
+
+
+    const botones =
+      document.querySelectorAll(
+        ".estrellas button"
+      );
+
+
+    botones.forEach(
+      (boton, indice) => {
 
         if (
-          typeof datos.puntaje !== "number" ||
-          isNaN(datos.puntaje)
+          indice + 1 ===
+          valor
         ) {
-          document.getElementById("resultado").innerText =
-            "No se pudo obtener un puntaje válido. Intenta de nuevo.";
-          return;
-        }
 
-        document.getElementById("resultado").innerText =
-          "Puntaje: " +
-          datos.puntaje +
-          "/10 — " +
-          datos.feedback;
+          boton.classList.add(
+            "seleccionada"
+          );
 
-        puntajes.push(datos.puntaje);
-
-        localStorage.setItem(
-          "puntajes",
-          JSON.stringify(puntajes)
-        );
-
-        calcularYMostrarPromedio();
-
-        historial.push(
-          "Puntaje " +
-          datos.puntaje +
-          "/10: " +
-          datos.feedback
-        );
-
-        document.getElementById("historial").innerHTML =
-          historial
-            .map(r => "<li>" + r + "</li>")
-            .join("");
-
-        localStorage.setItem(
-          "historial",
-          JSON.stringify(historial)
-        );
-
-        // Mostrar feedback
-        document.getElementById("feedback").style.display =
-          "block";
-
-      } catch (error) {
-        document.getElementById("resultado").innerText =
-          "Hubo un error evaluando la negociación. Intenta de nuevo.";
-      }
-    }
-
-    function seleccionarFeedback(valor) {
-      feedbackSeleccionado = valor;
-
-      const botones =
-        document.querySelectorAll(".estrellas button");
-
-      botones.forEach((boton, indice) => {
-        if (indice + 1 === valor) {
-          boton.classList.add("seleccionada");
         } else {
-          boton.classList.remove("seleccionada");
-        }
-      });
-    }
 
-    async function enviarFeedback() {
-      if (feedbackSeleccionado === 0) {
-        document.getElementById("mensajeFeedback").innerText =
-          "Selecciona una calificación del 1 al 5.";
-        return;
-      }
+          boton.classList.remove(
+            "seleccionada"
+          );
 
-      const comentario =
-        document.getElementById("comentarioFeedback").value;
-
-      const btn =
-        document.getElementById("btnFeedback");
-
-      btn.disabled = true;
-
-      document.getElementById("mensajeFeedback").innerText =
-        "Enviando...";
-
-      try {
-        const url =
-          WORKER +
-          "?accion=feedback" +
-          "&rating=" +
-          feedbackSeleccionado +
-          "&comentario=" +
-          encodeURIComponent(comentario);
-
-        const respuesta = await fetch(url);
-
-        const datos = await respuesta.json();
-
-        if (!respuesta.ok || !datos.ok) {
-          throw new Error("No se pudo guardar el feedback.");
         }
 
-        document.getElementById("mensajeFeedback").innerText =
-          "¡Gracias por tu feedback!";
-
-        document.getElementById("comentarioFeedback").value = "";
-
-      } catch (error) {
-        document.getElementById("mensajeFeedback").innerText =
-          "Hubo un error enviando el feedback. Intenta de nuevo.";
-
-        btn.disabled = false;
       }
+    );
+
+  }
+
+
+  async function enviarFeedback() {
+
+    if (
+      feedbackSeleccionado ===
+      0
+    ) {
+
+      document.getElementById(
+        "mensajeFeedback"
+      ).innerText =
+        "Selecciona una calificación del 1 al 5.";
+
+      return;
+
     }
 
-    function reiniciar() {
-      localStorage.removeItem("historial");
-      localStorage.removeItem("puntajes");
 
-      historial = [];
-      puntajes = [];
-      conversacion = [];
+    const comentario =
+      document.getElementById(
+        "comentarioFeedback"
+      ).value;
 
-      document.getElementById("historial").innerHTML = "";
 
-      document.getElementById("promedio").innerText =
-        "Promedio: sin datos aún";
-
-      document.getElementById("resultado").innerText = "";
-
-      document.getElementById("chat").innerHTML = "";
-
-      document.getElementById("sugerencia").innerText = "";
-
-      document.getElementById("feedback").style.display =
-        "none";
-
-      document.getElementById("mensajeFeedback").innerText =
-        "";
-
-      feedbackSeleccionado = 0;
-
-      const botones =
-        document.querySelectorAll(".estrellas button");
-
-      botones.forEach(boton =>
-        boton.classList.remove("seleccionada")
+    const btn =
+      document.getElementById(
+        "btnFeedback"
       );
+
+
+    btn.disabled = true;
+
+
+    document.getElementById(
+      "mensajeFeedback"
+    ).innerText =
+      "Enviando...";
+
+
+    try {
+
+      const url =
+        WORKER +
+        "?accion=feedback" +
+        "&rating=" +
+        feedbackSeleccionado +
+        "&comentario=" +
+        encodeURIComponent(
+          comentario
+        );
+
+
+      const respuesta =
+        await fetch(url);
+
+
+      const datos =
+        await respuesta.json();
+
+
+      if (
+        !respuesta.ok ||
+        !datos.ok
+      ) {
+
+        throw new Error(
+          "No se pudo guardar el feedback."
+        );
+
+      }
+
+
+      document.getElementById(
+        "mensajeFeedback"
+      ).innerText =
+        "¡Gracias por tu feedback!";
+
+
+      document.getElementById(
+        "comentarioFeedback"
+      ).value = "";
+
+
+    } catch (error) {
+
+      document.getElementById(
+        "mensajeFeedback"
+      ).innerText =
+        "Hubo un error enviando el feedback. Intenta de nuevo.";
+
+      btn.disabled = false;
+
     }
 
-    if (localStorage.getItem("historial")) {
+  }
+
+
+  /* =========================
+     REINICIAR
+  ========================= */
+
+  function reiniciar() {
+
+    localStorage.removeItem(
+      "historial"
+    );
+
+    localStorage.removeItem(
+      "puntajes"
+    );
+
+
+    historial = [];
+    puntajes = [];
+    conversacion = [];
+
+
+    renderHistorial();
+
+
+    document.getElementById(
+      "promedio"
+    ).innerText =
+      "Promedio: sin datos aún";
+
+
+    document.getElementById(
+      "resultado"
+    ).innerText = "";
+
+
+    document.getElementById(
+      "chat"
+    ).innerHTML =
+      `<p class="estado">
+        Tu negociación aparecerá aquí.
+      </p>`;
+
+
+    document.getElementById(
+      "sugerencia"
+    ).innerText = "";
+
+
+    document.getElementById(
+      "feedback"
+    ).style.display =
+      "none";
+
+
+    document.getElementById(
+      "mensajeFeedback"
+    ).innerText = "";
+
+
+    feedbackSeleccionado = 0;
+
+
+    const botones =
+      document.querySelectorAll(
+        ".estrellas button"
+      );
+
+
+    botones.forEach(
+      boton =>
+        boton.classList.remove(
+          "seleccionada"
+        )
+    );
+
+  }
+
+
+  /* =========================
+     CARGAR DATOS
+  ========================= */
+
+  if (
+    localStorage.getItem(
+      "historial"
+    )
+  ) {
+
+    try {
+
       historial =
         JSON.parse(
-          localStorage.getItem("historial")
+          localStorage.getItem(
+            "historial"
+          )
         );
 
-      document.getElementById("historial").innerHTML =
-        historial
-          .map(r => "<li>" + r + "</li>")
-          .join("");
+      renderHistorial();
+
+    } catch {
+
+      historial = [];
+
     }
 
-    if (localStorage.getItem("puntajes")) {
+  }
+
+
+  if (
+    localStorage.getItem(
+      "puntajes"
+    )
+  ) {
+
+    try {
+
       puntajes =
         JSON.parse(
-          localStorage.getItem("puntajes")
+          localStorage.getItem(
+            "puntajes"
+          )
         );
 
       calcularYMostrarPromedio();
+
+    } catch {
+
+      puntajes = [];
+
     }
 
-    mostrarLimiteDiario();
-  </script>
+  }
+
+
+  mostrarLimiteDiario();
+
+</script>
+
 </body>
 </html>
 ```
