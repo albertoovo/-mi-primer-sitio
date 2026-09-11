@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,43 +72,107 @@
       color: #b03030;
       font-weight: bold;
     }
-    #resultado { max-width: 500px; margin: 15px auto; font-weight: bold; }
+    #resultado {
+      max-width: 500px;
+      margin: 15px auto;
+      font-weight: bold;
+    }
+    #feedback {
+      display: none;
+      max-width: 500px;
+      margin: 20px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 8px;
+    }
+    #feedback h3 {
+      margin-top: 0;
+    }
+    .estrellas button {
+      background-color: #ddd;
+      color: #333;
+      padding: 8px 12px;
+    }
+    .estrellas button.seleccionada {
+      background-color: #3E63C7;
+      color: white;
+    }
+    #comentarioFeedback {
+      width: 90%;
+      min-height: 70px;
+      margin: 10px 0;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      resize: vertical;
+    }
   </style>
 </head>
 <body>
   <h1>Práctica de Negociación</h1>
+
   <p id="limiteDiario"></p>
+
   <select id="filtro">
     <option value="todos">Todos los contextos</option>
     <option value="Negociación de precio">Negociación de precio</option>
     <option value="Buscando acuerdo">Buscando acuerdo</option>
     <option value="Cerrando el trato">Cerrando el trato</option>
   </select>
+
   <select id="dificultad">
     <option value="facil">Fácil</option>
     <option value="medio" selected>Medio</option>
     <option value="dificil">Difícil</option>
   </select>
+
   <br>
+
   <button id="btnIniciar" onclick="iniciarNegociacion()">Iniciar negociación</button>
 
   <div id="chat"></div>
+
   <p id="sugerencia"></p>
 
   <textarea id="mensaje" placeholder="Escribe tu respuesta aquí..."></textarea><br>
+
   <button id="btnEnviar" onclick="enviarMensaje()">Enviar</button>
   <button onclick="finalizarNegociacion()">Finalizar negociación</button>
 
   <p id="resultado"></p>
+
+  <div id="feedback">
+    <h3>¿Qué tan útil fue esta práctica?</h3>
+
+    <div class="estrellas">
+      <button onclick="seleccionarFeedback(1)">1</button>
+      <button onclick="seleccionarFeedback(2)">2</button>
+      <button onclick="seleccionarFeedback(3)">3</button>
+      <button onclick="seleccionarFeedback(4)">4</button>
+      <button onclick="seleccionarFeedback(5)">5</button>
+    </div>
+
+    <textarea id="comentarioFeedback" placeholder="Comentario opcional..."></textarea><br>
+
+    <button id="btnFeedback" onclick="enviarFeedback()">Enviar feedback</button>
+
+    <p id="mensajeFeedback"></p>
+  </div>
+
   <p id="promedio">Promedio: sin datos aún</p>
+
   <h3>Historial de negociaciones</h3>
+
   <ul id="historial"></ul>
+
   <button onclick="reiniciar()">Reiniciar progreso</button>
 
   <script>
     let conversacion = [];
     let puntajes = [];
     let historial = [];
+    let feedbackSeleccionado = 0;
+
     const WORKER = "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
     const LIMITE_DIARIO = 15;
 
@@ -117,11 +182,13 @@
 
     function obtenerUsoHoy() {
       const fechaGuardada = localStorage.getItem("fechaUso");
+
       if (fechaGuardada !== fechaHoy()) {
         localStorage.setItem("fechaUso", fechaHoy());
         localStorage.setItem("usoHoy", "0");
         return 0;
       }
+
       return parseInt(localStorage.getItem("usoHoy") || "0");
     }
 
@@ -131,11 +198,20 @@
       const btnIniciar = document.getElementById("btnIniciar");
 
       if (usoHoy >= LIMITE_DIARIO) {
-        elemento.innerText = "Alcanzaste tu límite diario de práctica (" + LIMITE_DIARIO + "). Vuelve mañana para seguir.";
+        elemento.innerText =
+          "Alcanzaste tu límite diario de práctica (" +
+          LIMITE_DIARIO +
+          "). Vuelve mañana para seguir.";
+
         elemento.classList.add("alcanzado");
         btnIniciar.disabled = true;
       } else {
-        elemento.innerText = "Negociaciones usadas hoy: " + usoHoy + "/" + LIMITE_DIARIO;
+        elemento.innerText =
+          "Negociaciones usadas hoy: " +
+          usoHoy +
+          "/" +
+          LIMITE_DIARIO;
+
         elemento.classList.remove("alcanzado");
         btnIniciar.disabled = false;
       }
@@ -143,34 +219,63 @@
 
     function registrarUso() {
       const usoHoy = obtenerUsoHoy();
-      localStorage.setItem("usoHoy", (usoHoy + 1).toString());
+
+      localStorage.setItem(
+        "usoHoy",
+        (usoHoy + 1).toString()
+      );
+
       mostrarLimiteDiario();
     }
 
     function calcularYMostrarPromedio() {
-      const validos = puntajes.filter(p => typeof p === "number" && !isNaN(p));
+      const validos = puntajes.filter(
+        p => typeof p === "number" && !isNaN(p)
+      );
+
       if (validos.length === 0) {
-        document.getElementById("promedio").innerText = "Promedio: sin datos aún";
+        document.getElementById("promedio").innerText =
+          "Promedio: sin datos aún";
         return;
       }
-      const suma = validos.reduce((total, p) => total + p, 0);
+
+      const suma = validos.reduce(
+        (total, p) => total + p,
+        0
+      );
+
       const promedio = (suma / validos.length).toFixed(1);
-      document.getElementById("promedio").innerText = "Promedio: " + promedio + "/10 (" + validos.length + " negociaciones)";
+
+      document.getElementById("promedio").innerText =
+        "Promedio: " +
+        promedio +
+        "/10 (" +
+        validos.length +
+        " negociaciones)";
     }
 
     function renderChat(escribiendo) {
       let html = conversacion.map(m =>
-        `<div class="burbuja ${m.rol}"><strong>${m.rol === "cliente" ? "Cliente" : "Tú"}:</strong> ${m.texto}</div>`
+        `<div class="burbuja ${m.rol}">
+          <strong>${m.rol === "cliente" ? "Cliente" : "Tú"}:</strong>
+          ${m.texto}
+        </div>`
       ).join("");
+
       if (escribiendo) {
         html += `<p class="escribiendo">El cliente está escribiendo...</p>`;
       }
+
       document.getElementById("chat").innerHTML = html;
 
-      const turnosUsuario = conversacion.filter(m => m.rol === "usuario").length;
-      document.getElementById("sugerencia").innerText = turnosUsuario >= 3
-        ? "Si sientes que llegaron a un acuerdo o a un punto muerto, puedes finalizar la negociación."
-        : "";
+      const turnosUsuario = conversacion.filter(
+        m => m.rol === "usuario"
+      ).length;
+
+      document.getElementById("sugerencia").innerText =
+        turnosUsuario >= 3
+          ? "Si sientes que llegaron a un acuerdo o a un punto muerto, puedes finalizar la negociación."
+          : "";
     }
 
     async function iniciarNegociacion() {
@@ -180,42 +285,96 @@
       }
 
       conversacion = [];
+
       document.getElementById("resultado").innerText = "";
       document.getElementById("sugerencia").innerText = "";
-      document.getElementById("chat").innerHTML = `<p class="escribiendo">Iniciando negociación...</p>`;
+      document.getElementById("chat").innerHTML =
+        `<p class="escribiendo">Iniciando negociación...</p>`;
+
+      document.getElementById("feedback").style.display = "none";
+      document.getElementById("mensajeFeedback").innerText = "";
+      feedbackSeleccionado = 0;
+
       try {
-        const contexto = document.getElementById("filtro").value;
-        const dificultad = document.getElementById("dificultad").value;
-        const respuesta = await fetch(WORKER + "?contexto=" + encodeURIComponent(contexto) + "&dificultad=" + encodeURIComponent(dificultad));
+        const contexto =
+          document.getElementById("filtro").value;
+
+        const dificultad =
+          document.getElementById("dificultad").value;
+
+        const respuesta = await fetch(
+          WORKER +
+          "?contexto=" +
+          encodeURIComponent(contexto) +
+          "&dificultad=" +
+          encodeURIComponent(dificultad)
+        );
+
         const texto = await respuesta.text();
-        conversacion.push({ rol: "cliente", texto: texto });
+
+        conversacion.push({
+          rol: "cliente",
+          texto: texto
+        });
+
         renderChat(false);
+
         registrarUso();
+
       } catch (error) {
-        document.getElementById("chat").innerText = "Hubo un error iniciando la negociación. Intenta de nuevo.";
+        document.getElementById("chat").innerText =
+          "Hubo un error iniciando la negociación. Intenta de nuevo.";
       }
     }
 
     async function enviarMensaje() {
-      const texto = document.getElementById("mensaje").value;
+      const texto =
+        document.getElementById("mensaje").value;
+
       if (texto.trim() === "") return;
 
-      conversacion.push({ rol: "usuario", texto: texto });
+      conversacion.push({
+        rol: "usuario",
+        texto: texto
+      });
+
       document.getElementById("mensaje").value = "";
       document.getElementById("btnEnviar").disabled = true;
+
       renderChat(true);
 
       try {
-        const dificultad = document.getElementById("dificultad").value;
-        const url = WORKER + "?accion=continuar&dificultad=" + encodeURIComponent(dificultad)
-          + "&historial=" + encodeURIComponent(JSON.stringify(conversacion));
+        const dificultad =
+          document.getElementById("dificultad").value;
+
+        const url =
+          WORKER +
+          "?accion=continuar" +
+          "&dificultad=" +
+          encodeURIComponent(dificultad) +
+          "&historial=" +
+          encodeURIComponent(
+            JSON.stringify(conversacion)
+          );
+
         const respuesta = await fetch(url);
-        const respuestaCliente = await respuesta.text();
-        conversacion.push({ rol: "cliente", texto: respuestaCliente });
+
+        const respuestaCliente =
+          await respuesta.text();
+
+        conversacion.push({
+          rol: "cliente",
+          texto: respuestaCliente
+        });
+
         renderChat(false);
+
       } catch (error) {
         renderChat(false);
-        document.getElementById("chat").innerHTML += "<p>Hubo un error continuando la negociación. Intenta de nuevo.</p>";
+
+        document.getElementById("chat").innerHTML +=
+          "<p>Hubo un error continuando la negociación. Intenta de nuevo.</p>";
+
       } finally {
         document.getElementById("btnEnviar").disabled = false;
       }
@@ -223,58 +382,204 @@
 
     async function finalizarNegociacion() {
       if (conversacion.length === 0) {
-        document.getElementById("resultado").innerText = "Primero inicia una negociación.";
+        document.getElementById("resultado").innerText =
+          "Primero inicia una negociación.";
         return;
       }
-      document.getElementById("resultado").innerText = "Evaluando negociación completa...";
+
+      document.getElementById("resultado").innerText =
+        "Evaluando negociación completa...";
+
       try {
-        const dificultad = document.getElementById("dificultad").value;
-        const url = WORKER + "?accion=evaluar&dificultad=" + encodeURIComponent(dificultad)
-          + "&historial=" + encodeURIComponent(JSON.stringify(conversacion));
+        const dificultad =
+          document.getElementById("dificultad").value;
+
+        const url =
+          WORKER +
+          "?accion=evaluar" +
+          "&dificultad=" +
+          encodeURIComponent(dificultad) +
+          "&historial=" +
+          encodeURIComponent(
+            JSON.stringify(conversacion)
+          );
+
         const respuesta = await fetch(url);
+
         const datos = await respuesta.json();
 
-        if (typeof datos.puntaje !== "number" || isNaN(datos.puntaje)) {
-          document.getElementById("resultado").innerText = "No se pudo obtener un puntaje válido. Intenta de nuevo.";
+        if (
+          typeof datos.puntaje !== "number" ||
+          isNaN(datos.puntaje)
+        ) {
+          document.getElementById("resultado").innerText =
+            "No se pudo obtener un puntaje válido. Intenta de nuevo.";
           return;
         }
 
-        document.getElementById("resultado").innerText = "Puntaje: " + datos.puntaje + "/10 — " + datos.feedback;
+        document.getElementById("resultado").innerText =
+          "Puntaje: " +
+          datos.puntaje +
+          "/10 — " +
+          datos.feedback;
 
         puntajes.push(datos.puntaje);
-        localStorage.setItem("puntajes", JSON.stringify(puntajes));
+
+        localStorage.setItem(
+          "puntajes",
+          JSON.stringify(puntajes)
+        );
+
         calcularYMostrarPromedio();
 
-        historial.push("Puntaje " + datos.puntaje + "/10: " + datos.feedback);
-        document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
-        localStorage.setItem("historial", JSON.stringify(historial));
+        historial.push(
+          "Puntaje " +
+          datos.puntaje +
+          "/10: " +
+          datos.feedback
+        );
+
+        document.getElementById("historial").innerHTML =
+          historial
+            .map(r => "<li>" + r + "</li>")
+            .join("");
+
+        localStorage.setItem(
+          "historial",
+          JSON.stringify(historial)
+        );
+
+        // Mostrar feedback
+        document.getElementById("feedback").style.display =
+          "block";
+
       } catch (error) {
-        document.getElementById("resultado").innerText = "Hubo un error evaluando la negociación. Intenta de nuevo.";
+        document.getElementById("resultado").innerText =
+          "Hubo un error evaluando la negociación. Intenta de nuevo.";
+      }
+    }
+
+    function seleccionarFeedback(valor) {
+      feedbackSeleccionado = valor;
+
+      const botones =
+        document.querySelectorAll(".estrellas button");
+
+      botones.forEach((boton, indice) => {
+        if (indice + 1 === valor) {
+          boton.classList.add("seleccionada");
+        } else {
+          boton.classList.remove("seleccionada");
+        }
+      });
+    }
+
+    async function enviarFeedback() {
+      if (feedbackSeleccionado === 0) {
+        document.getElementById("mensajeFeedback").innerText =
+          "Selecciona una calificación del 1 al 5.";
+        return;
+      }
+
+      const comentario =
+        document.getElementById("comentarioFeedback").value;
+
+      const btn =
+        document.getElementById("btnFeedback");
+
+      btn.disabled = true;
+
+      document.getElementById("mensajeFeedback").innerText =
+        "Enviando...";
+
+      try {
+        const url =
+          WORKER +
+          "?accion=feedback" +
+          "&rating=" +
+          feedbackSeleccionado +
+          "&comentario=" +
+          encodeURIComponent(comentario);
+
+        const respuesta = await fetch(url);
+
+        const datos = await respuesta.json();
+
+        if (!respuesta.ok || !datos.ok) {
+          throw new Error("No se pudo guardar el feedback.");
+        }
+
+        document.getElementById("mensajeFeedback").innerText =
+          "¡Gracias por tu feedback!";
+
+        document.getElementById("comentarioFeedback").value = "";
+
+      } catch (error) {
+        document.getElementById("mensajeFeedback").innerText =
+          "Hubo un error enviando el feedback. Intenta de nuevo.";
+
+        btn.disabled = false;
       }
     }
 
     function reiniciar() {
       localStorage.removeItem("historial");
       localStorage.removeItem("puntajes");
+
       historial = [];
       puntajes = [];
       conversacion = [];
+
       document.getElementById("historial").innerHTML = "";
-      document.getElementById("promedio").innerText = "Promedio: sin datos aún";
+
+      document.getElementById("promedio").innerText =
+        "Promedio: sin datos aún";
+
       document.getElementById("resultado").innerText = "";
+
       document.getElementById("chat").innerHTML = "";
+
       document.getElementById("sugerencia").innerText = "";
+
+      document.getElementById("feedback").style.display =
+        "none";
+
+      document.getElementById("mensajeFeedback").innerText =
+        "";
+
+      feedbackSeleccionado = 0;
+
+      const botones =
+        document.querySelectorAll(".estrellas button");
+
+      botones.forEach(boton =>
+        boton.classList.remove("seleccionada")
+      );
     }
 
     if (localStorage.getItem("historial")) {
-      historial = JSON.parse(localStorage.getItem("historial"));
-      document.getElementById("historial").innerHTML = historial.map(r => "<li>" + r + "</li>").join("");
+      historial =
+        JSON.parse(
+          localStorage.getItem("historial")
+        );
+
+      document.getElementById("historial").innerHTML =
+        historial
+          .map(r => "<li>" + r + "</li>")
+          .join("");
     }
+
     if (localStorage.getItem("puntajes")) {
-      puntajes = JSON.parse(localStorage.getItem("puntajes"));
+      puntajes =
+        JSON.parse(
+          localStorage.getItem("puntajes")
+        );
+
       calcularYMostrarPromedio();
     }
+
     mostrarLimiteDiario();
   </script>
 </body>
 </html>
+```
