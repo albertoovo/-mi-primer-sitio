@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Panel de Feedback</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f2f2;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    .contenedor {
+      max-width: 700px;
+      margin: auto;
+    }
+
+    input {
+      padding: 12px;
+      width: 250px;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: #3E63C7;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      margin: 5px;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    #resultado {
+      margin-top: 25px;
+      text-align: left;
+    }
+
+    .feedback {
+      background: white;
+      padding: 18px;
+      margin: 12px 0;
+      border-radius: 10px;
+    }
+
+    .error {
+      color: #b03030;
+      font-weight: bold;
+    }
+
+    .rating {
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="contenedor">
+
+    <h1>Panel de Feedback</h1>
+
+    <p>Introduce tu contraseña de administrador.</p>
+
+    <input
+      type="password"
+      id="password"
+      placeholder="Contraseña"
+    >
+
+    <br>
+
+    <button onclick="cargarFeedbacks()">
+      Ver feedbacks
+    </button>
+
+    <p id="mensaje"></p>
+
+    <div id="resultado"></div>
+
+  </div>
+
+  <script>
+
+    const WORKER =
+      "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
+
+    async function cargarFeedbacks() {
+
+      const password =
+        document.getElementById("password").value;
+
+      if (password.trim() === "") {
+        document.getElementById("mensaje").innerText =
+          "Escribe la contraseña.";
+
+        return;
+      }
+
+      document.getElementById("mensaje").innerText =
+        "Cargando feedbacks...";
+
+      document.getElementById("resultado").innerHTML = "";
+
+      try {
+
+        const url =
+          WORKER +
+          "?accion=feedbacks" +
+          "&password=" +
+          encodeURIComponent(password);
+
+        const respuesta =
+          await fetch(url);
+
+        const datos =
+          await respuesta.json();
+
+        if (!respuesta.ok) {
+
+          document.getElementById("mensaje").innerText =
+            "Contraseña incorrecta.";
+
+          return;
+        }
+
+        document.getElementById("mensaje").innerText =
+          "Feedbacks encontrados: " +
+          datos.total;
+
+        if (datos.feedbacks.length === 0) {
+
+          document.getElementById("resultado").innerHTML =
+            "<p>No hay feedbacks todavía.</p>";
+
+          return;
+        }
+
+        document.getElementById("resultado").innerHTML =
+          datos.feedbacks.map(feedback => `
+
+            <div class="feedback">
+
+              <div class="rating">
+                ⭐ ${feedback.rating}/5
+              </div>
+
+              <p>
+                <strong>Comentario:</strong>
+                ${feedback.comentario || "Sin comentario"}
+              </p>
+
+              <p>
+                <small>
+                  Fecha: ${new Date(feedback.fecha).toLocaleString()}
+                </small>
+              </p>
+
+            </div>
+
+          `).join("");
+
+      } catch (error) {
+
+        document.getElementById("mensaje").innerText =
+          "Hubo un error conectando con el servidor.";
+
+      }
+    }
+
+  </script>
+
+</body>
+</html>
