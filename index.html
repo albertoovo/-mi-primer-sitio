@@ -1,1799 +1,1337 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Práctica de Negociación</title>
 
-  <title>Práctica de Negociación</title>
+<style>
+* {
+  box-sizing: border-box;
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f2f2f2;
+  color: #222;
+  padding: 40px 20px;
+}
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
-      color: #171717;
-    }
+.container {
+  max-width: 850px;
+  margin: auto;
+}
 
-    .contenedor {
-      width: 92%;
-      max-width: 850px;
-      margin: 0 auto;
-      padding: 50px 0;
-    }
+h1, h2, h3 {
+  text-align: center;
+}
 
-    h1 {
-      text-align: center;
-      margin-bottom: 10px;
-      font-size: 34px;
-    }
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.08);
+}
 
-    .subtitulo {
-      text-align: center;
-      color: #666;
-      margin-bottom: 35px;
-    }
+label {
+  display: block;
+  font-weight: bold;
+  margin-top: 15px;
+  margin-bottom: 6px;
+}
 
-    .tarjeta {
-      background: white;
-      border-radius: 18px;
-      padding: 28px;
-      margin-bottom: 20px;
-      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
-    }
+input,
+textarea,
+select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
 
-    label {
-      display: block;
-      font-weight: bold;
-      margin-bottom: 8px;
-    }
+textarea {
+  min-height: 100px;
+  resize: vertical;
+}
 
-    input,
-    textarea,
-    select {
-      width: 100%;
-      padding: 13px;
-      border: 1px solid #d5d5d5;
-      border-radius: 10px;
-      font-size: 16px;
-      margin-bottom: 18px;
-      font-family: inherit;
-    }
+button {
+  width: 100%;
+  padding: 13px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  background: #3E63C7;
+  color: white;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
 
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
+button:hover {
+  opacity: 0.9;
+}
 
-    button {
-      border: none;
-      border-radius: 10px;
-      padding: 13px 18px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+button:disabled {
+  background: #999;
+  cursor: not-allowed;
+}
 
-    button:disabled {
-      opacity: 0.6;
-      cursor: not-allowed;
-    }
+.secondary {
+  background: #555;
+}
 
-    .boton-principal {
-      width: 100%;
-      background: #3E63C7;
-      color: white;
-      padding: 16px;
-      font-size: 18px;
-      margin-top: 5px;
-    }
+.training-button {
+  background: #111;
+}
 
-    .boton-principal:hover {
-      opacity: 0.9;
-    }
+.danger {
+  background: #b42318;
+}
 
-    .boton-secundario {
-      background: #eeeeee;
-      color: #222;
-      width: 100%;
-      margin-bottom: 18px;
-    }
+.mensaje {
+  padding: 12px;
+  border-radius: 8px;
+  background: #eee;
+  margin-top: 15px;
+}
 
-    .boton-enviar {
-      background: #171717;
-      color: white;
-      width: 100%;
-    }
+.chat {
+  margin-top: 20px;
+}
 
-    .boton-finalizar {
-      background: #dcdcdc;
-      color: #222;
-      width: 100%;
-      margin-top: 12px;
-    }
+.oponente {
+  background: #eeeeee;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
 
-    #personalizacion {
-      display: none;
-    }
+.usuario {
+  background: #dfe8ff;
+  padding: 15px;
+  border-radius: 12px;
+  margin-bottom: 12px;
+}
 
-    .chat {
-      max-height: 500px;
-      overflow-y: auto;
-      padding: 5px;
-      margin-bottom: 20px;
-    }
+.score {
+  font-size: 42px;
+  font-weight: bold;
+  text-align: center;
+  margin: 20px 0;
+}
 
-    .mensaje {
-      padding: 15px;
-      border-radius: 14px;
-      margin-bottom: 12px;
-      line-height: 1.5;
-      white-space: pre-wrap;
-    }
+.skill-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
 
-    .oponente {
-      background: #eeeeee;
-      margin-right: 12%;
-    }
+.skill {
+  background: #f5f5f5;
+  padding: 15px;
+  border-radius: 10px;
+}
 
-    .usuario {
-      background: #3E63C7;
-      color: white;
-      margin-left: 12%;
-    }
+.skill strong {
+  display: block;
+  margin-bottom: 5px;
+}
 
-    .etiqueta {
-      font-size: 12px;
-      font-weight: bold;
-      margin-bottom: 5px;
-      opacity: 0.7;
-    }
+.debil {
+  border: 3px solid #3E63C7;
+  background: #eef2ff;
+}
 
-    #pantallaNegociacion,
-    #resultado {
-      display: none;
-    }
+ul {
+  padding-left: 20px;
+}
 
-    .puntaje {
-      font-size: 50px;
-      font-weight: bold;
-      text-align: center;
-      margin: 10px 0;
-    }
+.training-exercise {
+  background: #f7f7f7;
+  padding: 18px;
+  border-radius: 12px;
+  margin-top: 15px;
+  border-left: 5px solid #3E63C7;
+}
 
-    .feedback {
-      background: #f7f7f7;
-      padding: 18px;
-      border-radius: 12px;
-      white-space: pre-wrap;
-      line-height: 1.5;
-    }
+.training-exercise h3 {
+  text-align: left;
+  margin-top: 0;
+}
 
-    .habilidades {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      margin-top: 20px;
-    }
+.challenge {
+  background: #111;
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  margin-top: 20px;
+}
 
-    .habilidad {
-      background: #f7f7f7;
-      border-radius: 12px;
-      padding: 15px;
-    }
+.hidden {
+  display: none;
+}
 
-    .habilidad-nombre {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 7px;
-    }
+.small {
+  font-size: 14px;
+  color: #666;
+}
 
-    .habilidad-puntaje {
-      font-size: 24px;
-      font-weight: bold;
-    }
+@media (max-width: 600px) {
+  .skill-grid {
+    grid-template-columns: 1fr;
+  }
 
-    .seccion-evaluacion {
-      margin-top: 25px;
-    }
-
-    .seccion-evaluacion h3 {
-      margin-bottom: 10px;
-    }
-
-    .lista-evaluacion {
-      margin: 0;
-      padding-left: 20px;
-      line-height: 1.6;
-    }
-
-    .error-destacado {
-      background: #fff1f1;
-      border-left: 5px solid #d64545;
-      padding: 16px;
-      border-radius: 10px;
-      line-height: 1.5;
-    }
-
-    .mejora-destacada {
-      background: #eef4ff;
-      border-left: 5px solid #3E63C7;
-      padding: 16px;
-      border-radius: 10px;
-      line-height: 1.5;
-    }
-
-    .consejo-destacado {
-      background: #f1f7ee;
-      border-left: 5px solid #4d8b35;
-      padding: 16px;
-      border-radius: 10px;
-      line-height: 1.5;
-    }
-
-    .error {
-      background: #ffe7e7;
-      color: #a40000;
-      padding: 14px;
-      border-radius: 10px;
-      margin-top: 15px;
-      display: none;
-      white-space: pre-wrap;
-    }
-
-    .cargando {
-      text-align: center;
-      color: #666;
-      padding: 20px;
-      display: none;
-    }
-
-    .progreso {
-      text-align: center;
-      color: #666;
-      margin-top: 15px;
-      font-size: 14px;
-    }
-
-    .historial {
-      margin-top: 20px;
-    }
-
-    .historial-item {
-      background: #f5f5f5;
-      padding: 12px;
-      border-radius: 10px;
-      margin-bottom: 8px;
-    }
-
-    .pequeno {
-      font-size: 13px;
-      color: #777;
-    }
-
-    @media (max-width: 600px) {
-
-      .contenedor {
-        width: 94%;
-        padding: 30px 0;
-      }
-
-      .tarjeta {
-        padding: 20px;
-      }
-
-      h1 {
-        font-size: 28px;
-      }
-
-      .habilidades {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
+  body {
+    padding: 20px 12px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="contenedor">
+<div class="container">
 
-    <!-- ========================= -->
-    <!-- CONFIGURACIÓN -->
-    <!-- ========================= -->
+  <h1>Práctica de Negociación</h1>
 
-    <div id="configuracion">
+  <!-- CONFIGURACIÓN -->
+  <div class="card" id="configuracion">
 
-      <h1>Práctica de Negociación</h1>
+    <h2>Configura tu negociación</h2>
 
-      <p class="subtitulo">
-        Entrena con negociaciones realistas controladas por IA.
-      </p>
+    <label>¿Qué quieres conseguir?</label>
+    <input id="objetivo" placeholder="Ejemplo: Comprar por $1,000">
 
-      <div class="tarjeta">
+    <label>¿Qué estás negociando?</label>
+    <input id="articulo" placeholder="Ejemplo: Una computadora">
 
-        <label for="objetivo">
-          ¿Qué quieres conseguir?
-        </label>
+    <label>Dificultad</label>
+    <select id="dificultad">
+      <option value="facil">Fácil</option>
+      <option value="media" selected>Media</option>
+      <option value="dificil">Difícil</option>
+      <option value="experto">Experto</option>
+    </select>
 
-        <input
-          id="objetivo"
-          type="text"
-          placeholder="Ej. Conseguir un mejor precio"
-        >
+    <label>Tipo de negociación</label>
+    <input id="tipo" placeholder="Ejemplo: Compra, venta, salario, negocio">
 
-        <label for="articulo">
-          ¿Qué quieres negociar?
-        </label>
+    <label>Presupuesto</label>
+    <input id="presupuesto" placeholder="Opcional">
 
-        <input
-          id="articulo"
-          type="text"
-          placeholder="Ej. El precio de un automóvil"
-        >
+    <label>Cantidad</label>
+    <input id="cantidad" placeholder="Opcional">
 
-        <label for="dificultad">
-          Dificultad
-        </label>
+    <label>Contexto</label>
+    <textarea id="contexto" placeholder="Opcional"></textarea>
 
-        <select id="dificultad">
-          <option value="Fácil">Fácil</option>
-          <option value="Medio">Medio</option>
-          <option value="Difícil">Difícil</option>
-        </select>
+    <label>Condiciones</label>
+    <textarea id="condiciones" placeholder="Opcional"></textarea>
 
-        <button
-          class="boton-secundario"
-          onclick="mostrarPersonalizacion()"
-          id="botonPersonalizar"
-        >
-          ⚙️ Personalizar más
-        </button>
+    <button id="btnIniciar" onclick="iniciarNegociacion()">
+      Comenzar negociación
+    </button>
 
-        <div id="personalizacion">
-
-          <label for="tipo">
-            Tipo de negociación
-          </label>
-
-          <input
-            id="tipo"
-            type="text"
-            placeholder="Ej. Compra, venta, contrato..."
-          >
-
-          <label for="presupuesto">
-            Presupuesto o precio objetivo
-          </label>
-
-          <input
-            id="presupuesto"
-            type="text"
-            placeholder="Ej. Máximo $20,000"
-          >
-
-          <label for="cantidad">
-            Cantidad
-          </label>
-
-          <input
-            id="cantidad"
-            type="text"
-            placeholder="Ej. 1 unidad"
-          >
-
-          <label for="contexto">
-            Contexto
-          </label>
-
-          <textarea
-            id="contexto"
-            placeholder="Cuéntame brevemente la situación..."
-          ></textarea>
-
-          <label for="condiciones">
-            Condiciones o límites
-          </label>
-
-          <textarea
-            id="condiciones"
-            placeholder="Ej. No puedo pagar más de..."
-          ></textarea>
-
-        </div>
-
-        <button
-          class="boton-principal"
-          onclick="iniciarNegociacion()"
-          id="botonIniciar"
-        >
-          🚀 Empezar negociación
-        </button>
-
-        <div
-          class="cargando"
-          id="cargandoInicio"
-        >
-          Preparando negociación...
-        </div>
-
-        <div
-          class="error"
-          id="errorInicio"
-        ></div>
-
-      </div>
-
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- NEGOCIACIÓN -->
-    <!-- ========================= -->
-
-    <div id="pantallaNegociacion">
-
-      <div class="tarjeta">
-
-        <h1>Negociación</h1>
-
-        <p class="subtitulo">
-          Habla naturalmente. La IA reaccionará a tus decisiones.
-        </p>
-
-        <div
-          class="chat"
-          id="chat"
-        ></div>
-
-        <div
-          class="cargando"
-          id="cargandoRespuesta"
-        >
-          El oponente está pensando...
-        </div>
-
-        <textarea
-          id="respuestaUsuario"
-          placeholder="Escribe tu respuesta..."
-        ></textarea>
-
-        <button
-          class="boton-enviar"
-          onclick="enviarRespuesta()"
-          id="botonEnviar"
-        >
-          Enviar respuesta
-        </button>
-
-        <button
-          class="boton-finalizar"
-          onclick="finalizarNegociacion()"
-          id="botonFinalizar"
-        >
-          Finalizar negociación
-        </button>
-
-        <div
-          class="error"
-          id="errorNegociacion"
-        ></div>
-
-      </div>
-
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- RESULTADO -->
-    <!-- ========================= -->
-
-    <div id="resultado">
-
-      <div class="tarjeta">
-
-        <h1>Resultado</h1>
-
-        <p class="subtitulo">
-          Así fue tu desempeño en esta negociación.
-        </p>
-
-        <div
-          class="puntaje"
-          id="puntaje"
-        >
-          --
-        </div>
-
-        <div
-          class="feedback"
-          id="feedback"
-        ></div>
-
-        <!-- HABILIDADES -->
-
-        <div id="bloqueHabilidades">
-
-          <h2>📊 Tus habilidades</h2>
-
-          <div class="habilidades">
-
-            <div class="habilidad">
-              <div class="habilidad-nombre">
-                Preparación
-              </div>
-
-              <div
-                class="habilidad-puntaje"
-                id="preparacion"
-              >
-                --
-              </div>
-            </div>
-
-            <div class="habilidad">
-              <div class="habilidad-nombre">
-                Anclaje
-              </div>
-
-              <div
-                class="habilidad-puntaje"
-                id="anclaje"
-              >
-                --
-              </div>
-            </div>
-
-            <div class="habilidad">
-              <div class="habilidad-nombre">
-                Preguntas
-              </div>
-
-              <div
-                class="habilidad-puntaje"
-                id="preguntas"
-              >
-                --
-              </div>
-            </div>
-
-            <div class="habilidad">
-              <div class="habilidad-nombre">
-                Argumentación
-              </div>
-
-              <div
-                class="habilidad-puntaje"
-                id="argumentacion"
-              >
-                --
-              </div>
-            </div>
-
-            <div class="habilidad">
-              <div class="habilidad-nombre">
-                Manejo de presión
-              </div>
-
-              <div
-                class="habilidad-puntaje"
-                id="manejoPresion"
-              >
-                --
-              </div>
-            </div>
-
-            <div class="habilidad">
-              <div class="habilidad-nombre">
-                Concesiones
-              </div>
-
-              <div
-                class="habilidad-puntaje"
-                id="concesiones"
-              >
-                --
-              </div>
-            </div>
-
-            <div class="habilidad">
-              <div class="habilidad-nombre">
-                Cierre
-              </div>
-
-              <div
-                class="habilidad-puntaje"
-                id="cierre"
-              >
-                --
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- QUÉ HIZO BIEN -->
-
-        <div class="seccion-evaluacion">
-
-          <h3>✅ Qué hiciste bien</h3>
-
-          <ul
-            class="lista-evaluacion"
-            id="queHizoBien"
-          ></ul>
-
-        </div>
-
-
-        <!-- QUÉ HIZO MAL -->
-
-        <div class="seccion-evaluacion">
-
-          <h3>❌ Qué hiciste mal</h3>
-
-          <ul
-            class="lista-evaluacion"
-            id="queHizoMal"
-          ></ul>
-
-        </div>
-
-
-        <!-- MAYOR ERROR -->
-
-        <div class="seccion-evaluacion">
-
-          <h3>⚠️ Tu mayor error</h3>
-
-          <div
-            class="error-destacado"
-            id="mayorError"
-          ></div>
-
-        </div>
-
-
-        <!-- QUÉ DEBE MEJORAR -->
-
-        <div class="seccion-evaluacion">
-
-          <h3>📈 Qué debes mejorar</h3>
-
-          <div
-            class="mejora-destacada"
-            id="deberiaMejorar"
-          ></div>
-
-        </div>
-
-
-        <!-- CONSEJO -->
-
-        <div class="seccion-evaluacion">
-
-          <h3>💡 Consejo para la siguiente</h3>
-
-          <div
-            class="consejo-destacado"
-            id="consejo"
-          ></div>
-
-        </div>
-
-
-        <br>
-
-        <button
-          class="boton-principal"
-          onclick="nuevaNegociacion()"
-        >
-          🔄 Nueva negociación
-        </button>
-
-      </div>
-
-
-      <!-- ========================= -->
-      <!-- PROGRESO -->
-      <!-- ========================= -->
-
-      <div class="tarjeta">
-
-        <h2>Tu progreso</h2>
-
-        <p id="estadisticas">
-          Todavía no tienes negociaciones registradas.
-        </p>
-
-        <div
-          class="historial"
-          id="historialResultados"
-        ></div>
-
-      </div>
-
-    </div>
+    <div id="mensajeInicio"></div>
 
   </div>
 
 
+  <!-- NEGOCIACIÓN -->
+  <div class="card hidden" id="negociacion">
+
+    <h2>Negociación</h2>
+
+    <div id="chat" class="chat"></div>
+
+    <label>Tu respuesta</label>
+
+    <textarea
+      id="respuesta"
+      placeholder="Escribe lo que responderías..."
+      onkeydown="manejarEnter(event)"
+    ></textarea>
+
+    <button id="btnEnviar" onclick="enviarRespuesta()">
+      Enviar respuesta
+    </button>
+
+    <button
+      id="btnFinalizar"
+      class="secondary"
+      onclick="finalizarNegociacion()"
+    >
+      Finalizar negociación
+    </button>
+
+    <div id="mensajeRespuesta"></div>
+
+  </div>
+
+
+  <!-- RESULTADO -->
+  <div class="card hidden" id="resultado">
+
+    <h2>Resultado</h2>
+
+    <div class="score" id="puntaje"></div>
+
+    <div id="feedback"></div>
+
+    <div id="evaluacion"></div>
+
+    <button
+      id="btnEntrenamiento"
+      class="training-button hidden"
+      onclick="obtenerEntrenamiento()"
+    >
+      🎯 Entrenar mi habilidad más débil
+    </button>
+
+    <div id="mensajeEntrenamiento"></div>
+
+  </div>
+
+
+  <!-- ENTRENAMIENTO -->
+  <div class="card hidden" id="entrenamiento">
+
+    <h2>🎯 Entrenamiento personalizado</h2>
+
+    <div id="contenidoEntrenamiento"></div>
+
+  </div>
+
+
+  <!-- PROGRESO -->
+  <div class="card">
+
+    <h2>Mi progreso</h2>
+
+    <p id="estadisticas"></p>
+
+    <button class="danger" onclick="reiniciar()">
+      Reiniciar progreso
+    </button>
+
+  </div>
+
+</div>
+
+
 <script>
 
-  // ==========================================
-  // CONFIGURACIÓN
-  // ==========================================
+const API_URL =
+"https://academia-negociacion-api.aispuroalberto546.workers.dev/";
 
-  const API_URL =
-    "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
+let historial = [];
+let contador = 0;
 
+let sessionId = null;
 
-  // ==========================================
-  // VARIABLES
-  // ==========================================
-
-  let sessionId = "";
-
-  let historial = [];
-
-  let negociacionActiva = false;
+let ultimaFrase = "";
 
 
-  // ==========================================
-  // PERSONALIZACIÓN
-  // ==========================================
+/* =========================
+   CARGAR PROGRESO
+========================= */
 
-  function mostrarPersonalizacion() {
+historial = JSON.parse(
+  localStorage.getItem("historial") || "[]"
+);
 
-    const elemento =
-      document.getElementById("personalizacion");
+contador = Number(
+  localStorage.getItem("contador") || 0
+);
 
-    const boton =
-      document.getElementById("botonPersonalizar");
+actualizarEstadisticas();
 
-    if (elemento.style.display === "block") {
 
-      elemento.style.display = "none";
+/* =========================
+   INICIAR NEGOCIACIÓN
+========================= */
 
-      boton.textContent =
-        "⚙️ Personalizar más";
+async function iniciarNegociacion() {
 
-    } else {
+  const objetivo =
+    document.getElementById("objetivo").value.trim();
 
-      elemento.style.display = "block";
+  const articulo =
+    document.getElementById("articulo").value.trim();
 
-      boton.textContent =
-        "⚙️ Ocultar personalización";
-    }
+  const dificultad =
+    document.getElementById("dificultad").value;
+
+  const tipo =
+    document.getElementById("tipo").value.trim();
+
+  const presupuesto =
+    document.getElementById("presupuesto").value.trim();
+
+  const cantidad =
+    document.getElementById("cantidad").value.trim();
+
+  const contexto =
+    document.getElementById("contexto").value.trim();
+
+  const condiciones =
+    document.getElementById("condiciones").value.trim();
+
+
+  if (!objetivo || !articulo) {
+
+    document.getElementById("mensajeInicio").innerHTML =
+      `<div class="mensaje">
+        Escribe el objetivo y lo que estás negociando.
+      </div>`;
+
+    return;
   }
 
 
-  // ==========================================
-  // INICIAR NEGOCIACIÓN
-  // ==========================================
+  const btn =
+    document.getElementById("btnIniciar");
 
-  async function iniciarNegociacion() {
-
-    const objetivo =
-      document.getElementById("objetivo").value.trim();
-
-    const articulo =
-      document.getElementById("articulo").value.trim();
-
-    const dificultad =
-      document.getElementById("dificultad").value;
-
-    const tipo =
-      document.getElementById("tipo").value.trim();
-
-    const presupuesto =
-      document.getElementById("presupuesto").value.trim();
-
-    const cantidad =
-      document.getElementById("cantidad").value.trim();
-
-    const contexto =
-      document.getElementById("contexto").value.trim();
-
-    const condiciones =
-      document.getElementById("condiciones").value.trim();
+  btn.disabled = true;
+  btn.textContent = "Preparando negociación...";
 
 
-    if (!objetivo) {
+  try {
 
-      mostrarError(
-        "errorInicio",
-        "Escribe qué quieres conseguir."
+    const url =
+      API_URL +
+      "?accion=frase" +
+      "&objetivo=" + encodeURIComponent(objetivo) +
+      "&articulo=" + encodeURIComponent(articulo) +
+      "&dificultad=" + encodeURIComponent(dificultad) +
+      "&tipo=" + encodeURIComponent(tipo) +
+      "&presupuesto=" + encodeURIComponent(presupuesto) +
+      "&cantidad=" + encodeURIComponent(cantidad) +
+      "&contexto=" + encodeURIComponent(contexto) +
+      "&condiciones=" + encodeURIComponent(condiciones);
+
+
+    const respuesta =
+      await fetch(url);
+
+    const datos =
+      await respuesta.json();
+
+
+    if (!respuesta.ok) {
+      throw new Error(
+        datos.error || "No se pudo iniciar la negociación."
       );
-
-      return;
     }
 
 
-    if (!articulo) {
-
-      mostrarError(
-        "errorInicio",
-        "Escribe qué quieres negociar."
-      );
-
-      return;
-    }
-
-
-    ocultarError("errorInicio");
-
-
-    const boton =
-      document.getElementById("botonIniciar");
-
-    const cargando =
-      document.getElementById("cargandoInicio");
-
-
-    boton.disabled = true;
-
-    cargando.style.display = "block";
-
-
-    try {
-
-      const parametros =
-        new URLSearchParams({
-
-          accion: "frase",
-
-          objetivo,
-
-          articulo,
-
-          dificultad,
-
-          tipo,
-
-          presupuesto,
-
-          cantidad,
-
-          contexto,
-
-          condiciones
-        });
-
-
-      const respuesta =
-        await fetch(
-          API_URL + "?" + parametros.toString(),
-          {
-            method: "GET"
-          }
-        );
-
-
-      const texto =
-        await respuesta.text();
-
-
-      let datos;
-
-      try {
-
-        datos =
-          JSON.parse(texto);
-
-      } catch {
-
-        throw new Error(
-          "El servidor no devolvió una respuesta válida."
-        );
-      }
-
-
-      if (!respuesta.ok) {
-
-        throw new Error(
-          datos.detalle ||
-          datos.error ||
-          "El servidor rechazó la solicitud."
-        );
-      }
-
-
-      if (!datos.respuesta) {
-
-        throw new Error(
-          "El servidor no devolvió la respuesta de la negociación."
-        );
-      }
-
-
-      if (!datos.sessionId) {
-
-        throw new Error(
-          "El servidor no devolvió el identificador de la sesión."
-        );
-      }
-
-
-      sessionId =
-        datos.sessionId;
-
-
-      historial = [];
-
-
-      historial.push({
-
-        rol: "oponente",
-
-        texto: datos.respuesta
-      });
-
-
-      document.getElementById(
-        "configuracion"
-      ).style.display = "none";
-
-
-      document.getElementById(
-        "pantallaNegociacion"
-      ).style.display = "block";
-
-
-      document.getElementById(
-        "chat"
-      ).innerHTML = "";
-
-
-      agregarMensaje(
-        "oponente",
-        datos.respuesta
-      );
-
-
-      negociacionActiva = true;
-
-
-      document.getElementById(
-        "respuestaUsuario"
-      ).focus();
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      mostrarError(
-        "errorInicio",
-        "No se pudo iniciar la negociación.\n\n" +
-        error.message
-      );
-
-    } finally {
-
-      boton.disabled = false;
-
-      cargando.style.display = "none";
-    }
-  }
-
-
-  // ==========================================
-  // ENVIAR RESPUESTA
-  // ==========================================
-
-  async function enviarRespuesta() {
-
-    if (!negociacionActiva) {
-      return;
-    }
-
-
-    if (!sessionId) {
-
-      mostrarError(
-        "errorNegociacion",
-        "No existe una sesión de negociación."
-      );
-
-      return;
-    }
-
-
-    const campo =
-      document.getElementById(
-        "respuestaUsuario"
-      );
-
-
-    const texto =
-      campo.value.trim();
-
-
-    if (!texto) {
-
-      mostrarError(
-        "errorNegociacion",
-        "Escribe algo antes de enviar."
-      );
-
-      return;
-    }
-
-
-    ocultarError(
-      "errorNegociacion"
-    );
-
-
-    const boton =
-      document.getElementById(
-        "botonEnviar"
-      );
-
-    const cargando =
-      document.getElementById(
-        "cargandoRespuesta"
-      );
-
-
-    boton.disabled = true;
-
-    cargando.style.display = "block";
-
-
-    agregarMensaje(
-      "usuario",
-      texto
-    );
-
-
-    historial.push({
-
-      rol: "usuario",
-
-      texto
-    });
-
-
-    campo.value = "";
-
-
-    try {
-
-      const url =
-        API_URL +
-        "?accion=continuar" +
-        "&sessionId=" +
-        encodeURIComponent(sessionId);
-
-
-      const respuesta =
-        await fetch(
-          url,
-          {
-
-            method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
-
-            body: JSON.stringify({
-              historial
-            })
-          }
-        );
-
-
-      const textoRespuesta =
-        await respuesta.text();
-
-
-      let datos;
-
-      try {
-
-        datos =
-          JSON.parse(textoRespuesta);
-
-      } catch {
-
-        throw new Error(
-          "El servidor no devolvió una respuesta válida."
-        );
-      }
-
-
-      if (!respuesta.ok) {
-
-        throw new Error(
-          datos.detalle ||
-          datos.error ||
-          "No se pudo continuar la negociación."
-        );
-      }
-
-
-      if (!datos.respuesta) {
-
-        throw new Error(
-          "El servidor no devolvió una respuesta del oponente."
-        );
-      }
-
-
-      agregarMensaje(
-        "oponente",
-        datos.respuesta
-      );
-
-
-      historial.push({
-
-        rol: "oponente",
-
-        texto: datos.respuesta
-      });
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      mostrarError(
-        "errorNegociacion",
-        "No se pudo enviar la respuesta.\n\n" +
-        error.message
-      );
-
-    } finally {
-
-      boton.disabled = false;
-
-      cargando.style.display = "none";
-
-      campo.focus();
-    }
-  }
-
-
-  // ==========================================
-  // FINALIZAR
-  // ==========================================
-
-  async function finalizarNegociacion() {
-
-    if (!sessionId) {
-
-      mostrarError(
-        "errorNegociacion",
-        "No existe una sesión activa."
-      );
-
-      return;
-    }
-
-
-    if (
-      !confirm(
-        "¿Seguro que quieres finalizar la negociación?"
-      )
-    ) {
-      return;
-    }
-
-
-    const boton =
-      document.getElementById(
-        "botonFinalizar"
-      );
-
-
-    boton.disabled = true;
-
-
-    try {
-
-      const respuesta =
-        await fetch(
-
-          API_URL +
-          "?accion=evaluar" +
-          "&sessionId=" +
-          encodeURIComponent(sessionId),
-
-          {
-
-            method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
-
-            body: JSON.stringify({
-              historial
-            })
-          }
-        );
-
-
-      const texto =
-        await respuesta.text();
-
-
-      let datos;
-
-      try {
-
-        datos =
-          JSON.parse(texto);
-
-      } catch {
-
-        throw new Error(
-          "El servidor no devolvió una respuesta válida."
-        );
-      }
-
-
-      if (!respuesta.ok) {
-
-        throw new Error(
-          datos.detalle ||
-          datos.error ||
-          "No se pudo evaluar la negociación."
-        );
-      }
-
-
-      mostrarResultado(
-        datos.puntaje,
-        datos.feedback,
-        datos.evaluacion
-      );
-
-
-      negociacionActiva = false;
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      mostrarError(
-        "errorNegociacion",
-        "No se pudo finalizar la negociación.\n\n" +
-        error.message
-      );
-
-    } finally {
-
-      boton.disabled = false;
-    }
-  }
-
-
-  // ==========================================
-  // MOSTRAR MENSAJE
-  // ==========================================
-
-  function agregarMensaje(
-    tipo,
-    texto
-  ) {
-
-    const chat =
-      document.getElementById(
-        "chat"
-      );
-
-
-    const mensaje =
-      document.createElement(
-        "div"
-      );
-
-
-    mensaje.className =
-      "mensaje " +
-      tipo;
-
-
-    const etiqueta =
-      document.createElement(
-        "div"
-      );
-
-
-    etiqueta.className =
-      "etiqueta";
-
-
-    etiqueta.textContent =
-      tipo === "oponente"
-        ? "OPONENTE"
-        : "TÚ";
-
-
-    const contenido =
-      document.createElement(
-        "div"
-      );
-
-
-    contenido.textContent =
-      texto;
-
-
-    mensaje.appendChild(
-      etiqueta
-    );
-
-    mensaje.appendChild(
-      contenido
-    );
-
-
-    chat.appendChild(
-      mensaje
-    );
-
-
-    chat.scrollTop =
-      chat.scrollHeight;
-  }
-
-
-  // ==========================================
-  // RESULTADO
-  // ==========================================
-
-  function mostrarResultado(
-    puntaje,
-    feedback,
-    evaluacion
-  ) {
-
-    document.getElementById(
-      "pantallaNegociacion"
-    ).style.display = "none";
-
-
-    document.getElementById(
-      "resultado"
-    ).style.display = "block";
-
-
-    document.getElementById(
-      "puntaje"
-    ).textContent =
-      puntaje + "/100";
-
-
-    document.getElementById(
-      "feedback"
-    ).textContent =
-      feedback;
-
-
-    mostrarEvaluacion(
-      evaluacion
-    );
-
-
-    guardarResultado(
-      puntaje,
-      feedback,
-      evaluacion
-    );
-
-
-    cargarResultados();
-  }
-
-
-  // ==========================================
-  // MOSTRAR EVALUACIÓN ESTRUCTURADA
-  // ==========================================
-
-  function mostrarEvaluacion(
-    evaluacion
-  ) {
-
-    if (!evaluacion) {
-      return;
-    }
-
-
-    const habilidades =
-      evaluacion.habilidades || {};
-
-
-    document.getElementById(
-      "preparacion"
-    ).textContent =
-      (habilidades.preparacion ?? "--") +
-      "/100";
-
-
-    document.getElementById(
-      "anclaje"
-    ).textContent =
-      (habilidades.anclaje ?? "--") +
-      "/100";
-
-
-    document.getElementById(
-      "preguntas"
-    ).textContent =
-      (habilidades.preguntas ?? "--") +
-      "/100";
-
-
-    document.getElementById(
-      "argumentacion"
-    ).textContent =
-      (habilidades.argumentacion ?? "--") +
-      "/100";
-
-
-    document.getElementById(
-      "manejoPresion"
-    ).textContent =
-      (habilidades.manejoPresion ?? "--") +
-      "/100";
-
-
-    document.getElementById(
-      "concesiones"
-    ).textContent =
-      (habilidades.concesiones ?? "--") +
-      "/100";
-
-
-    document.getElementById(
-      "cierre"
-    ).textContent =
-      (habilidades.cierre ?? "--") +
-      "/100";
-
-
-    mostrarLista(
-      "queHizoBien",
-      evaluacion.queHizoBien
-    );
-
-
-    mostrarLista(
-      "queHizoMal",
-      evaluacion.queHizoMal
-    );
-
-
-    document.getElementById(
-      "mayorError"
-    ).textContent =
-      evaluacion.mayorError ||
-      "No se detectó un error principal.";
-
-
-    document.getElementById(
-      "deberiaMejorar"
-    ).textContent =
-      Array.isArray(evaluacion.deberiaMejorar)
-        ? evaluacion.deberiaMejorar.join(" ")
-        : (
-            evaluacion.deberiaMejorar ||
-            "Continúa practicando."
-          );
-
-
-    document.getElementById(
-      "consejo"
-    ).textContent =
-      evaluacion.consejo ||
-      "Sigue practicando y analiza tus decisiones.";
-  }
-
-
-  // ==========================================
-  // MOSTRAR LISTAS
-  // ==========================================
-
-  function mostrarLista(
-    id,
-    lista
-  ) {
-
-    const elemento =
-      document.getElementById(id);
-
-
-    elemento.innerHTML = "";
-
-
-    if (
-      !Array.isArray(lista) ||
-      lista.length === 0
-    ) {
-
-      const li =
-        document.createElement("li");
-
-      li.textContent =
-        "No hay información disponible.";
-
-      elemento.appendChild(li);
-
-      return;
-    }
-
-
-    lista.forEach(
-      function(item) {
-
-        const li =
-          document.createElement("li");
-
-        li.textContent =
-          item;
-
-        elemento.appendChild(li);
-      }
-    );
-  }
-
-
-  // ==========================================
-  // GUARDAR PROGRESO
-  // ==========================================
-
-  function guardarResultado(
-    puntaje,
-    feedback,
-    evaluacion
-  ) {
-
-    const resultados =
-      JSON.parse(
-        localStorage.getItem(
-          "resultadosNegociacion"
-        ) || "[]"
-      );
-
-
-    resultados.push({
-
-      puntaje,
-
-      feedback,
-
-      evaluacion:
-
-        evaluacion || null,
-
-      fecha:
-        new Date().toLocaleString(
-          "es-MX"
-        )
-    });
-
-
-    localStorage.setItem(
-      "resultadosNegociacion",
-      JSON.stringify(resultados)
-    );
-  }
-
-
-  // ==========================================
-  // CARGAR RESULTADOS
-  // ==========================================
-
-  function cargarResultados() {
-
-    const resultados =
-      JSON.parse(
-        localStorage.getItem(
-          "resultadosNegociacion"
-        ) || "[]"
-      );
-
-
-    const estadisticas =
-      document.getElementById(
-        "estadisticas"
-      );
-
-
-    const historialResultados =
-      document.getElementById(
-        "historialResultados"
-      );
-
-
-    if (resultados.length === 0) {
-
-      estadisticas.textContent =
-        "Todavía no tienes negociaciones registradas.";
-
-      historialResultados.innerHTML =
-        "";
-
-      return;
-    }
-
-
-    const promedio =
-      resultados.reduce(
-        (total, item) =>
-          total + Number(item.puntaje),
-        0
-      ) / resultados.length;
-
-
-    estadisticas.textContent =
-      "Negociaciones: " +
-      resultados.length +
-      " · Promedio: " +
-      promedio.toFixed(1) +
-      "/100";
-
-
-    historialResultados.innerHTML =
-      "";
-
-
-    resultados
-      .slice()
-      .reverse()
-      .forEach(
-        (item) => {
-
-          const elemento =
-            document.createElement(
-              "div"
-            );
-
-
-          elemento.className =
-            "historial-item";
-
-
-          elemento.innerHTML =
-            "<strong>" +
-            item.puntaje +
-            "/100</strong>" +
-            "<br>" +
-            "<span class='pequeno'>" +
-            item.fecha +
-            "</span>";
-
-
-          historialResultados.appendChild(
-            elemento
-          );
-        }
-      );
-  }
-
-
-  // ==========================================
-  // NUEVA NEGOCIACIÓN
-  // ==========================================
-
-  function nuevaNegociacion() {
-
-    sessionId = "";
+    sessionId = datos.sessionId;
 
     historial = [];
 
-    negociacionActiva = false;
+    ultimaFrase = "";
 
 
-    document.getElementById(
-      "resultado"
-    ).style.display = "none";
+    document.getElementById("chat").innerHTML = "";
+
+    agregarOponente(datos.respuesta);
 
 
-    document.getElementById(
-      "pantallaNegociacion"
-    ).style.display = "none";
+    document.getElementById("configuracion")
+      .classList.add("hidden");
+
+    document.getElementById("resultado")
+      .classList.add("hidden");
+
+    document.getElementById("entrenamiento")
+      .classList.add("hidden");
+
+    document.getElementById("negociacion")
+      .classList.remove("hidden");
 
 
-    document.getElementById(
-      "configuracion"
-    ).style.display = "block";
+  } catch (error) {
+
+    document.getElementById("mensajeInicio").innerHTML =
+      `<div class="mensaje">
+        Error: ${error.message}
+      </div>`;
+
+  } finally {
+
+    btn.disabled = false;
+    btn.textContent = "Comenzar negociación";
+
+  }
+
+}
 
 
-    document.getElementById(
-      "chat"
-    ).innerHTML = "";
+/* =========================
+   MOSTRAR OPONENTE
+========================= */
+
+function agregarOponente(texto) {
+
+  const chat =
+    document.getElementById("chat");
+
+  chat.innerHTML +=
+    `<div class="oponente">
+      <strong>🤖 Oponente:</strong><br>
+      ${texto}
+    </div>`;
+
+  chat.scrollTop = chat.scrollHeight;
+}
 
 
-    document.getElementById(
-      "respuestaUsuario"
-    ).value = "";
+/* =========================
+   MOSTRAR USUARIO
+========================= */
+
+function agregarUsuario(texto) {
+
+  const chat =
+    document.getElementById("chat");
+
+  chat.innerHTML +=
+    `<div class="usuario">
+      <strong>🧑 Tú:</strong><br>
+      ${texto}
+    </div>`;
+
+  chat.scrollTop = chat.scrollHeight;
+}
 
 
-    document.getElementById(
-      "errorInicio"
-    ).style.display = "none";
+/* =========================
+   ENVIAR RESPUESTA
+========================= */
+
+async function enviarRespuesta() {
+
+  const textarea =
+    document.getElementById("respuesta");
+
+  const texto =
+    textarea.value.trim();
 
 
-    document.getElementById(
-      "errorNegociacion"
-    ).style.display = "none";
+  if (!texto) {
+
+    document.getElementById("mensajeRespuesta").innerHTML =
+      `<div class="mensaje">
+        Por favor escribe algo antes de enviar.
+      </div>`;
+
+    return;
   }
 
 
-  // ==========================================
-  // ERRORES
-  // ==========================================
+  if (!sessionId) {
 
-  function mostrarError(
-    id,
-    mensaje
-  ) {
+    document.getElementById("mensajeRespuesta").innerHTML =
+      `<div class="mensaje">
+        No hay una negociación activa.
+      </div>`;
 
-    const elemento =
-      document.getElementById(id);
-
-
-    elemento.textContent =
-      mensaje;
-
-
-    elemento.style.display =
-      "block";
+    return;
   }
 
 
-  function ocultarError(id) {
+  document.getElementById("mensajeRespuesta").innerHTML = "";
 
-    document.getElementById(
-      id
-    ).style.display = "none";
-  }
+  agregarUsuario(texto);
+
+  historial.push({
+    rol: "usuario",
+    texto: texto
+  });
+
+  textarea.value = "";
 
 
-  // ==========================================
-  // ENTER PARA ENVIAR
-  // ==========================================
+  const btn =
+    document.getElementById("btnEnviar");
 
-  document
-    .getElementById(
-      "respuestaUsuario"
-    )
-    .addEventListener(
-      "keydown",
-      function(event) {
+  btn.disabled = true;
+  btn.textContent = "El oponente está respondiendo...";
 
-        if (
-          event.key === "Enter" &&
-          !event.shiftKey
-        ) {
 
-          event.preventDefault();
+  try {
 
-          enviarRespuesta();
+    const respuesta =
+      await fetch(
+        API_URL +
+        "?accion=continuar&sessionId=" +
+        encodeURIComponent(sessionId),
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            historial: historial
+          })
         }
-      }
+      );
+
+
+    const datos =
+      await respuesta.json();
+
+
+    if (!respuesta.ok) {
+      throw new Error(
+        datos.error || "No se pudo continuar."
+      );
+    }
+
+
+    historial.push({
+      rol: "oponente",
+      texto: datos.respuesta
+    });
+
+
+    agregarOponente(datos.respuesta);
+
+
+  } catch (error) {
+
+    document.getElementById("mensajeRespuesta").innerHTML =
+      `<div class="mensaje">
+        Error: ${error.message}
+      </div>`;
+
+  } finally {
+
+    btn.disabled = false;
+    btn.textContent = "Enviar respuesta";
+
+  }
+
+}
+
+
+/* =========================
+   ENTER
+========================= */
+
+function manejarEnter(event) {
+
+  if (event.key === "Enter" && !event.shiftKey) {
+
+    event.preventDefault();
+
+    enviarRespuesta();
+
+  }
+
+}
+
+
+/* =========================
+   FINALIZAR
+========================= */
+
+async function finalizarNegociacion() {
+
+  if (!sessionId) {
+    return;
+  }
+
+
+  const btn =
+    document.getElementById("btnFinalizar");
+
+  btn.disabled = true;
+  btn.textContent = "Evaluando negociación...";
+
+
+  try {
+
+    const respuesta =
+      await fetch(
+        API_URL +
+        "?accion=evaluar&sessionId=" +
+        encodeURIComponent(sessionId),
+        {
+          method: "POST",
+
+          headers: {
+            "Content-Type": "application/json"
+          },
+
+          body: JSON.stringify({
+            historial: historial
+          })
+        }
+      );
+
+
+    const datos =
+      await respuesta.json();
+
+
+    if (!respuesta.ok) {
+      throw new Error(
+        datos.error || "No se pudo evaluar."
+      );
+    }
+
+
+    mostrarResultado(
+      datos.puntaje,
+      datos.feedback,
+      datos.evaluacion
     );
 
 
-  // ==========================================
-  // CARGAR PROGRESO
-  // ==========================================
+  } catch (error) {
 
-  cargarResultados();
+    alert(
+      "Error al evaluar: " +
+      error.message
+    );
+
+  } finally {
+
+    btn.disabled = false;
+    btn.textContent = "Finalizar negociación";
+
+  }
+
+}
+
+
+/* =========================
+   MOSTRAR RESULTADO
+========================= */
+
+function mostrarResultado(
+  puntaje,
+  feedback,
+  evaluacion
+) {
+
+  document.getElementById("negociacion")
+    .classList.add("hidden");
+
+  document.getElementById("resultado")
+    .classList.remove("hidden");
+
+
+  document.getElementById("puntaje").textContent =
+    puntaje + "/100";
+
+
+  document.getElementById("feedback").innerHTML =
+    `<div class="mensaje">
+      ${feedback || ""}
+    </div>`;
+
+
+  mostrarEvaluacion(evaluacion);
+
+
+  const botonEntrenamiento =
+    document.getElementById("btnEntrenamiento");
+
+
+  if (
+    evaluacion &&
+    evaluacion.habilidadMasDebil &&
+    sessionId
+  ) {
+
+    botonEntrenamiento.classList.remove("hidden");
+
+    botonEntrenamiento.textContent =
+      "🎯 Entrenar " +
+      evaluacion.habilidadMasDebil.nombre;
+
+  } else {
+
+    botonEntrenamiento.classList.add("hidden");
+
+  }
+
+
+  contador++;
+
+  historialResultadosGuardar(
+    puntaje,
+    evaluacion
+  );
+
+  actualizarEstadisticas();
+
+}
+
+
+/* =========================
+   EVALUACIÓN
+========================= */
+
+function mostrarEvaluacion(evaluacion) {
+
+  const contenedor =
+    document.getElementById("evaluacion");
+
+
+  if (!evaluacion) {
+
+    contenedor.innerHTML = "";
+
+    return;
+  }
+
+
+  let html = "";
+
+
+  if (evaluacion.habilidadMasDebil) {
+
+    html +=
+      `<div class="mensaje">
+        <strong>🎯 Tu habilidad más débil:</strong><br>
+        ${evaluacion.habilidadMasDebil.nombre}
+        (${evaluacion.habilidadMasDebil.puntaje}/100)
+      </div>`;
+
+  }
+
+
+  if (evaluacion.habilidades) {
+
+    html += `<h3>Habilidades</h3>`;
+
+    html += `<div class="skill-grid">`;
+
+
+    const habilidades = {
+
+      preparacion: "Preparación",
+
+      anclaje: "Anclaje",
+
+      preguntas: "Preguntas",
+
+      argumentacion: "Argumentación",
+
+      manejoPresion: "Manejo de presión",
+
+      concesiones: "Concesiones",
+
+      cierre: "Cierre"
+
+    };
+
+
+    for (const clave in habilidades) {
+
+      const puntaje =
+        evaluacion.habilidades[clave] ?? 0;
+
+
+      const esDebil =
+        evaluacion.habilidadMasDebil &&
+        evaluacion.habilidadMasDebil.clave === clave;
+
+
+      html +=
+        `<div class="skill ${esDebil ? "debil" : ""}">
+          <strong>
+            ${habilidades[clave]}
+          </strong>
+          ${puntaje}/100
+          ${esDebil ? " 🎯" : ""}
+        </div>`;
+
+    }
+
+
+    html += `</div>`;
+
+  }
+
+
+  if (evaluacion.queHizoBien?.length) {
+
+    html +=
+      `<h3>✅ Qué hiciste bien</h3>
+       <ul>`;
+
+    evaluacion.queHizoBien.forEach(item => {
+
+      html += `<li>${item}</li>`;
+
+    });
+
+    html += `</ul>`;
+
+  }
+
+
+  if (evaluacion.queHizoMal?.length) {
+
+    html +=
+      `<h3>❌ Qué hiciste mal</h3>
+       <ul>`;
+
+    evaluacion.queHizoMal.forEach(item => {
+
+      html += `<li>${item}</li>`;
+
+    });
+
+    html += `</ul>`;
+
+  }
+
+
+  if (evaluacion.mayorError) {
+
+    html +=
+      `<h3>⚠️ Tu mayor error</h3>
+       <p>${evaluacion.mayorError}</p>`;
+
+  }
+
+
+  if (evaluacion.deberiaMejorar) {
+
+    html +=
+      `<h3>📈 Qué debes mejorar</h3>
+       <p>${evaluacion.deberiaMejorar}</p>`;
+
+  }
+
+
+  if (evaluacion.consejo) {
+
+    html +=
+      `<h3>💡 Consejo para la siguiente</h3>
+       <p>${evaluacion.consejo}</p>`;
+
+  }
+
+
+  contenedor.innerHTML = html;
+
+}
+
+
+/* =========================
+   ENTRENAMIENTO
+========================= */
+
+async function obtenerEntrenamiento() {
+
+  if (!sessionId) {
+
+    alert(
+      "No se encontró la sesión de esta negociación."
+    );
+
+    return;
+  }
+
+
+  const boton =
+    document.getElementById("btnEntrenamiento");
+
+  const mensaje =
+    document.getElementById("mensajeEntrenamiento");
+
+
+  boton.disabled = true;
+  boton.textContent =
+    "🎯 Creando entrenamiento...";
+
+  mensaje.innerHTML =
+    `<div class="mensaje">
+      Analizando tu desempeño y creando ejercicios personalizados...
+    </div>`;
+
+
+  try {
+
+    const respuesta =
+      await fetch(
+        API_URL +
+        "?accion=entrenamiento&sessionId=" +
+        encodeURIComponent(sessionId),
+        {
+          method: "POST"
+        }
+      );
+
+
+    const datos =
+      await respuesta.json();
+
+
+    if (!respuesta.ok) {
+
+      throw new Error(
+        datos.error ||
+        "No se pudo generar el entrenamiento."
+      );
+
+    }
+
+
+    mostrarEntrenamiento(
+      datos.entrenamiento
+    );
+
+
+    localStorage.setItem(
+      "ultimoEntrenamiento",
+      JSON.stringify(datos.entrenamiento)
+    );
+
+
+    mensaje.innerHTML = "";
+
+
+  } catch (error) {
+
+    mensaje.innerHTML =
+      `<div class="mensaje">
+        Error: ${error.message}
+      </div>`;
+
+  } finally {
+
+    boton.disabled = false;
+
+    boton.textContent =
+      "🎯 Entrenar mi habilidad más débil";
+
+  }
+
+}
+
+
+/* =========================
+   MOSTRAR ENTRENAMIENTO
+========================= */
+
+function mostrarEntrenamiento(entrenamiento) {
+
+  if (!entrenamiento) {
+    return;
+  }
+
+
+  const contenedor =
+    document.getElementById(
+      "contenidoEntrenamiento"
+    );
+
+
+  let html = "";
+
+
+  html +=
+    `<div class="mensaje">
+      <strong>
+        Habilidad:
+      </strong>
+      ${entrenamiento.nombreHabilidad || entrenamiento.habilidad}
+      <br><br>
+
+      <strong>
+        Puntaje actual:
+      </strong>
+      ${entrenamiento.puntajeActual}/100
+    </div>`;
+
+
+  if (entrenamiento.objetivo) {
+
+    html +=
+      `<h3>🎯 Objetivo</h3>
+       <p>
+        ${entrenamiento.objetivo}
+       </p>`;
+
+  }
+
+
+  if (entrenamiento.explicacion) {
+
+    html +=
+      `<h3>📚 Aprende primero</h3>
+       <p>
+        ${entrenamiento.explicacion}
+       </p>`;
+
+  }
+
+
+  if (
+    entrenamiento.ejercicios &&
+    entrenamiento.ejercicios.length
+  ) {
+
+    html +=
+      `<h3>🥊 Ejercicios</h3>`;
+
+
+    entrenamiento.ejercicios.forEach(
+      ejercicio => {
+
+        html +=
+          `<div class="training-exercise">
+
+            <h3>
+              Ejercicio ${ejercicio.numero}:
+              ${ejercicio.titulo}
+            </h3>
+
+            <p>
+              <strong>Instrucción:</strong><br>
+              ${ejercicio.instruccion}
+            </p>
+
+            <p>
+              <strong>Situación:</strong><br>
+              ${ejercicio.situacion}
+            </p>
+
+            <p>
+              <strong>Qué debes hacer:</strong><br>
+              ${ejercicio.queDebeHacer}
+            </p>
+
+          </div>`;
+
+      }
+    );
+
+  }
+
+
+  if (entrenamiento.retoFinal) {
+
+    const reto =
+      entrenamiento.retoFinal;
+
+
+    html +=
+      `<div class="challenge">
+
+        <h3>
+          🏆 Reto final
+        </h3>
+
+        <h3>
+          ${reto.titulo}
+        </h3>
+
+        <p>
+          <strong>Situación:</strong><br>
+          ${reto.situacion}
+        </p>
+
+        <p>
+          <strong>Instrucción:</strong><br>
+          ${reto.instruccion}
+        </p>
+
+        <p>
+          <strong>Criterio de éxito:</strong><br>
+          ${reto.criterioExito}
+        </p>
+
+      </div>`;
+
+  }
+
+
+  contenedor.innerHTML = html;
+
+
+  document.getElementById("entrenamiento")
+    .classList.remove("hidden");
+
+
+  document.getElementById("entrenamiento")
+    .scrollIntoView({
+      behavior: "smooth"
+    });
+
+}
+
+
+/* =========================
+   GUARDAR RESULTADOS
+========================= */
+
+function historialResultadosGuardar(
+  puntaje,
+  evaluacion
+) {
+
+  let resultados =
+    JSON.parse(
+      localStorage.getItem("resultados") || "[]"
+    );
+
+
+  resultados.push({
+
+    fecha: new Date().toISOString(),
+
+    puntaje: puntaje,
+
+    evaluacion: evaluacion
+
+  });
+
+
+  localStorage.setItem(
+    "resultados",
+    JSON.stringify(resultados)
+  );
+
+
+  localStorage.setItem(
+    "historial",
+    JSON.stringify(historial)
+  );
+
+
+  localStorage.setItem(
+    "contador",
+    contador
+  );
+
+}
+
+
+/* =========================
+   ESTADÍSTICAS
+========================= */
+
+function actualizarEstadisticas() {
+
+  const resultados =
+    JSON.parse(
+      localStorage.getItem("resultados") || "[]"
+    );
+
+
+  if (!resultados.length) {
+
+    document.getElementById("estadisticas").innerHTML =
+      "Negociaciones: 0<br>Promedio: 0/100";
+
+    return;
+  }
+
+
+  const suma =
+    resultados.reduce(
+      (total, resultado) =>
+        total + Number(resultado.puntaje || 0),
+      0
+    );
+
+
+  const promedio =
+    Math.round(
+      (suma / resultados.length) * 10
+    ) / 10;
+
+
+  const ultimos =
+    resultados
+      .slice(-6)
+      .reverse()
+      .map(r => r.puntaje)
+      .join(", ");
+
+
+  document.getElementById("estadisticas").innerHTML =
+    `
+    <strong>Negociaciones:</strong>
+    ${resultados.length}
+    <br>
+
+    <strong>Promedio:</strong>
+    ${promedio}/100
+    <br>
+
+    <strong>Últimos resultados:</strong>
+    ${ultimos}
+    `;
+
+}
+
+
+/* =========================
+   REINICIAR
+========================= */
+
+function reiniciar() {
+
+  const confirmar =
+    confirm(
+      "¿Seguro que quieres borrar todo tu progreso?"
+    );
+
+
+  if (!confirmar) {
+    return;
+  }
+
+
+  localStorage.removeItem("historial");
+  localStorage.removeItem("contador");
+  localStorage.removeItem("resultados");
+  localStorage.removeItem("ultimoEntrenamiento");
+
+
+  historial = [];
+  contador = 0;
+  sessionId = null;
+
+
+  actualizarEstadisticas();
+
+
+  document.getElementById("chat").innerHTML = "";
+
+  document.getElementById("configuracion")
+    .classList.remove("hidden");
+
+  document.getElementById("negociacion")
+    .classList.add("hidden");
+
+  document.getElementById("resultado")
+    .classList.add("hidden");
+
+  document.getElementById("entrenamiento")
+    .classList.add("hidden");
+
+}
+
+
+/* =========================
+   FIN
+========================= */
 
 </script>
 
