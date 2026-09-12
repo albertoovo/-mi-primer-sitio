@@ -77,6 +77,11 @@
       cursor: pointer;
     }
 
+    button:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
     .boton-principal {
       width: 100%;
       background: #3E63C7;
@@ -167,6 +172,68 @@
       line-height: 1.5;
     }
 
+    .habilidades {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .habilidad {
+      background: #f7f7f7;
+      border-radius: 12px;
+      padding: 15px;
+    }
+
+    .habilidad-nombre {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 7px;
+    }
+
+    .habilidad-puntaje {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .seccion-evaluacion {
+      margin-top: 25px;
+    }
+
+    .seccion-evaluacion h3 {
+      margin-bottom: 10px;
+    }
+
+    .lista-evaluacion {
+      margin: 0;
+      padding-left: 20px;
+      line-height: 1.6;
+    }
+
+    .error-destacado {
+      background: #fff1f1;
+      border-left: 5px solid #d64545;
+      padding: 16px;
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+
+    .mejora-destacada {
+      background: #eef4ff;
+      border-left: 5px solid #3E63C7;
+      padding: 16px;
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+
+    .consejo-destacado {
+      background: #f1f7ee;
+      border-left: 5px solid #4d8b35;
+      padding: 16px;
+      border-radius: 10px;
+      line-height: 1.5;
+    }
+
     .error {
       background: #ffe7e7;
       color: #a40000;
@@ -205,6 +272,26 @@
     .pequeno {
       font-size: 13px;
       color: #777;
+    }
+
+    @media (max-width: 600px) {
+
+      .contenedor {
+        width: 94%;
+        padding: 30px 0;
+      }
+
+      .tarjeta {
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 28px;
+      }
+
+      .habilidades {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -425,6 +512,180 @@
           id="feedback"
         ></div>
 
+        <!-- HABILIDADES -->
+
+        <div id="bloqueHabilidades">
+
+          <h2>📊 Tus habilidades</h2>
+
+          <div class="habilidades">
+
+            <div class="habilidad">
+              <div class="habilidad-nombre">
+                Preparación
+              </div>
+
+              <div
+                class="habilidad-puntaje"
+                id="preparacion"
+              >
+                --
+              </div>
+            </div>
+
+            <div class="habilidad">
+              <div class="habilidad-nombre">
+                Anclaje
+              </div>
+
+              <div
+                class="habilidad-puntaje"
+                id="anclaje"
+              >
+                --
+              </div>
+            </div>
+
+            <div class="habilidad">
+              <div class="habilidad-nombre">
+                Preguntas
+              </div>
+
+              <div
+                class="habilidad-puntaje"
+                id="preguntas"
+              >
+                --
+              </div>
+            </div>
+
+            <div class="habilidad">
+              <div class="habilidad-nombre">
+                Argumentación
+              </div>
+
+              <div
+                class="habilidad-puntaje"
+                id="argumentacion"
+              >
+                --
+              </div>
+            </div>
+
+            <div class="habilidad">
+              <div class="habilidad-nombre">
+                Manejo de presión
+              </div>
+
+              <div
+                class="habilidad-puntaje"
+                id="manejoPresion"
+              >
+                --
+              </div>
+            </div>
+
+            <div class="habilidad">
+              <div class="habilidad-nombre">
+                Concesiones
+              </div>
+
+              <div
+                class="habilidad-puntaje"
+                id="concesiones"
+              >
+                --
+              </div>
+            </div>
+
+            <div class="habilidad">
+              <div class="habilidad-nombre">
+                Cierre
+              </div>
+
+              <div
+                class="habilidad-puntaje"
+                id="cierre"
+              >
+                --
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- QUÉ HIZO BIEN -->
+
+        <div class="seccion-evaluacion">
+
+          <h3>✅ Qué hiciste bien</h3>
+
+          <ul
+            class="lista-evaluacion"
+            id="queHizoBien"
+          ></ul>
+
+        </div>
+
+
+        <!-- QUÉ HIZO MAL -->
+
+        <div class="seccion-evaluacion">
+
+          <h3>❌ Qué hiciste mal</h3>
+
+          <ul
+            class="lista-evaluacion"
+            id="queHizoMal"
+          ></ul>
+
+        </div>
+
+
+        <!-- MAYOR ERROR -->
+
+        <div class="seccion-evaluacion">
+
+          <h3>⚠️ Tu mayor error</h3>
+
+          <div
+            class="error-destacado"
+            id="mayorError"
+          ></div>
+
+        </div>
+
+
+        <!-- QUÉ DEBE MEJORAR -->
+
+        <div class="seccion-evaluacion">
+
+          <h3>📈 Qué debes mejorar</h3>
+
+          <div
+            class="mejora-destacada"
+            id="deberiaMejorar"
+          ></div>
+
+        </div>
+
+
+        <!-- CONSEJO -->
+
+        <div class="seccion-evaluacion">
+
+          <h3>💡 Consejo para la siguiente</h3>
+
+          <div
+            class="consejo-destacado"
+            id="consejo"
+          ></div>
+
+        </div>
+
+
         <br>
 
         <button
@@ -435,6 +696,11 @@
         </button>
 
       </div>
+
+
+      <!-- ========================= -->
+      <!-- PROGRESO -->
+      <!-- ========================= -->
 
       <div class="tarjeta">
 
@@ -537,8 +803,6 @@
       document.getElementById("condiciones").value.trim();
 
 
-    // Validación básica
-
     if (!objetivo) {
 
       mostrarError(
@@ -548,6 +812,7 @@
 
       return;
     }
+
 
     if (!articulo) {
 
@@ -654,8 +919,6 @@
       }
 
 
-      // Guardamos la sesión
-
       sessionId =
         datos.sessionId;
 
@@ -671,8 +934,6 @@
       });
 
 
-      // Cambiar pantalla
-
       document.getElementById(
         "configuracion"
       ).style.display = "none";
@@ -682,8 +943,6 @@
         "pantallaNegociacion"
       ).style.display = "block";
 
-
-      // Limpiar chat
 
       document.getElementById(
         "chat"
@@ -996,7 +1255,8 @@
 
       mostrarResultado(
         datos.puntaje,
-        datos.feedback
+        datos.feedback,
+        datos.evaluacion
       );
 
 
@@ -1097,7 +1357,8 @@
 
   function mostrarResultado(
     puntaje,
-    feedback
+    feedback,
+    evaluacion
   ) {
 
     document.getElementById(
@@ -1122,13 +1383,171 @@
       feedback;
 
 
+    mostrarEvaluacion(
+      evaluacion
+    );
+
+
     guardarResultado(
       puntaje,
-      feedback
+      feedback,
+      evaluacion
     );
 
 
     cargarResultados();
+  }
+
+
+  // ==========================================
+  // MOSTRAR EVALUACIÓN ESTRUCTURADA
+  // ==========================================
+
+  function mostrarEvaluacion(
+    evaluacion
+  ) {
+
+    if (!evaluacion) {
+      return;
+    }
+
+
+    const habilidades =
+      evaluacion.habilidades || {};
+
+
+    document.getElementById(
+      "preparacion"
+    ).textContent =
+      (habilidades.preparacion ?? "--") +
+      "/100";
+
+
+    document.getElementById(
+      "anclaje"
+    ).textContent =
+      (habilidades.anclaje ?? "--") +
+      "/100";
+
+
+    document.getElementById(
+      "preguntas"
+    ).textContent =
+      (habilidades.preguntas ?? "--") +
+      "/100";
+
+
+    document.getElementById(
+      "argumentacion"
+    ).textContent =
+      (habilidades.argumentacion ?? "--") +
+      "/100";
+
+
+    document.getElementById(
+      "manejoPresion"
+    ).textContent =
+      (habilidades.manejoPresion ?? "--") +
+      "/100";
+
+
+    document.getElementById(
+      "concesiones"
+    ).textContent =
+      (habilidades.concesiones ?? "--") +
+      "/100";
+
+
+    document.getElementById(
+      "cierre"
+    ).textContent =
+      (habilidades.cierre ?? "--") +
+      "/100";
+
+
+    mostrarLista(
+      "queHizoBien",
+      evaluacion.queHizoBien
+    );
+
+
+    mostrarLista(
+      "queHizoMal",
+      evaluacion.queHizoMal
+    );
+
+
+    document.getElementById(
+      "mayorError"
+    ).textContent =
+      evaluacion.mayorError ||
+      "No se detectó un error principal.";
+
+
+    document.getElementById(
+      "deberiaMejorar"
+    ).textContent =
+      Array.isArray(evaluacion.deberiaMejorar)
+        ? evaluacion.deberiaMejorar.join(" ")
+        : (
+            evaluacion.deberiaMejorar ||
+            "Continúa practicando."
+          );
+
+
+    document.getElementById(
+      "consejo"
+    ).textContent =
+      evaluacion.consejo ||
+      "Sigue practicando y analiza tus decisiones.";
+  }
+
+
+  // ==========================================
+  // MOSTRAR LISTAS
+  // ==========================================
+
+  function mostrarLista(
+    id,
+    lista
+  ) {
+
+    const elemento =
+      document.getElementById(id);
+
+
+    elemento.innerHTML = "";
+
+
+    if (
+      !Array.isArray(lista) ||
+      lista.length === 0
+    ) {
+
+      const li =
+        document.createElement("li");
+
+      li.textContent =
+        "No hay información disponible.";
+
+      elemento.appendChild(li);
+
+      return;
+    }
+
+
+    lista.forEach(
+      function(item) {
+
+        const li =
+          document.createElement("li");
+
+        li.textContent =
+          item;
+
+        elemento.appendChild(li);
+      }
+    );
   }
 
 
@@ -1138,7 +1557,8 @@
 
   function guardarResultado(
     puntaje,
-    feedback
+    feedback,
+    evaluacion
   ) {
 
     const resultados =
@@ -1154,6 +1574,10 @@
       puntaje,
 
       feedback,
+
+      evaluacion:
+
+        evaluacion || null,
 
       fecha:
         new Date().toLocaleString(
@@ -1231,7 +1655,7 @@
       .slice()
       .reverse()
       .forEach(
-        (item, indice) => {
+        (item) => {
 
           const elemento =
             document.createElement(
