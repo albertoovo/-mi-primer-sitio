@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>AI Business Academy</title>
+  <title>Práctica de Negociación</title>
 
   <style>
     * {
@@ -15,271 +15,258 @@
       margin: 0;
       font-family: Arial, sans-serif;
       background: #f2f2f2;
-      color: #111;
-    }
-
-    header {
-      background: #111;
-      color: white;
-      padding: 22px 20px;
-      text-align: center;
-    }
-
-    header h1 {
-      margin: 0;
-      font-size: 26px;
-    }
-
-    header p {
-      margin: 7px 0 0;
-      color: #bbb;
-      font-size: 14px;
+      color: #171717;
     }
 
     .contenedor {
+      width: 92%;
       max-width: 850px;
       margin: 0 auto;
-      padding: 35px 18px 60px;
+      padding: 50px 0;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 34px;
+    }
+
+    .subtitulo {
+      text-align: center;
+      color: #666;
+      margin-bottom: 35px;
     }
 
     .tarjeta {
       background: white;
       border-radius: 18px;
-      padding: 25px;
+      padding: 28px;
       margin-bottom: 20px;
-      box-shadow: 0 5px 25px rgba(0,0,0,0.06);
-    }
-
-    h2 {
-      margin-top: 0;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.06);
     }
 
     label {
       display: block;
-      margin-top: 16px;
-      margin-bottom: 7px;
       font-weight: bold;
-      font-size: 14px;
+      margin-bottom: 8px;
     }
 
     input,
     textarea,
     select {
       width: 100%;
-      border: 1px solid #ddd;
-      border-radius: 10px;
       padding: 13px;
-      font-size: 15px;
+      border: 1px solid #d5d5d5;
+      border-radius: 10px;
+      font-size: 16px;
+      margin-bottom: 18px;
       font-family: inherit;
-      background: white;
     }
 
     textarea {
+      min-height: 110px;
       resize: vertical;
-      min-height: 100px;
     }
 
     button {
       border: none;
-      border-radius: 11px;
+      border-radius: 10px;
       padding: 13px 18px;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: bold;
       cursor: pointer;
-      margin-top: 12px;
     }
 
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    .btn-principal {
+    .boton-principal {
       width: 100%;
-      background: #111;
+      background: #3E63C7;
       color: white;
-      font-size: 17px;
       padding: 16px;
-      margin-top: 22px;
+      font-size: 18px;
+      margin-top: 5px;
     }
 
-    .btn-secundario {
-      background: #eee;
-      color: #111;
+    .boton-principal:hover {
+      opacity: 0.9;
     }
 
-    .btn-finalizar {
-      background: #d9e4ff;
-      color: #183b87;
-    }
-
-    .chat {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      max-height: 500px;
-      overflow-y: auto;
+    .boton-secundario {
+      background: #eeeeee;
+      color: #222;
+      width: 100%;
       margin-bottom: 18px;
     }
 
+    .boton-enviar {
+      background: #171717;
+      color: white;
+      width: 100%;
+    }
+
+    .boton-finalizar {
+      background: #dcdcdc;
+      color: #222;
+      width: 100%;
+      margin-top: 12px;
+    }
+
+    #personalizacion {
+      display: none;
+    }
+
+    .chat {
+      max-height: 500px;
+      overflow-y: auto;
+      padding: 5px;
+      margin-bottom: 20px;
+    }
+
     .mensaje {
-      padding: 14px;
+      padding: 15px;
       border-radius: 14px;
-      max-width: 85%;
+      margin-bottom: 12px;
       line-height: 1.5;
       white-space: pre-wrap;
     }
 
     .oponente {
-      align-self: flex-start;
-      background: #eee;
+      background: #eeeeee;
+      margin-right: 12%;
     }
 
     .usuario {
-      align-self: flex-end;
-      background: #111;
+      background: #3E63C7;
       color: white;
+      margin-left: 12%;
     }
 
-    .oculto {
+    .etiqueta {
+      font-size: 12px;
+      font-weight: bold;
+      margin-bottom: 5px;
+      opacity: 0.7;
+    }
+
+    #pantallaNegociacion,
+    #resultado {
       display: none;
     }
 
-    .fila {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .resultado {
-      background: #f5f7ff;
-      border-radius: 14px;
-      padding: 18px;
-      margin-top: 18px;
-    }
-
     .puntaje {
-      font-size: 42px;
+      font-size: 50px;
       font-weight: bold;
-      margin: 5px 0 10px;
+      text-align: center;
+      margin: 10px 0;
     }
 
-    .estado {
-      font-size: 13px;
+    .feedback {
+      background: #f7f7f7;
+      padding: 18px;
+      border-radius: 12px;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    .error {
+      background: #ffe7e7;
+      color: #a40000;
+      padding: 14px;
+      border-radius: 10px;
+      margin-top: 15px;
+      display: none;
+      white-space: pre-wrap;
+    }
+
+    .cargando {
+      text-align: center;
       color: #666;
-      margin-top: 10px;
-      min-height: 18px;
+      padding: 20px;
+      display: none;
     }
 
-    .personalizar {
-      margin-top: 18px;
-      padding-top: 18px;
-      border-top: 1px solid #eee;
-    }
-
-    .link-config {
-      background: transparent;
-      color: #555;
-      padding: 5px 0;
+    .progreso {
+      text-align: center;
+      color: #666;
+      margin-top: 15px;
       font-size: 14px;
     }
 
-    .feedback-estrellas {
-      display: flex;
-      gap: 7px;
-      margin-top: 10px;
-    }
-
-    .estrella {
-      background: #eee;
-      font-size: 20px;
-      padding: 8px 11px;
-    }
-
-    .estrella.activa {
-      background: #111;
-      color: white;
+    .historial {
+      margin-top: 20px;
     }
 
     .historial-item {
-      border-bottom: 1px solid #eee;
-      padding: 10px 0;
-      font-size: 14px;
+      background: #f5f5f5;
+      padding: 12px;
+      border-radius: 10px;
+      margin-bottom: 8px;
     }
 
-    @media (max-width: 600px) {
-      .fila {
-        grid-template-columns: 1fr;
-      }
-
-      .contenedor {
-        padding: 20px 12px 50px;
-      }
-
-      .tarjeta {
-        padding: 18px;
-      }
+    .pequeno {
+      font-size: 13px;
+      color: #777;
     }
   </style>
 </head>
 
 <body>
 
-<header>
-  <h1>AI Business Academy</h1>
-  <p>Aprende · Practica · Compite · Mejora · Crea · Ejecuta</p>
-</header>
+  <div class="contenedor">
 
-<div class="contenedor">
+    <!-- ========================= -->
+    <!-- CONFIGURACIÓN -->
+    <!-- ========================= -->
 
-  <!-- INICIO -->
-  <section id="pantallaInicio" class="tarjeta">
+    <div id="configuracion">
 
-    <h2>🤝 Negociar</h2>
+      <h1>Práctica de Negociación</h1>
 
-    <label for="objetivo">
-      ¿Qué quieres conseguir?
-    </label>
+      <p class="subtitulo">
+        Entrena con negociaciones realistas controladas por IA.
+      </p>
 
-    <input
-      id="objetivo"
-      type="text"
-      placeholder="Ej. Conseguir el mejor precio posible"
-    >
+      <div class="tarjeta">
 
-    <label for="articulo">
-      ¿Qué quieres negociar?
-    </label>
+        <label for="objetivo">
+          ¿Qué quieres conseguir?
+        </label>
 
-    <input
-      id="articulo"
-      type="text"
-      placeholder="Ej. Comprar 100 relojes"
-    >
+        <input
+          id="objetivo"
+          type="text"
+          placeholder="Ej. Conseguir un mejor precio"
+        >
 
-    <label for="dificultad">
-      Dificultad
-    </label>
+        <label for="articulo">
+          ¿Qué quieres negociar?
+        </label>
 
-    <select id="dificultad">
-      <option value="facil">Fácil</option>
-      <option value="medio" selected>Medio</option>
-      <option value="dificil">Difícil</option>
-    </select>
+        <input
+          id="articulo"
+          type="text"
+          placeholder="Ej. El precio de un automóvil"
+        >
 
-    <button
-      id="btnPersonalizar"
-      class="link-config"
-      onclick="mostrarPersonalizacion()"
-    >
-      ⚙️ Personalizar más
-    </button>
+        <label for="dificultad">
+          Dificultad
+        </label>
 
-    <div id="personalizacion" class="personalizar oculto">
+        <select id="dificultad">
+          <option value="Fácil">Fácil</option>
+          <option value="Medio">Medio</option>
+          <option value="Difícil">Difícil</option>
+        </select>
 
-      <div class="fila">
+        <button
+          class="boton-secundario"
+          onclick="mostrarPersonalizacion()"
+          id="botonPersonalizar"
+        >
+          ⚙️ Personalizar más
+        </button>
 
-        <div>
+        <div id="personalizacion">
+
           <label for="tipo">
             Tipo de negociación
           </label>
@@ -287,27 +274,19 @@
           <input
             id="tipo"
             type="text"
-            placeholder="Ej. Compra"
+            placeholder="Ej. Compra, venta, contrato..."
           >
-        </div>
 
-        <div>
           <label for="presupuesto">
-            Presupuesto
+            Presupuesto o precio objetivo
           </label>
 
           <input
             id="presupuesto"
             type="text"
-            placeholder="Ej. $7,000"
+            placeholder="Ej. Máximo $20,000"
           >
-        </div>
 
-      </div>
-
-      <div class="fila">
-
-        <div>
           <label for="cantidad">
             Cantidad
           </label>
@@ -315,715 +294,1060 @@
           <input
             id="cantidad"
             type="text"
-            placeholder="Ej. 100 unidades"
+            placeholder="Ej. 1 unidad"
           >
-        </div>
 
-        <div>
           <label for="contexto">
             Contexto
           </label>
 
-          <select id="contexto">
-            <option value="todos">
-              General
-            </option>
+          <textarea
+            id="contexto"
+            placeholder="Cuéntame brevemente la situación..."
+          ></textarea>
 
-            <option value="Negociación de precio">
-              Negociación de precio
-            </option>
+          <label for="condiciones">
+            Condiciones o límites
+          </label>
 
-            <option value="Buscando acuerdo">
-              Buscando acuerdo
-            </option>
+          <textarea
+            id="condiciones"
+            placeholder="Ej. No puedo pagar más de..."
+          ></textarea>
 
-            <option value="Cerrando el trato">
-              Cerrando el trato
-            </option>
-          </select>
         </div>
 
-      </div>
+        <button
+          class="boton-principal"
+          onclick="iniciarNegociacion()"
+          id="botonIniciar"
+        >
+          🚀 Empezar negociación
+        </button>
 
-      <label for="condiciones">
-        Condiciones o límites
-      </label>
+        <div
+          class="cargando"
+          id="cargandoInicio"
+        >
+          Preparando negociación...
+        </div>
 
-      <textarea
-        id="condiciones"
-        placeholder="Ej. Necesito entrega en 30 días"
-      ></textarea>
+        <div
+          class="error"
+          id="errorInicio"
+        ></div>
 
-    </div>
-
-    <button
-      id="btnIniciar"
-      class="btn-principal"
-      onclick="iniciarNegociacion()"
-    >
-      🚀 Empezar negociación
-    </button>
-
-    <div id="estadoInicio" class="estado"></div>
-
-  </section>
-
-
-  <!-- NEGOCIACIÓN -->
-  <section id="pantallaNegociacion" class="tarjeta oculto">
-
-    <h2>🤝 Negociación</h2>
-
-    <div id="chat" class="chat"></div>
-
-    <textarea
-      id="respuestaUsuario"
-      placeholder="Escribe tu respuesta..."
-    ></textarea>
-
-    <button
-      id="btnEnviar"
-      class="btn-principal"
-      onclick="enviarMensaje()"
-    >
-      Enviar respuesta
-    </button>
-
-    <button
-      id="btnFinalizar"
-      class="btn-finalizar"
-      onclick="finalizarNegociacion()"
-    >
-      Finalizar negociación
-    </button>
-
-    <div id="estadoChat" class="estado"></div>
-
-  </section>
-
-
-  <!-- RESULTADO -->
-  <section id="pantallaResultado" class="tarjeta oculto">
-
-    <h2>🎓 Resultado</h2>
-
-    <div class="resultado">
-
-      <div>Puntaje</div>
-
-      <div id="puntaje" class="puntaje">
-        -
-      </div>
-
-      <div id="feedback">
-        Evaluando...
       </div>
 
     </div>
 
-    <button
-      class="btn-principal"
-      onclick="nuevaNegociacion()"
-    >
-      🔄 Nueva negociación
-    </button>
 
-  </section>
+    <!-- ========================= -->
+    <!-- NEGOCIACIÓN -->
+    <!-- ========================= -->
 
+    <div id="pantallaNegociacion">
 
-  <!-- FEEDBACK -->
-  <section id="pantallaFeedback" class="tarjeta oculto">
+      <div class="tarjeta">
 
-    <h2>⭐ ¿Qué te pareció?</h2>
+        <h1>Negociación</h1>
 
-    <p>
-      Tu opinión nos ayuda a mejorar la academia.
-    </p>
+        <p class="subtitulo">
+          Habla naturalmente. La IA reaccionará a tus decisiones.
+        </p>
 
-    <div class="feedback-estrellas">
+        <div
+          class="chat"
+          id="chat"
+        ></div>
 
-      <button
-        class="estrella"
-        onclick="seleccionarEstrella(1)"
-      >
-        ★
-      </button>
+        <div
+          class="cargando"
+          id="cargandoRespuesta"
+        >
+          El oponente está pensando...
+        </div>
 
-      <button
-        class="estrella"
-        onclick="seleccionarEstrella(2)"
-      >
-        ★
-      </button>
+        <textarea
+          id="respuestaUsuario"
+          placeholder="Escribe tu respuesta..."
+        ></textarea>
 
-      <button
-        class="estrella"
-        onclick="seleccionarEstrella(3)"
-      >
-        ★
-      </button>
+        <button
+          class="boton-enviar"
+          onclick="enviarRespuesta()"
+          id="botonEnviar"
+        >
+          Enviar respuesta
+        </button>
 
-      <button
-        class="estrella"
-        onclick="seleccionarEstrella(4)"
-      >
-        ★
-      </button>
+        <button
+          class="boton-finalizar"
+          onclick="finalizarNegociacion()"
+          id="botonFinalizar"
+        >
+          Finalizar negociación
+        </button>
 
-      <button
-        class="estrella"
-        onclick="seleccionarEstrella(5)"
-      >
-        ★
-      </button>
+        <div
+          class="error"
+          id="errorNegociacion"
+        ></div>
+
+      </div>
 
     </div>
 
-    <textarea
-      id="comentarioFeedback"
-      placeholder="¿Qué mejorarías?"
-    ></textarea>
 
-    <button
-      class="btn-principal"
-      onclick="enviarFeedback()"
-    >
-      Enviar opinión
-    </button>
+    <!-- ========================= -->
+    <!-- RESULTADO -->
+    <!-- ========================= -->
 
-    <div id="estadoFeedback" class="estado"></div>
+    <div id="resultado">
 
-  </section>
+      <div class="tarjeta">
 
+        <h1>Resultado</h1>
 
-  <!-- HISTORIAL -->
-  <section class="tarjeta">
+        <p class="subtitulo">
+          Así fue tu desempeño en esta negociación.
+        </p>
 
-    <h2>📚 Tu progreso</h2>
+        <div
+          class="puntaje"
+          id="puntaje"
+        >
+          --
+        </div>
 
-    <p>
-      Negociaciones completadas:
-      <strong id="contadorNegociaciones">0</strong>
-    </p>
+        <div
+          class="feedback"
+          id="feedback"
+        ></div>
 
-    <p>
-      Promedio:
-      <strong id="promedioPuntaje">-</strong>
-    </p>
+        <br>
 
-    <div id="historialResultados"></div>
+        <button
+          class="boton-principal"
+          onclick="nuevaNegociacion()"
+        >
+          🔄 Nueva negociación
+        </button>
 
-    <button
-      class="btn-secundario"
-      onclick="reiniciarProgreso()"
-    >
-      Reiniciar progreso
-    </button>
+      </div>
 
-  </section>
+      <div class="tarjeta">
 
-</div>
+        <h2>Tu progreso</h2>
+
+        <p id="estadisticas">
+          Todavía no tienes negociaciones registradas.
+        </p>
+
+        <div
+          class="historial"
+          id="historialResultados"
+        ></div>
+
+      </div>
+
+    </div>
+
+  </div>
 
 
 <script>
 
-  // =========================================================
+  // ==========================================
   // CONFIGURACIÓN
-  // =========================================================
+  // ==========================================
 
-  const API =
+  const API_URL =
     "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
+
+
+  // ==========================================
+  // VARIABLES
+  // ==========================================
 
   let sessionId = "";
 
   let historial = [];
 
-  let puntajes =
-    JSON.parse(
-      localStorage.getItem("puntajes") || "[]"
-    );
-
-  let historialResultados =
-    JSON.parse(
-      localStorage.getItem("historialResultados") || "[]"
-    );
-
   let negociacionActiva = false;
 
-  let negociacionFinalizada = false;
 
-  let estrellasSeleccionadas = 0;
-
-
-  // =========================================================
-  // INICIO
-  // =========================================================
+  // ==========================================
+  // PERSONALIZACIÓN
+  // ==========================================
 
   function mostrarPersonalizacion() {
 
     const elemento =
       document.getElementById("personalizacion");
 
-    elemento.classList.toggle("oculto");
+    const boton =
+      document.getElementById("botonPersonalizar");
 
+    if (elemento.style.display === "block") {
+
+      elemento.style.display = "none";
+
+      boton.textContent =
+        "⚙️ Personalizar más";
+
+    } else {
+
+      elemento.style.display = "block";
+
+      boton.textContent =
+        "⚙️ Ocultar personalización";
+    }
   }
 
 
-  function obtenerEscenario() {
-
-    return {
-
-      contexto:
-        document.getElementById("contexto").value,
-
-      dificultad:
-        document.getElementById("dificultad").value,
-
-      objetivo:
-        document.getElementById("objetivo").value.trim(),
-
-      tipo:
-        document.getElementById("tipo").value.trim(),
-
-      articulo:
-        document.getElementById("articulo").value.trim(),
-
-      presupuesto:
-        document.getElementById("presupuesto").value.trim(),
-
-      cantidad:
-        document.getElementById("cantidad").value.trim(),
-
-      condiciones:
-        document.getElementById("condiciones").value.trim()
-
-    };
-
-  }
-
-
-  function construirParametrosEscenario() {
-
-    const escenario =
-      obtenerEscenario();
-
-    const params =
-      new URLSearchParams();
-
-    params.set(
-      "contexto",
-      escenario.contexto
-    );
-
-    params.set(
-      "dificultad",
-      escenario.dificultad
-    );
-
-    params.set(
-      "objetivo",
-      escenario.objetivo
-    );
-
-    params.set(
-      "tipo",
-      escenario.tipo
-    );
-
-    params.set(
-      "articulo",
-      escenario.articulo
-    );
-
-    params.set(
-      "presupuesto",
-      escenario.presupuesto
-    );
-
-    params.set(
-      "cantidad",
-      escenario.cantidad
-    );
-
-    params.set(
-      "condiciones",
-      escenario.condiciones
-    );
-
-    return params;
-
-  }
-
-
-  // =========================================================
+  // ==========================================
   // INICIAR NEGOCIACIÓN
-  // =========================================================
+  // ==========================================
 
   async function iniciarNegociacion() {
 
     const objetivo =
-      document.getElementById("objetivo")
-        .value.trim();
+      document.getElementById("objetivo").value.trim();
 
     const articulo =
-      document.getElementById("articulo")
-        .value.trim();
+      document.getElementById("articulo").value.trim();
+
+    const dificultad =
+      document.getElementById("dificultad").value;
+
+    const tipo =
+      document.getElementById("tipo").value.trim();
+
+    const presupuesto =
+      document.getElementById("presupuesto").value.trim();
+
+    const cantidad =
+      document.getElementById("cantidad").value.trim();
+
+    const contexto =
+      document.getElementById("contexto").value.trim();
+
+    const condiciones =
+      document.getElementById("condiciones").value.trim();
+
+
+    // Validación básica
 
     if (!objetivo) {
 
-      alert(
+      mostrarError(
+        "errorInicio",
         "Escribe qué quieres conseguir."
       );
 
       return;
-
     }
 
     if (!articulo) {
 
-      alert(
+      mostrarError(
+        "errorInicio",
         "Escribe qué quieres negociar."
       );
 
       return;
-
     }
 
 
-    const btn =
-      document.getElementById("btnIniciar");
-
-    const estado =
-      document.getElementById("estadoInicio");
+    ocultarError("errorInicio");
 
 
-    btn.disabled = true;
+    const boton =
+      document.getElementById("botonIniciar");
 
-    estado.textContent =
-      "Creando negociación...";
+    const cargando =
+      document.getElementById("cargandoInicio");
+
+
+    boton.disabled = true;
+
+    cargando.style.display = "block";
 
 
     try {
 
-      const params =
-        construirParametrosEscenario();
+      const parametros =
+        new URLSearchParams({
+
+          accion: "frase",
+
+          objetivo,
+
+          articulo,
+
+          dificultad,
+
+          tipo,
+
+          presupuesto,
+
+          cantidad,
+
+          contexto,
+
+          condiciones
+        });
+
 
       const respuesta =
         await fetch(
-          API + "?" + params.toString()
+          API_URL + "?" + parametros.toString(),
+          {
+            method: "GET"
+          }
         );
+
+
+      const texto =
+        await respuesta.text();
+
+
+      let datos;
+
+      try {
+
+        datos =
+          JSON.parse(texto);
+
+      } catch {
+
+        throw new Error(
+          "El servidor no devolvió una respuesta válida."
+        );
+      }
 
 
       if (!respuesta.ok) {
 
         throw new Error(
-          "El servidor respondió con error."
+          datos.detalle ||
+          datos.error ||
+          "El servidor rechazó la solicitud."
         );
-
       }
-
-
-      const datos =
-        await respuesta.json();
 
 
       if (!datos.respuesta) {
 
         throw new Error(
-          datos.error ||
-          "No se recibió respuesta."
+          "El servidor no devolvió la respuesta de la negociación."
         );
-
       }
 
 
-      // Guardamos el ID secreto de la sesión
+      if (!datos.sessionId) {
+
+        throw new Error(
+          "El servidor no devolvió el identificador de la sesión."
+        );
+      }
+
+
+      // Guardamos la sesión
+
       sessionId =
-        datos.sessionId || "";
+        datos.sessionId;
 
 
-      if (!sessionId) {
-
-        throw new Error(
-          "El servidor no devolvió sessionId."
-        );
-
-      }
-
-
-      historial = [
-
-        {
-          rol: "oponente",
-          texto: datos.respuesta
-        }
-
-      ];
-
-
-      negociacionActiva = true;
-
-      negociacionFinalizada = false;
-
-
-      document
-        .getElementById("pantallaInicio")
-        .classList.add("oculto");
-
-
-      document
-        .getElementById("pantallaResultado")
-        .classList.add("oculto");
-
-
-      document
-        .getElementById("pantallaFeedback")
-        .classList.add("oculto");
-
-
-      document
-        .getElementById("pantallaNegociacion")
-        .classList.remove("oculto");
-
-
-      renderizarChat();
-
-
-      document
-        .getElementById("respuestaUsuario")
-        .focus();
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      estado.textContent =
-        "No se pudo iniciar la negociación. Intenta nuevamente.";
-
-    } finally {
-
-      btn.disabled = false;
-
-    }
-
-  }
-
-
-  // =========================================================
-  // MOSTRAR CHAT
-  // =========================================================
-
-  function escaparHTML(texto) {
-
-    const div =
-      document.createElement("div");
-
-    div.textContent = texto;
-
-    return div.innerHTML;
-
-  }
-
-
-  function renderizarChat() {
-
-    const chat =
-      document.getElementById("chat");
-
-    chat.innerHTML = "";
-
-
-    historial.forEach(mensaje => {
-
-      const div =
-        document.createElement("div");
-
-
-      div.className =
-        "mensaje " +
-        (
-          mensaje.rol === "usuario"
-            ? "usuario"
-            : "oponente"
-        );
-
-
-      div.innerHTML =
-        escaparHTML(
-          mensaje.texto
-        );
-
-
-      chat.appendChild(div);
-
-    });
-
-
-    chat.scrollTop =
-      chat.scrollHeight;
-
-  }
-
-
-  // =========================================================
-  // ENVIAR MENSAJE
-  // =========================================================
-
-  async function enviarMensaje() {
-
-    if (!negociacionActiva) {
-      return;
-    }
-
-    const textarea =
-      document.getElementById(
-        "respuestaUsuario"
-      );
-
-    const texto =
-      textarea.value.trim();
-
-
-    if (!texto) {
-
-      alert(
-        "Escribe una respuesta antes de enviar."
-      );
-
-      return;
-
-    }
-
-
-    const btn =
-      document.getElementById(
-        "btnEnviar"
-      );
-
-    const estado =
-      document.getElementById(
-        "estadoChat"
-      );
-
-
-    btn.disabled = true;
-
-    estado.textContent =
-      "El oponente está pensando...";
-
-
-    historial.push({
-
-      rol: "usuario",
-      texto
-
-    });
-
-
-    renderizarChat();
-
-    textarea.value = "";
-
-
-    try {
-
-      const params =
-        construirParametrosEscenario();
-
-
-      params.set(
-        "accion",
-        "continuar"
-      );
-
-
-      params.set(
-        "sessionId",
-        sessionId
-      );
-
-
-      params.set(
-        "historial",
-        JSON.stringify(historial)
-      );
-
-
-      const respuesta =
-        await fetch(
-          API + "?" + params.toString()
-        );
-
-
-      if (!respuesta.ok) {
-
-        throw new Error(
-          "Error del servidor."
-        );
-
-      }
-
-
-      const datos =
-        await respuesta.json();
-
-
-      if (!datos.respuesta) {
-
-        throw new Error(
-          datos.error ||
-          "No se recibió respuesta."
-        );
-
-      }
+      historial = [];
 
 
       historial.push({
 
         rol: "oponente",
-        texto: datos.respuesta
 
+        texto: datos.respuesta
       });
 
 
-      renderizarChat();
+      // Cambiar pantalla
+
+      document.getElementById(
+        "configuracion"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "pantallaNegociacion"
+      ).style.display = "block";
+
+
+      // Limpiar chat
+
+      document.getElementById(
+        "chat"
+      ).innerHTML = "";
+
+
+      agregarMensaje(
+        "oponente",
+        datos.respuesta
+      );
+
+
+      negociacionActiva = true;
+
+
+      document.getElementById(
+        "respuestaUsuario"
+      ).focus();
 
 
     } catch (error) {
 
       console.error(error);
 
-      estado.textContent =
-        "No se pudo obtener respuesta. Intenta nuevamente.";
-
-
-      // Quitamos el mensaje del usuario
-      // para que pueda volver a enviarlo.
-      historial.pop();
-
-      renderizarChat();
-
+      mostrarError(
+        "errorInicio",
+        "No se pudo iniciar la negociación.\n\n" +
+        error.message
+      );
 
     } finally {
 
-      btn.disabled = false;
+      boton.disabled = false;
 
-      estado.textContent = "";
-
-      textarea.focus();
-
+      cargando.style.display = "none";
     }
-
   }
 
 
-  // =========================================================
+  // ==========================================
+  // ENVIAR RESPUESTA
+  // ==========================================
+
+  async function enviarRespuesta() {
+
+    if (!negociacionActiva) {
+      return;
+    }
+
+
+    if (!sessionId) {
+
+      mostrarError(
+        "errorNegociacion",
+        "No existe una sesión de negociación."
+      );
+
+      return;
+    }
+
+
+    const campo =
+      document.getElementById(
+        "respuestaUsuario"
+      );
+
+
+    const texto =
+      campo.value.trim();
+
+
+    if (!texto) {
+
+      mostrarError(
+        "errorNegociacion",
+        "Escribe algo antes de enviar."
+      );
+
+      return;
+    }
+
+
+    ocultarError(
+      "errorNegociacion"
+    );
+
+
+    const boton =
+      document.getElementById(
+        "botonEnviar"
+      );
+
+    const cargando =
+      document.getElementById(
+        "cargandoRespuesta"
+      );
+
+
+    boton.disabled = true;
+
+    cargando.style.display = "block";
+
+
+    agregarMensaje(
+      "usuario",
+      texto
+    );
+
+
+    historial.push({
+
+      rol: "usuario",
+
+      texto
+    });
+
+
+    campo.value = "";
+
+
+    try {
+
+      const url =
+        API_URL +
+        "?accion=continuar" +
+        "&sessionId=" +
+        encodeURIComponent(sessionId);
+
+
+      const respuesta =
+        await fetch(
+          url,
+          {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+              historial
+            })
+          }
+        );
+
+
+      const textoRespuesta =
+        await respuesta.text();
+
+
+      let datos;
+
+      try {
+
+        datos =
+          JSON.parse(textoRespuesta);
+
+      } catch {
+
+        throw new Error(
+          "El servidor no devolvió una respuesta válida."
+        );
+      }
+
+
+      if (!respuesta.ok) {
+
+        throw new Error(
+          datos.detalle ||
+          datos.error ||
+          "No se pudo continuar la negociación."
+        );
+      }
+
+
+      if (!datos.respuesta) {
+
+        throw new Error(
+          "El servidor no devolvió una respuesta del oponente."
+        );
+      }
+
+
+      agregarMensaje(
+        "oponente",
+        datos.respuesta
+      );
+
+
+      historial.push({
+
+        rol: "oponente",
+
+        texto: datos.respuesta
+      });
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      mostrarError(
+        "errorNegociacion",
+        "No se pudo enviar la respuesta.\n\n" +
+        error.message
+      );
+
+    } finally {
+
+      boton.disabled = false;
+
+      cargando.style.display = "none";
+
+      campo.focus();
+    }
+  }
+
+
+  // ==========================================
+  // FINALIZAR
+  // ==========================================
+
+  async function finalizarNegociacion() {
+
+    if (!sessionId) {
+
+      mostrarError(
+        "errorNegociacion",
+        "No existe una sesión activa."
+      );
+
+      return;
+    }
+
+
+    if (
+      !confirm(
+        "¿Seguro que quieres finalizar la negociación?"
+      )
+    ) {
+      return;
+    }
+
+
+    const boton =
+      document.getElementById(
+        "botonFinalizar"
+      );
+
+
+    boton.disabled = true;
+
+
+    try {
+
+      const respuesta =
+        await fetch(
+
+          API_URL +
+          "?accion=evaluar" +
+          "&sessionId=" +
+          encodeURIComponent(sessionId),
+
+          {
+
+            method: "POST",
+
+            headers: {
+              "Content-Type":
+                "application/json"
+            },
+
+            body: JSON.stringify({
+              historial
+            })
+          }
+        );
+
+
+      const texto =
+        await respuesta.text();
+
+
+      let datos;
+
+      try {
+
+        datos =
+          JSON.parse(texto);
+
+      } catch {
+
+        throw new Error(
+          "El servidor no devolvió una respuesta válida."
+        );
+      }
+
+
+      if (!respuesta.ok) {
+
+        throw new Error(
+          datos.detalle ||
+          datos.error ||
+          "No se pudo evaluar la negociación."
+        );
+      }
+
+
+      mostrarResultado(
+        datos.puntaje,
+        datos.feedback
+      );
+
+
+      negociacionActiva = false;
+
+
+    } catch (error) {
+
+      console.error(error);
+
+      mostrarError(
+        "errorNegociacion",
+        "No se pudo finalizar la negociación.\n\n" +
+        error.message
+      );
+
+    } finally {
+
+      boton.disabled = false;
+    }
+  }
+
+
+  // ==========================================
+  // MOSTRAR MENSAJE
+  // ==========================================
+
+  function agregarMensaje(
+    tipo,
+    texto
+  ) {
+
+    const chat =
+      document.getElementById(
+        "chat"
+      );
+
+
+    const mensaje =
+      document.createElement(
+        "div"
+      );
+
+
+    mensaje.className =
+      "mensaje " +
+      tipo;
+
+
+    const etiqueta =
+      document.createElement(
+        "div"
+      );
+
+
+    etiqueta.className =
+      "etiqueta";
+
+
+    etiqueta.textContent =
+      tipo === "oponente"
+        ? "OPONENTE"
+        : "TÚ";
+
+
+    const contenido =
+      document.createElement(
+        "div"
+      );
+
+
+    contenido.textContent =
+      texto;
+
+
+    mensaje.appendChild(
+      etiqueta
+    );
+
+    mensaje.appendChild(
+      contenido
+    );
+
+
+    chat.appendChild(
+      mensaje
+    );
+
+
+    chat.scrollTop =
+      chat.scrollHeight;
+  }
+
+
+  // ==========================================
+  // RESULTADO
+  // ==========================================
+
+  function mostrarResultado(
+    puntaje,
+    feedback
+  ) {
+
+    document.getElementById(
+      "pantallaNegociacion"
+    ).style.display = "none";
+
+
+    document.getElementById(
+      "resultado"
+    ).style.display = "block";
+
+
+    document.getElementById(
+      "puntaje"
+    ).textContent =
+      puntaje + "/100";
+
+
+    document.getElementById(
+      "feedback"
+    ).textContent =
+      feedback;
+
+
+    guardarResultado(
+      puntaje,
+      feedback
+    );
+
+
+    cargarResultados();
+  }
+
+
+  // ==========================================
+  // GUARDAR PROGRESO
+  // ==========================================
+
+  function guardarResultado(
+    puntaje,
+    feedback
+  ) {
+
+    const resultados =
+      JSON.parse(
+        localStorage.getItem(
+          "resultadosNegociacion"
+        ) || "[]"
+      );
+
+
+    resultados.push({
+
+      puntaje,
+
+      feedback,
+
+      fecha:
+        new Date().toLocaleString(
+          "es-MX"
+        )
+    });
+
+
+    localStorage.setItem(
+      "resultadosNegociacion",
+      JSON.stringify(resultados)
+    );
+  }
+
+
+  // ==========================================
+  // CARGAR RESULTADOS
+  // ==========================================
+
+  function cargarResultados() {
+
+    const resultados =
+      JSON.parse(
+        localStorage.getItem(
+          "resultadosNegociacion"
+        ) || "[]"
+      );
+
+
+    const estadisticas =
+      document.getElementById(
+        "estadisticas"
+      );
+
+
+    const historialResultados =
+      document.getElementById(
+        "historialResultados"
+      );
+
+
+    if (resultados.length === 0) {
+
+      estadisticas.textContent =
+        "Todavía no tienes negociaciones registradas.";
+
+      historialResultados.innerHTML =
+        "";
+
+      return;
+    }
+
+
+    const promedio =
+      resultados.reduce(
+        (total, item) =>
+          total + Number(item.puntaje),
+        0
+      ) / resultados.length;
+
+
+    estadisticas.textContent =
+      "Negociaciones: " +
+      resultados.length +
+      " · Promedio: " +
+      promedio.toFixed(1) +
+      "/100";
+
+
+    historialResultados.innerHTML =
+      "";
+
+
+    resultados
+      .slice()
+      .reverse()
+      .forEach(
+        (item, indice) => {
+
+          const elemento =
+            document.createElement(
+              "div"
+            );
+
+
+          elemento.className =
+            "historial-item";
+
+
+          elemento.innerHTML =
+            "<strong>" +
+            item.puntaje +
+            "/100</strong>" +
+            "<br>" +
+            "<span class='pequeno'>" +
+            item.fecha +
+            "</span>";
+
+
+          historialResultados.appendChild(
+            elemento
+          );
+        }
+      );
+  }
+
+
+  // ==========================================
+  // NUEVA NEGOCIACIÓN
+  // ==========================================
+
+  function nuevaNegociacion() {
+
+    sessionId = "";
+
+    historial = [];
+
+    negociacionActiva = false;
+
+
+    document.getElementById(
+      "resultado"
+    ).style.display = "none";
+
+
+    document.getElementById(
+      "pantallaNegociacion"
+    ).style.display = "none";
+
+
+    document.getElementById(
+      "configuracion"
+    ).style.display = "block";
+
+
+    document.getElementById(
+      "chat"
+    ).innerHTML = "";
+
+
+    document.getElementById(
+      "respuestaUsuario"
+    ).value = "";
+
+
+    document.getElementById(
+      "errorInicio"
+    ).style.display = "none";
+
+
+    document.getElementById(
+      "errorNegociacion"
+    ).style.display = "none";
+  }
+
+
+  // ==========================================
+  // ERRORES
+  // ==========================================
+
+  function mostrarError(
+    id,
+    mensaje
+  ) {
+
+    const elemento =
+      document.getElementById(id);
+
+
+    elemento.textContent =
+      mensaje;
+
+
+    elemento.style.display =
+      "block";
+  }
+
+
+  function ocultarError(id) {
+
+    document.getElementById(
+      id
+    ).style.display = "none";
+  }
+
+
+  // ==========================================
   // ENTER PARA ENVIAR
-  // =========================================================
+  // ==========================================
 
   document
-    .getElementById("respuestaUsuario")
+    .getElementById(
+      "respuestaUsuario"
+    )
     .addEventListener(
       "keydown",
       function(event) {
@@ -1035,547 +1359,17 @@
 
           event.preventDefault();
 
-          enviarMensaje();
-
+          enviarRespuesta();
         }
-
       }
     );
 
 
-  // =========================================================
-  // FINALIZAR
-  // =========================================================
-
-  async function finalizarNegociacion() {
-
-    if (
-      !negociacionActiva ||
-      negociacionFinalizada
-    ) {
-
-      return;
-
-    }
-
-
-    if (historial.length < 2) {
-
-      alert(
-        "Primero debes tener al menos un intercambio."
-      );
-
-      return;
-
-    }
-
-
-    const confirmar =
-      confirm(
-        "¿Quieres finalizar esta negociación?"
-      );
-
-
-    if (!confirmar) {
-      return;
-    }
-
-
-    negociacionFinalizada = true;
-
-    negociacionActiva = false;
-
-
-    const btnFinalizar =
-      document.getElementById(
-        "btnFinalizar"
-      );
-
-    const btnEnviar =
-      document.getElementById(
-        "btnEnviar"
-      );
-
-    const estado =
-      document.getElementById(
-        "estadoChat"
-      );
-
-
-    btnFinalizar.disabled = true;
-
-    btnEnviar.disabled = true;
-
-    estado.textContent =
-      "Evaluando tu negociación...";
-
-
-    try {
-
-      const params =
-        construirParametrosEscenario();
-
-
-      params.set(
-        "accion",
-        "evaluar"
-      );
-
-
-      params.set(
-        "sessionId",
-        sessionId
-      );
-
-
-      params.set(
-        "historial",
-        JSON.stringify(historial)
-      );
-
-
-      const respuesta =
-        await fetch(
-          API + "?" + params.toString()
-        );
-
-
-      if (!respuesta.ok) {
-
-        throw new Error(
-          "Error al evaluar."
-        );
-
-      }
-
-
-      const datos =
-        await respuesta.json();
-
-
-      if (
-        typeof datos.puntaje !==
-        "number"
-      ) {
-
-        throw new Error(
-          datos.error ||
-          "No se recibió evaluación."
-        );
-
-      }
-
-
-      mostrarResultado(
-        datos.puntaje,
-        datos.feedback
-      );
-
-
-    } catch (error) {
-
-      console.error(error);
-
-      alert(
-        "No se pudo evaluar la negociación. Intenta nuevamente."
-      );
-
-
-      negociacionFinalizada = false;
-
-      negociacionActiva = true;
-
-      btnFinalizar.disabled = false;
-
-      btnEnviar.disabled = false;
-
-      estado.textContent = "";
-
-    }
-
-  }
-
-
-  // =========================================================
-  // RESULTADO
-  // =========================================================
-
-  function mostrarResultado(
-    puntaje,
-    feedback
-  ) {
-
-    document
-      .getElementById("pantallaNegociacion")
-      .classList.add("oculto");
-
-
-    document
-      .getElementById("pantallaResultado")
-      .classList.remove("oculto");
-
-
-    document
-      .getElementById("pantallaFeedback")
-      .classList.remove("oculto");
-
-
-    document
-      .getElementById("puntaje")
-      .textContent =
-      puntaje + "/10";
-
-
-    document
-      .getElementById("feedback")
-      .textContent =
-      feedback;
-
-
-    puntajes.push(puntaje);
-
-
-    localStorage.setItem(
-      "puntajes",
-      JSON.stringify(puntajes)
-    );
-
-
-    historialResultados.unshift({
-
-      fecha:
-        new Date().toLocaleString(),
-
-      puntaje
-
-    });
-
-
-    historialResultados =
-      historialResultados.slice(
-        0,
-        20
-      );
-
-
-    localStorage.setItem(
-      "historialResultados",
-      JSON.stringify(
-        historialResultados
-      )
-    );
-
-
-    actualizarProgreso();
-
-  }
-
-
-  // =========================================================
-  // FEEDBACK
-  // =========================================================
-
-  function seleccionarEstrella(numero) {
-
-    estrellasSeleccionadas =
-      numero;
-
-
-    const estrellas =
-      document.querySelectorAll(
-        ".estrella"
-      );
-
-
-    estrellas.forEach(
-      (estrella, index) => {
-
-        estrella.classList.toggle(
-          "activa",
-          index < numero
-        );
-
-      }
-    );
-
-  }
-
-
-  async function enviarFeedback() {
-
-    if (!estrellasSeleccionadas) {
-
-      alert(
-        "Selecciona una calificación."
-      );
-
-      return;
-
-    }
-
-
-    const comentario =
-      document
-        .getElementById(
-          "comentarioFeedback"
-        )
-        .value.trim();
-
-
-    const estado =
-      document.getElementById(
-        "estadoFeedback"
-      );
-
-
-    try {
-
-      const respuesta =
-        await fetch(
-          API + "?accion=feedback",
-          {
-
-            method: "POST",
-
-            headers: {
-              "Content-Type":
-                "application/json"
-            },
-
-            body: JSON.stringify({
-
-              rating:
-                estrellasSeleccionadas,
-
-              comentario
-
-            })
-
-          }
-        );
-
-
-      const datos =
-        await respuesta.json();
-
-
-      if (!respuesta.ok) {
-
-        throw new Error(
-          datos.error ||
-          "No se pudo guardar."
-        );
-
-      }
-
-
-      estado.textContent =
-        "Gracias por tu opinión.";
-
-    } catch (error) {
-
-      console.error(error);
-
-      estado.textContent =
-        "No se pudo enviar la opinión.";
-
-    }
-
-  }
-
-
-  // =========================================================
-  // NUEVA NEGOCIACIÓN
-  // =========================================================
-
-  function nuevaNegociacion() {
-
-    sessionId = "";
-
-    historial = [];
-
-    negociacionActiva = false;
-
-    negociacionFinalizada = false;
-
-    estrellasSeleccionadas = 0;
-
-
-    document
-      .getElementById(
-        "pantallaResultado"
-      )
-      .classList.add("oculto");
-
-
-    document
-      .getElementById(
-        "pantallaFeedback"
-      )
-      .classList.add("oculto");
-
-
-    document
-      .getElementById(
-        "pantallaNegociacion"
-      )
-      .classList.add("oculto");
-
-
-    document
-      .getElementById(
-        "pantallaInicio"
-      )
-      .classList.remove("oculto");
-
-
-    document
-      .getElementById(
-        "respuestaUsuario"
-      )
-      .value = "";
-
-
-    document
-      .getElementById(
-        "comentarioFeedback"
-      )
-      .value = "";
-
-
-    document
-      .querySelectorAll(
-        ".estrella"
-      )
-      .forEach(
-        estrella =>
-          estrella.classList.remove(
-            "activa"
-          )
-      );
-
-  }
-
-
-  // =========================================================
-  // PROGRESO
-  // =========================================================
-
-  function actualizarProgreso() {
-
-    const contador =
-      document.getElementById(
-        "contadorNegociaciones"
-      );
-
-
-    const promedio =
-      document.getElementById(
-        "promedioPuntaje"
-      );
-
-
-    contador.textContent =
-      puntajes.length;
-
-
-    if (!puntajes.length) {
-
-      promedio.textContent =
-        "-";
-
-    } else {
-
-      const suma =
-        puntajes.reduce(
-          (a, b) => a + b,
-          0
-        );
-
-
-      promedio.textContent =
-        (
-          suma / puntajes.length
-        ).toFixed(1) + "/10";
-
-    }
-
-
-    const lista =
-      document.getElementById(
-        "historialResultados"
-      );
-
-
-    lista.innerHTML = "";
-
-
-    historialResultados.forEach(
-      resultado => {
-
-        const div =
-          document.createElement(
-            "div"
-          );
-
-
-        div.className =
-          "historial-item";
-
-
-        div.textContent =
-          `${resultado.fecha} — ${resultado.puntaje}/10`;
-
-
-        lista.appendChild(div);
-
-      }
-    );
-
-  }
-
-
-  // =========================================================
-  // REINICIAR
-  // =========================================================
-
-  function reiniciarProgreso() {
-
-    const confirmar =
-      confirm(
-        "¿Seguro que quieres borrar tu progreso?"
-      );
-
-
-    if (!confirmar) {
-      return;
-    }
-
-
-    localStorage.removeItem(
-      "puntajes"
-    );
-
-    localStorage.removeItem(
-      "historialResultados"
-    );
-
-
-    puntajes = [];
-
-    historialResultados = [];
-
-
-    actualizarProgreso();
-
-  }
-
-
-  // =========================================================
-  // INICIALIZAR
-  // =========================================================
-
-  actualizarProgreso();
+  // ==========================================
+  // CARGAR PROGRESO
+  // ==========================================
+
+  cargarResultados();
 
 </script>
 
