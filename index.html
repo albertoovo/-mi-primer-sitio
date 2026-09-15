@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Academia de Negociación</title>
 
 <style>
+
 * {
   box-sizing: border-box;
 }
@@ -235,10 +237,6 @@ button:disabled {
   margin-top: 15px;
 }
 
-.evolution {
-  margin-top: 20px;
-}
-
 .evolution-item {
   background: #f7f7f7;
   padding: 15px;
@@ -256,10 +254,6 @@ button:disabled {
   color: #666;
 }
 
-ul {
-  padding-left: 20px;
-}
-
 @media (max-width: 600px) {
 
   .skill-grid {
@@ -269,9 +263,12 @@ ul {
   body {
     padding: 20px 12px;
   }
+
 }
+
 </style>
 </head>
+
 
 <body>
 
@@ -279,102 +276,176 @@ ul {
 
 <h1>🎯 Academia de Negociación</h1>
 
-<!-- CONFIGURACIÓN -->
+
+<!-- =========================
+     CONFIGURACIÓN
+========================= -->
 
 <div class="card" id="configuracion">
 
 <h2>Configura tu negociación</h2>
 
+
 <label>Idioma</label>
 
 <select id="idioma">
-  <option value="auto">Automático</option>
-  <option value="es">Español</option>
-  <option value="en">English</option>
-  <option value="fr">Français</option>
-  <option value="de">Deutsch</option>
-  <option value="pt">Português</option>
+
+  <option value="es">
+    Español
+  </option>
+
+  <option value="en">
+    English
+  </option>
+
+  <option value="fr">
+    Français
+  </option>
+
+  <option value="de">
+    Deutsch
+  </option>
+
+  <option value="pt">
+    Português
+  </option>
+
 </select>
 
-<label>¿Qué quieres conseguir?</label>
+
+<label>
+  ¿Qué quieres conseguir?
+</label>
 
 <input
   id="objetivo"
   placeholder="Ejemplo: Comprar por $1,000"
 >
 
-<label>¿Qué estás negociando?</label>
+
+<label>
+  ¿Qué estás negociando?
+</label>
 
 <input
   id="articulo"
   placeholder="Ejemplo: Una computadora"
 >
 
-<label>Dificultad</label>
+
+<label>
+  Dificultad
+</label>
 
 <select id="dificultad">
-  <option value="facil">Fácil</option>
-  <option value="media" selected>Media</option>
-  <option value="dificil">Difícil</option>
-  <option value="experto">Experto</option>
+
+  <option value="facil">
+    Fácil
+  </option>
+
+  <option value="media" selected>
+    Media
+  </option>
+
+  <option value="dificil">
+    Difícil
+  </option>
+
+  <option value="experto">
+    Experto
+  </option>
+
 </select>
 
-<label>Tipo de negociación</label>
+
+<label>
+  Tipo de negociación
+</label>
 
 <input
   id="tipo"
   placeholder="Compra, venta, salario, negocio..."
 >
 
-<label>Presupuesto</label>
+
+<label>
+  Presupuesto
+</label>
 
 <input
   id="presupuesto"
   placeholder="Opcional"
 >
 
-<label>Cantidad</label>
+
+<label>
+  Cantidad
+</label>
 
 <input
   id="cantidad"
   placeholder="Opcional"
 >
 
-<label>Contexto</label>
+
+<label>
+  Contexto
+</label>
 
 <textarea
   id="contexto"
   placeholder="Opcional"
 ></textarea>
 
-<label>Condiciones</label>
+
+<label>
+  Condiciones
+</label>
 
 <textarea
   id="condiciones"
   placeholder="Opcional"
 ></textarea>
 
+
 <button
   id="btnIniciar"
   onclick="iniciarNegociacion()"
 >
-Comenzar negociación
+  Comenzar negociación
 </button>
+
 
 <div id="mensajeInicio"></div>
 
 </div>
 
 
-<!-- NEGOCIACIÓN -->
 
-<div class="card hidden" id="negociacion">
+<!-- =========================
+     NEGOCIACIÓN
+========================= -->
 
-<h2>💬 Negociación</h2>
+<div
+  class="card hidden"
+  id="negociacion"
+>
 
-<div id="chat" class="chat"></div>
+<h2>
+  💬 Negociación
+</h2>
 
-<label>Tu respuesta</label>
+
+<div
+  id="chat"
+  class="chat"
+></div>
+
+
+<label>
+  Tu respuesta
+</label>
+
 
 <textarea
   id="respuesta"
@@ -382,86 +453,136 @@ Comenzar negociación
   onkeydown="manejarEnter(event)"
 ></textarea>
 
+
 <button
   id="btnEnviar"
   onclick="enviarRespuesta()"
 >
-Enviar respuesta
+  Enviar respuesta
 </button>
+
 
 <button
   id="btnFinalizar"
   class="secondary"
   onclick="finalizarNegociacion()"
 >
-Finalizar negociación
+  Finalizar negociación
 </button>
+
 
 <div id="mensajeRespuesta"></div>
 
 </div>
 
 
-<!-- RESULTADO -->
 
-<div class="card hidden" id="resultado">
+<!-- =========================
+     RESULTADO
+========================= -->
 
-<h2>📊 Resultado</h2>
+<div
+  class="card hidden"
+  id="resultado"
+>
 
-<div class="score" id="puntaje"></div>
+<h2>
+  📊 Resultado
+</h2>
+
+
+<div
+  class="score"
+  id="puntaje"
+></div>
+
 
 <div id="feedback"></div>
 
+
 <div id="evaluacion"></div>
+
 
 <button
   id="btnEntrenamiento"
   class="training-button hidden"
   onclick="obtenerEntrenamiento()"
 >
-🎯 Entrenar mi habilidad más débil
+  🎯 Entrenar mi habilidad más débil
 </button>
+
 
 <div id="mensajeEntrenamiento"></div>
 
 </div>
 
 
-<!-- ENTRENAMIENTO -->
 
-<div class="card hidden" id="entrenamiento">
+<!-- =========================
+     ENTRENAMIENTO
+========================= -->
 
-<h2>🎯 Entrenamiento personalizado</h2>
+<div
+  class="card hidden"
+  id="entrenamiento"
+>
 
-<div id="contenidoEntrenamiento"></div>
+<h2>
+  🎯 Entrenamiento personalizado
+</h2>
+
+
+<div
+  id="contenidoEntrenamiento"
+></div>
 
 </div>
 
 
-<!-- EVOLUCIÓN -->
 
-<div class="card hidden" id="evolucion">
+<!-- =========================
+     EVOLUCIÓN
+========================= -->
 
-<h2>📈 Evolución de habilidades</h2>
+<div
+  class="card hidden"
+  id="evolucion"
+>
 
-<div id="contenidoEvolucion"></div>
+<h2>
+  📈 Evolución de habilidades
+</h2>
+
+
+<div
+  id="contenidoEvolucion"
+></div>
 
 </div>
 
 
-<!-- PROGRESO -->
+
+<!-- =========================
+     PROGRESO
+========================= -->
 
 <div class="card">
 
-<h2>🏆 Mi progreso</h2>
+<h2>
+  🏆 Mi progreso
+</h2>
 
-<div id="estadisticas"></div>
+
+<div
+  id="estadisticas"
+></div>
+
 
 <button
   class="danger"
   onclick="reiniciar()"
 >
-Reiniciar progreso
+  Reiniciar progreso
 </button>
 
 </div>
@@ -469,13 +590,24 @@ Reiniciar progreso
 </div>
 
 
+
 <script>
+
+
+/* =========================
+   API
+========================= */
 
 const API_URL =
 "https://academia-negociacion-api.aispuroalberto546.workers.dev/";
 
 
+/* =========================
+   VARIABLES
+========================= */
+
 let historial = [];
+
 let contador = 0;
 
 let sessionId = null;
@@ -490,20 +622,27 @@ let resultadosEjercicios = [];
 
 
 /* =========================
-   PROGRESO LOCAL
+   CARGAR PROGRESO
 ========================= */
 
 historial =
 JSON.parse(
-  localStorage.getItem("historial") || "[]"
+  localStorage.getItem(
+    "historial"
+  ) || "[]"
 );
+
 
 contador =
 Number(
-  localStorage.getItem("contador") || 0
+  localStorage.getItem(
+    "contador"
+  ) || 0
 );
 
+
 actualizarEstadisticas();
+
 
 
 /* =========================
@@ -513,30 +652,15 @@ actualizarEstadisticas();
 function obtenerIdioma() {
 
   const selector =
-    document.getElementById("idioma");
+    document.getElementById(
+      "idioma"
+    );
 
-  const idioma =
-    selector.value;
 
-  if (idioma === "auto") {
+  return selector.value;
 
-    const navegador =
-      navigator.language
-        .split("-")[0]
-        .toLowerCase();
-
-    if (
-      ["es","en","fr","de","pt"]
-      .includes(navegador)
-    ) {
-      return navegador;
-    }
-
-    return "es";
-  }
-
-  return idioma;
 }
+
 
 
 /* =========================
@@ -545,52 +669,124 @@ function obtenerIdioma() {
 
 async function iniciarNegociacion() {
 
+
   const objetivo =
-    document.getElementById("objetivo")
-      .value.trim();
+    document
+      .getElementById(
+        "objetivo"
+      )
+      .value
+      .trim();
+
 
   const articulo =
-    document.getElementById("articulo")
-      .value.trim();
+    document
+      .getElementById(
+        "articulo"
+      )
+      .value
+      .trim();
+
 
   const dificultad =
-    document.getElementById("dificultad")
+    document
+      .getElementById(
+        "dificultad"
+      )
       .value;
 
+
+  /*
+    IMPORTANTE:
+
+    El frontend usa "media",
+    pero el Worker usa "medio".
+  */
+
+  const dificultadWorker =
+    dificultad === "media"
+      ? "medio"
+      : dificultad;
+
+
   const tipo =
-    document.getElementById("tipo")
-      .value.trim();
+    document
+      .getElementById(
+        "tipo"
+      )
+      .value
+      .trim();
+
 
   const presupuesto =
-    document.getElementById("presupuesto")
-      .value.trim();
+    document
+      .getElementById(
+        "presupuesto"
+      )
+      .value
+      .trim();
+
 
   const cantidad =
-    document.getElementById("cantidad")
-      .value.trim();
+    document
+      .getElementById(
+        "cantidad"
+      )
+      .value
+      .trim();
+
 
   const contexto =
-    document.getElementById("contexto")
-      .value.trim();
+    document
+      .getElementById(
+        "contexto"
+      )
+      .value
+      .trim();
+
 
   const condiciones =
-    document.getElementById("condiciones")
-      .value.trim();
+    document
+      .getElementById(
+        "condiciones"
+      )
+      .value
+      .trim();
 
 
-  if (!objetivo || !articulo) {
+  if (
+    !objetivo ||
+    !articulo
+  ) {
 
     document.getElementById(
       "mensajeInicio"
     ).innerHTML =
 
-    `<div class="mensaje">
-      Escribe el objetivo y lo que estás negociando.
-    </div>`;
+    `
+    <div class="mensaje">
+
+      Escribe el objetivo y
+      lo que estás negociando.
+
+    </div>
+    `;
 
     return;
+
   }
 
+
+  /*
+    Guardamos el idioma elegido.
+
+    Por ahora solamente lo
+    guardamos en frontend.
+
+    La integración real del
+    idioma con Gemini la haremos
+    después directamente en Worker.
+  */
 
   idiomaActual =
     obtenerIdioma();
@@ -601,46 +797,104 @@ async function iniciarNegociacion() {
       "btnIniciar"
     );
 
+
   btn.disabled = true;
 
   btn.textContent =
     "Preparando negociación...";
 
 
+  document.getElementById(
+    "mensajeInicio"
+  ).innerHTML = "";
+
+
   try {
 
+
+    /*
+      IMPORTANTE:
+
+      NO mandamos idioma aquí
+      todavía.
+
+      Primero recuperamos
+      la conexión estable
+      con el Worker.
+    */
+
     const url =
+
       API_URL +
+
       "?accion=frase" +
+
       "&objetivo=" +
-      encodeURIComponent(objetivo) +
+      encodeURIComponent(
+        objetivo
+      ) +
+
       "&articulo=" +
-      encodeURIComponent(articulo) +
+      encodeURIComponent(
+        articulo
+      ) +
+
       "&dificultad=" +
-      encodeURIComponent(dificultad) +
+      encodeURIComponent(
+        dificultadWorker
+      ) +
+
       "&tipo=" +
-      encodeURIComponent(tipo) +
+      encodeURIComponent(
+        tipo
+      ) +
+
       "&presupuesto=" +
-      encodeURIComponent(presupuesto) +
+      encodeURIComponent(
+        presupuesto
+      ) +
+
       "&cantidad=" +
-      encodeURIComponent(cantidad) +
+      encodeURIComponent(
+        cantidad
+      ) +
+
       "&contexto=" +
-      encodeURIComponent(contexto) +
+      encodeURIComponent(
+        contexto
+      ) +
+
       "&condiciones=" +
-      encodeURIComponent(condiciones) +
-      "&idioma=" +
-      encodeURIComponent(idiomaActual);
+      encodeURIComponent(
+        condiciones
+      );
+
+
+    console.log(
+      "URL enviada:",
+      url
+    );
 
 
     const respuesta =
-      await fetch(url);
+      await fetch(
+        url
+      );
 
 
     const datos =
       await respuesta.json();
 
 
-    if (!respuesta.ok) {
+    console.log(
+      "Respuesta del Worker:",
+      datos
+    );
+
+
+    if (
+      !respuesta.ok
+    ) {
 
       throw new Error(
         datos.error ||
@@ -650,8 +904,20 @@ async function iniciarNegociacion() {
     }
 
 
+    if (
+      !datos.respuesta
+    ) {
+
+      throw new Error(
+        "El Worker no devolvió una respuesta de Gemini."
+      );
+
+    }
+
+
     sessionId =
       datos.sessionId;
+
 
     historial = [];
 
@@ -668,40 +934,69 @@ async function iniciarNegociacion() {
 
     document.getElementById(
       "configuracion"
-    ).classList.add("hidden");
+    ).classList.add(
+      "hidden"
+    );
 
 
     document.getElementById(
       "resultado"
-    ).classList.add("hidden");
+    ).classList.add(
+      "hidden"
+    );
 
 
     document.getElementById(
       "entrenamiento"
-    ).classList.add("hidden");
+    ).classList.add(
+      "hidden"
+    );
 
 
     document.getElementById(
       "evolucion"
-    ).classList.add("hidden");
+    ).classList.add(
+      "hidden"
+    );
 
 
     document.getElementById(
       "negociacion"
-    ).classList.remove("hidden");
+    ).classList.remove(
+      "hidden"
+    );
 
 
-  } catch (error) {
+  } catch (
+    error
+  ) {
+
+
+    console.error(
+      "Error iniciando:",
+      error
+    );
+
 
     document.getElementById(
       "mensajeInicio"
     ).innerHTML =
 
-    `<div class="mensaje">
-      Error: ${error.message}
-    </div>`;
+    `
+    <div class="mensaje">
+
+      <strong>
+        Error:
+      </strong>
+
+      ${error.message}
+
+    </div>
+    `;
+
 
   } finally {
+
 
     btn.disabled = false;
 
@@ -713,46 +1008,81 @@ async function iniciarNegociacion() {
 }
 
 
+
 /* =========================
    OPONENTE
 ========================= */
 
-function agregarOponente(texto) {
+function agregarOponente(
+  texto
+) {
 
   const chat =
-    document.getElementById("chat");
+    document.getElementById(
+      "chat"
+    );
+
 
   chat.innerHTML +=
 
-  `<div class="oponente">
-    <strong>🤖 Oponente:</strong><br>
+  `
+  <div class="oponente">
+
+    <strong>
+      🤖 Oponente:
+    </strong>
+
+    <br>
+
     ${texto}
-  </div>`;
+
+  </div>
+  `;
+
 
   chat.scrollTop =
     chat.scrollHeight;
+
 }
+
 
 
 /* =========================
    USUARIO
 ========================= */
 
-function agregarUsuario(texto) {
+function agregarUsuario(
+  texto
+) {
 
   const chat =
-    document.getElementById("chat");
+    document.getElementById(
+      "chat"
+    );
+
 
   chat.innerHTML +=
 
-  `<div class="usuario">
-    <strong>🧑 Tú:</strong><br>
+  `
+  <div class="usuario">
+
+    <strong>
+      🧑 Tú:
+    </strong>
+
+    <br>
+
     ${texto}
-  </div>`;
+
+  </div>
+  `;
+
 
   chat.scrollTop =
     chat.scrollHeight;
+
 }
+
 
 
 /* =========================
@@ -761,10 +1091,12 @@ function agregarUsuario(texto) {
 
 async function enviarRespuesta() {
 
+
   const textarea =
     document.getElementById(
       "respuesta"
     );
+
 
   const texto =
     textarea.value.trim();
@@ -776,11 +1108,17 @@ async function enviarRespuesta() {
       "mensajeRespuesta"
     ).innerHTML =
 
-    `<div class="mensaje">
-      Por favor escribe algo antes de enviar.
-    </div>`;
+    `
+    <div class="mensaje">
+
+      Por favor escribe algo
+      antes de enviar.
+
+    </div>
+    `;
 
     return;
+
   }
 
 
@@ -790,20 +1128,32 @@ async function enviarRespuesta() {
       "mensajeRespuesta"
     ).innerHTML =
 
-    `<div class="mensaje">
+    `
+    <div class="mensaje">
+
       No hay una negociación activa.
-    </div>`;
+
+    </div>
+    `;
 
     return;
+
   }
 
 
-  agregarUsuario(texto);
+  agregarUsuario(
+    texto
+  );
 
 
   historial.push({
-    rol: "usuario",
-    texto: texto
+
+    rol:
+      "usuario",
+
+    texto:
+      texto
+
   });
 
 
@@ -815,6 +1165,7 @@ async function enviarRespuesta() {
       "btnEnviar"
     );
 
+
   btn.disabled = true;
 
   btn.textContent =
@@ -823,32 +1174,42 @@ async function enviarRespuesta() {
 
   try {
 
+
     const respuesta =
       await fetch(
 
         API_URL +
-        "?accion=continuar&sessionId=" +
-        encodeURIComponent(sessionId),
+
+        "?accion=continuar" +
+
+        "&sessionId=" +
+
+        encodeURIComponent(
+          sessionId
+        ),
 
         {
 
-          method: "POST",
+          method:
+            "POST",
 
           headers: {
+
             "Content-Type":
-            "application/json"
+              "application/json"
+
           },
 
           body:
-          JSON.stringify({
+            JSON.stringify({
 
-            historial:
-              historial,
+              historial:
+                historial,
 
-            idioma:
-              idiomaActual
+              idioma:
+                idiomaActual
 
-          })
+            })
 
         }
 
@@ -859,11 +1220,24 @@ async function enviarRespuesta() {
       await respuesta.json();
 
 
-    if (!respuesta.ok) {
+    if (
+      !respuesta.ok
+    ) {
 
       throw new Error(
         datos.error ||
         "No se pudo continuar."
+      );
+
+    }
+
+
+    if (
+      !datos.respuesta
+    ) {
+
+      throw new Error(
+        "El Worker no devolvió respuesta."
       );
 
     }
@@ -885,17 +1259,35 @@ async function enviarRespuesta() {
     );
 
 
-  } catch (error) {
+  } catch (
+    error
+  ) {
+
+
+    console.error(
+      error
+    );
+
 
     document.getElementById(
       "mensajeRespuesta"
     ).innerHTML =
 
-    `<div class="mensaje">
-      Error: ${error.message}
-    </div>`;
+    `
+    <div class="mensaje">
+
+      <strong>
+        Error:
+      </strong>
+
+      ${error.message}
+
+    </div>
+    `;
+
 
   } finally {
+
 
     btn.disabled = false;
 
@@ -907,11 +1299,14 @@ async function enviarRespuesta() {
 }
 
 
+
 /* =========================
    ENTER
 ========================= */
 
-function manejarEnter(event) {
+function manejarEnter(
+  event
+) {
 
   if (
     event.key === "Enter" &&
@@ -927,14 +1322,18 @@ function manejarEnter(event) {
 }
 
 
+
 /* =========================
    FINALIZAR
 ========================= */
 
 async function finalizarNegociacion() {
 
+
   if (!sessionId) {
+
     return;
+
   }
 
 
@@ -942,6 +1341,7 @@ async function finalizarNegociacion() {
     document.getElementById(
       "btnFinalizar"
     );
+
 
   btn.disabled = true;
 
@@ -951,32 +1351,42 @@ async function finalizarNegociacion() {
 
   try {
 
+
     const respuesta =
       await fetch(
 
         API_URL +
-        "?accion=evaluar&sessionId=" +
-        encodeURIComponent(sessionId),
+
+        "?accion=evaluar" +
+
+        "&sessionId=" +
+
+        encodeURIComponent(
+          sessionId
+        ),
 
         {
 
-          method: "POST",
+          method:
+            "POST",
 
           headers: {
+
             "Content-Type":
-            "application/json"
+              "application/json"
+
           },
 
           body:
-          JSON.stringify({
+            JSON.stringify({
 
-            historial:
-              historial,
+              historial:
+                historial,
 
-            idioma:
-              idiomaActual
+              idioma:
+                idiomaActual
 
-          })
+            })
 
         }
 
@@ -987,7 +1397,9 @@ async function finalizarNegociacion() {
       await respuesta.json();
 
 
-    if (!respuesta.ok) {
+    if (
+      !respuesta.ok
+    ) {
 
       throw new Error(
         datos.error ||
@@ -998,20 +1410,29 @@ async function finalizarNegociacion() {
 
 
     mostrarResultado(
+
       datos.puntaje,
+
       datos.feedback,
+
       datos.evaluacion
+
     );
 
 
-  } catch (error) {
+  } catch (
+    error
+  ) {
+
 
     alert(
       "Error al evaluar: " +
       error.message
     );
 
+
   } finally {
+
 
     btn.disabled = false;
 
@@ -1023,39 +1444,55 @@ async function finalizarNegociacion() {
 }
 
 
+
 /* =========================
    RESULTADO
 ========================= */
 
 function mostrarResultado(
+
   puntaje,
+
   feedback,
+
   evaluacion
+
 ) {
+
 
   document.getElementById(
     "negociacion"
-  ).classList.add("hidden");
+  ).classList.add(
+    "hidden"
+  );
 
 
   document.getElementById(
     "resultado"
-  ).classList.remove("hidden");
+  ).classList.remove(
+    "hidden"
+  );
 
 
   document.getElementById(
     "puntaje"
   ).textContent =
-    puntaje + "/100";
+
+    puntaje +
+    "/100";
 
 
   document.getElementById(
     "feedback"
   ).innerHTML =
 
-  `<div class="mensaje">
+  `
+  <div class="mensaje">
+
     ${feedback || ""}
-  </div>`;
+
+  </div>
+  `;
 
 
   mostrarEvaluacion(
@@ -1078,8 +1515,11 @@ function mostrarResultado(
       "hidden"
     );
 
+
     boton.textContent =
+
       "🎯 Entrenar " +
+
       evaluacion
         .habilidadMasDebil
         .nombre;
@@ -1091,8 +1531,11 @@ function mostrarResultado(
 
 
   historialResultadosGuardar(
+
     puntaje,
+
     evaluacion
+
   );
 
 
@@ -1101,13 +1544,15 @@ function mostrarResultado(
 }
 
 
+
 /* =========================
-   EVALUACIÓN
+   MOSTRAR EVALUACIÓN
 ========================= */
 
 function mostrarEvaluacion(
   evaluacion
 ) {
+
 
   const contenedor =
     document.getElementById(
@@ -1117,13 +1562,16 @@ function mostrarEvaluacion(
 
   if (!evaluacion) {
 
-    contenedor.innerHTML = "";
+    contenedor.innerHTML =
+      "";
 
     return;
+
   }
 
 
-  let html = "";
+  let html =
+    "";
 
 
   if (
@@ -1132,7 +1580,8 @@ function mostrarEvaluacion(
 
     html +=
 
-    `<div class="mensaje">
+    `
+    <div class="mensaje">
 
       <strong>
         🎯 Habilidad más débil:
@@ -1147,25 +1596,32 @@ function mostrarEvaluacion(
       }
 
       (
+
       ${
         evaluacion
           .habilidadMasDebil
           .puntaje
       }/100
+
       )
 
-    </div>`;
+    </div>
+    `;
 
   }
 
 
-  if (evaluacion.habilidades) {
+  if (
+    evaluacion.habilidades
+  ) {
+
 
     html +=
       "<h3>Habilidades</h3>";
 
+
     html +=
-      `<div class="skill-grid">`;
+      '<div class="skill-grid">';
 
 
     const habilidades = {
@@ -1195,26 +1651,37 @@ function mostrarEvaluacion(
 
 
     for (
-      const clave in habilidades
+      const clave
+      in habilidades
     ) {
 
+
       const valor =
+
         evaluacion
-          .habilidades[clave] ?? 0;
+          .habilidades[clave]
+        ??
+        0;
 
 
       const debil =
-        evaluacion
-          .habilidadMasDebil &&
+
         evaluacion
           .habilidadMasDebil
-          .clave === clave;
+        &&
+        evaluacion
+          .habilidadMasDebil
+          .clave ===
+          clave;
 
 
       html +=
 
-      `<div class="skill ${
-        debil ? "debil" : ""
+      `
+      <div class="skill ${
+        debil
+          ? "debil"
+          : ""
       }">
 
         <strong>
@@ -1223,14 +1690,20 @@ function mostrarEvaluacion(
 
         ${valor}/100
 
-        ${debil ? " 🎯" : ""}
+        ${
+          debil
+            ? " 🎯"
+            : ""
+        }
 
-      </div>`;
+      </div>
+      `;
 
     }
 
 
-    html += "</div>";
+    html +=
+      "</div>";
 
   }
 
@@ -1239,22 +1712,32 @@ function mostrarEvaluacion(
     evaluacion.queHizoBien?.length
   ) {
 
+
     html +=
-      `<h3>✅ Qué hiciste bien</h3>
-       <ul>`;
+
+    `
+    <h3>
+      ✅ Qué hiciste bien
+    </h3>
+
+    <ul>
+    `;
 
 
     evaluacion
       .queHizoBien
-      .forEach(item => {
+      .forEach(
+        item => {
 
-        html +=
-          `<li>${item}</li>`;
+          html +=
+            `<li>${item}</li>`;
 
-      });
+        }
+      );
 
 
-    html += "</ul>";
+    html +=
+      "</ul>";
 
   }
 
@@ -1263,67 +1746,95 @@ function mostrarEvaluacion(
     evaluacion.queHizoMal?.length
   ) {
 
+
     html +=
-      `<h3>❌ Qué debes mejorar</h3>
-       <ul>`;
+
+    `
+    <h3>
+      ❌ Qué debes mejorar
+    </h3>
+
+    <ul>
+    `;
 
 
     evaluacion
       .queHizoMal
-      .forEach(item => {
+      .forEach(
+        item => {
 
-        html +=
-          `<li>${item}</li>`;
+          html +=
+            `<li>${item}</li>`;
 
-      });
+        }
+      );
 
 
-    html += "</ul>";
+    html +=
+      "</ul>";
 
   }
 
 
-  if (evaluacion.mayorError) {
+  if (
+    evaluacion.mayorError
+  ) {
 
     html +=
 
-    `<h3>
+    `
+    <h3>
       ⚠️ Mayor error
     </h3>
 
     <p>
-      ${evaluacion.mayorError}
-    </p>`;
+      ${
+        evaluacion.mayorError
+      }
+    </p>
+    `;
 
   }
 
 
-  if (evaluacion.deberiaMejorar) {
+  if (
+    evaluacion.deberiaMejorar
+  ) {
 
     html +=
 
-    `<h3>
+    `
+    <h3>
       📈 Debes mejorar
     </h3>
 
     <p>
-      ${evaluacion.deberiaMejorar}
-    </p>`;
+      ${
+        evaluacion.deberiaMejorar
+      }
+    </p>
+    `;
 
   }
 
 
-  if (evaluacion.consejo) {
+  if (
+    evaluacion.consejo
+  ) {
 
     html +=
 
-    `<h3>
+    `
+    <h3>
       💡 Consejo
     </h3>
 
     <p>
-      ${evaluacion.consejo}
-    </p>`;
+      ${
+        evaluacion.consejo
+      }
+    </p>
+    `;
 
   }
 
@@ -1334,14 +1845,18 @@ function mostrarEvaluacion(
 }
 
 
+
 /* =========================
    ENTRENAMIENTO
 ========================= */
 
 async function obtenerEntrenamiento() {
 
+
   if (!sessionId) {
+
     return;
+
   }
 
 
@@ -1349,6 +1864,7 @@ async function obtenerEntrenamiento() {
     document.getElementById(
       "btnEntrenamiento"
     );
+
 
   const mensaje =
     document.getElementById(
@@ -1364,36 +1880,51 @@ async function obtenerEntrenamiento() {
 
   mensaje.innerHTML =
 
-  `<div class="mensaje">
-    Creando entrenamiento personalizado...
-  </div>`;
+  `
+  <div class="mensaje">
+
+    Creando entrenamiento
+    personalizado...
+
+  </div>
+  `;
 
 
   try {
+
 
     const respuesta =
       await fetch(
 
         API_URL +
-        "?accion=entrenamiento&sessionId=" +
-        encodeURIComponent(sessionId),
+
+        "?accion=entrenamiento" +
+
+        "&sessionId=" +
+
+        encodeURIComponent(
+          sessionId
+        ),
 
         {
 
-          method: "POST",
+          method:
+            "POST",
 
           headers: {
+
             "Content-Type":
-            "application/json"
+              "application/json"
+
           },
 
           body:
-          JSON.stringify({
+            JSON.stringify({
 
-            idioma:
-              idiomaActual
+              idioma:
+                idiomaActual
 
-          })
+            })
 
         }
 
@@ -1404,7 +1935,9 @@ async function obtenerEntrenamiento() {
       await respuesta.json();
 
 
-    if (!respuesta.ok) {
+    if (
+      !respuesta.ok
+    ) {
 
       throw new Error(
         datos.error ||
@@ -1419,18 +1952,29 @@ async function obtenerEntrenamiento() {
     );
 
 
-    mensaje.innerHTML = "";
+    mensaje.innerHTML =
+      "";
 
 
-  } catch (error) {
+  } catch (
+    error
+  ) {
+
 
     mensaje.innerHTML =
 
-    `<div class="mensaje">
-      Error: ${error.message}
-    </div>`;
+    `
+    <div class="mensaje">
+
+      Error:
+      ${error.message}
+
+    </div>
+    `;
+
 
   } finally {
+
 
     boton.disabled = false;
 
@@ -1442,6 +1986,7 @@ async function obtenerEntrenamiento() {
 }
 
 
+
 /* =========================
    MOSTRAR ENTRENAMIENTO
 ========================= */
@@ -1450,22 +1995,31 @@ function mostrarEntrenamiento(
   entrenamiento
 ) {
 
+
   if (!entrenamiento) {
+
     return;
+
   }
 
 
   entrenamientoActual =
     entrenamiento;
 
-  ejercicioActual = 0;
 
-  resultadosEjercicios = [];
+  ejercicioActual =
+    0;
+
+
+  resultadosEjercicios =
+    [];
 
 
   document.getElementById(
     "entrenamiento"
-  ).classList.remove("hidden");
+  ).classList.remove(
+    "hidden"
+  );
 
 
   mostrarEjercicioActual();
@@ -1474,17 +2028,22 @@ function mostrarEntrenamiento(
   document.getElementById(
     "entrenamiento"
   ).scrollIntoView({
-    behavior: "smooth"
+
+    behavior:
+      "smooth"
+
   });
 
 }
 
 
+
 /* =========================
-   EJERCICIO
+   MOSTRAR EJERCICIO
 ========================= */
 
 function mostrarEjercicioActual() {
+
 
   const contenedor =
     document.getElementById(
@@ -1505,19 +2064,24 @@ function mostrarEjercicioActual() {
     mostrarResumenEntrenamiento();
 
     return;
+
   }
 
 
   const ejercicio =
-    ejercicios[ejercicioActual];
+    ejercicios[
+      ejercicioActual
+    ];
 
 
-  let html = "";
+  let html =
+    "";
 
 
   html +=
 
-  `<div class="mensaje">
+  `
+  <div class="mensaje">
 
     <strong>
       Habilidad:
@@ -1539,10 +2103,12 @@ function mostrarEjercicioActual() {
 
     ${
       entrenamientoActual
-        .puntajeActual || 0
+        .puntajeActual ||
+      0
     }/100
 
-  </div>`;
+  </div>
+  `;
 
 
   if (
@@ -1552,7 +2118,8 @@ function mostrarEjercicioActual() {
 
     html +=
 
-    `<h3>
+    `
+    <h3>
       🎯 Objetivo
     </h3>
 
@@ -1561,7 +2128,8 @@ function mostrarEjercicioActual() {
         entrenamientoActual
           .objetivo
       }
-    </p>`;
+    </p>
+    `;
 
   }
 
@@ -1574,7 +2142,8 @@ function mostrarEjercicioActual() {
 
     html +=
 
-    `<h3>
+    `
+    <h3>
       📚 Aprende primero
     </h3>
 
@@ -1583,19 +2152,24 @@ function mostrarEjercicioActual() {
         entrenamientoActual
           .explicacion
       }
-    </p>`;
+    </p>
+    `;
 
   }
 
 
   html +=
 
-  `<div class="training-progress">
+  `
+  <div class="training-progress">
+
     Ejercicio
     ${ejercicioActual + 1}
     de
     ${ejercicios.length}
+
   </div>
+
 
   <div class="training-exercise">
 
@@ -1607,48 +2181,66 @@ function mostrarEjercicioActual() {
       }
     </h3>
 
+
     <p>
+
       <strong>
         Instrucción:
       </strong>
+
       <br>
+
       ${
         ejercicio.instruccion ||
         ""
       }
+
     </p>
 
+
     <p>
+
       <strong>
         Situación:
       </strong>
+
       <br>
+
       ${
         ejercicio.situacion ||
         ""
       }
+
     </p>
 
+
     <p>
+
       <strong>
         Qué debes hacer:
       </strong>
+
       <br>
+
       ${
         ejercicio.queDebeHacer ||
         ""
       }
+
     </p>
+
 
     <label>
       Tu respuesta
     </label>
+
 
     <textarea
       id="respuestaEjercicio"
       placeholder="Escribe exactamente lo que responderías..."
       onkeydown="manejarEnterEjercicio(event)"
     ></textarea>
+
 
     <button
       id="btnResponderEjercicio"
@@ -1657,9 +2249,14 @@ function mostrarEjercicioActual() {
       Evaluar mi respuesta
     </button>
 
-    <div id="mensajeEjercicio"></div>
 
-  </div>`;
+    <div
+      id="mensajeEjercicio"
+    ></div>
+
+
+  </div>
+  `;
 
 
   contenedor.innerHTML =
@@ -1668,14 +2265,18 @@ function mostrarEjercicioActual() {
 }
 
 
+
 /* =========================
    EVALUAR EJERCICIO
 ========================= */
 
 async function evaluarEjercicio() {
 
+
   if (!sessionId) {
+
     return;
+
   }
 
 
@@ -1695,11 +2296,16 @@ async function evaluarEjercicio() {
       "mensajeEjercicio"
     ).innerHTML =
 
-    `<div class="mensaje">
+    `
+    <div class="mensaje">
+
       Escribe una respuesta.
-    </div>`;
+
+    </div>
+    `;
 
     return;
+
   }
 
 
@@ -1709,7 +2315,9 @@ async function evaluarEjercicio() {
 
 
   const ejercicio =
-    ejercicios[ejercicioActual];
+    ejercicios[
+      ejercicioActual
+    ];
 
 
   const btn =
@@ -1726,37 +2334,47 @@ async function evaluarEjercicio() {
 
   try {
 
+
     const respuestaAPI =
       await fetch(
 
         API_URL +
-        "?accion=ejercicio&sessionId=" +
-        encodeURIComponent(sessionId),
+
+        "?accion=ejercicio" +
+
+        "&sessionId=" +
+
+        encodeURIComponent(
+          sessionId
+        ),
 
         {
 
-          method: "POST",
+          method:
+            "POST",
 
           headers: {
+
             "Content-Type":
-            "application/json"
+              "application/json"
+
           },
 
           body:
-          JSON.stringify({
+            JSON.stringify({
 
-            numeroEjercicio:
-              Number(
-                ejercicio.numero
-              ),
+              numeroEjercicio:
+                Number(
+                  ejercicio.numero
+                ),
 
-            respuesta:
-              respuesta,
+              respuesta:
+                respuesta,
 
-            idioma:
-              idiomaActual
+              idioma:
+                idiomaActual
 
-          })
+            })
 
         }
 
@@ -1767,7 +2385,9 @@ async function evaluarEjercicio() {
       await respuestaAPI.json();
 
 
-    if (!respuestaAPI.ok) {
+    if (
+      !respuestaAPI.ok
+    ) {
 
       throw new Error(
         datos.error ||
@@ -1791,15 +2411,23 @@ async function evaluarEjercicio() {
     );
 
 
-  } catch (error) {
+  } catch (
+    error
+  ) {
+
 
     document.getElementById(
       "mensajeEjercicio"
     ).innerHTML =
 
-    `<div class="mensaje">
-      Error: ${error.message}
-    </div>`;
+    `
+    <div class="mensaje">
+
+      Error:
+      ${error.message}
+
+    </div>
+    `;
 
 
     btn.disabled = false;
@@ -1812,6 +2440,7 @@ async function evaluarEjercicio() {
 }
 
 
+
 /* =========================
    FEEDBACK EJERCICIO
 ========================= */
@@ -1819,6 +2448,7 @@ async function evaluarEjercicio() {
 function mostrarFeedbackEjercicio(
   resultado
 ) {
+
 
   const contenedor =
     document.getElementById(
@@ -1828,28 +2458,39 @@ function mostrarFeedbackEjercicio(
 
   let html =
 
-  `<div class="exercise-feedback">
+  `
+  <div class="exercise-feedback">
 
     <h3>
       📊 Resultado
     </h3>
 
+
     <div class="score">
+
       ${
-        resultado.puntaje || 0
+        resultado.puntaje ||
+        0
       }/100
+
     </div>
 
+
     <p>
+
       <strong>
         Evaluación:
       </strong>
+
       <br>
+
       ${
         resultado.evaluacion ||
         ""
       }
-    </p>`;
+
+    </p>
+  `;
 
 
   if (
@@ -1858,24 +2499,29 @@ function mostrarFeedbackEjercicio(
 
     html +=
 
-    `<h3>
+    `
+    <h3>
       ✅ Qué hiciste bien
     </h3>
 
-    <ul>`;
+    <ul>
+    `;
 
 
     resultado
       .queHizoBien
-      .forEach(item => {
+      .forEach(
+        item => {
 
-        html +=
-          `<li>${item}</li>`;
+          html +=
+            `<li>${item}</li>`;
 
-      });
+        }
+      );
 
 
-    html += "</ul>";
+    html +=
+      "</ul>";
 
   }
 
@@ -1886,24 +2532,29 @@ function mostrarFeedbackEjercicio(
 
     html +=
 
-    `<h3>
+    `
+    <h3>
       📈 Qué debes mejorar
     </h3>
 
-    <ul>`;
+    <ul>
+    `;
 
 
     resultado
       .queDebeMejorar
-      .forEach(item => {
+      .forEach(
+        item => {
 
-        html +=
-          `<li>${item}</li>`;
+          html +=
+            `<li>${item}</li>`;
 
-      });
+        }
+      );
 
 
-    html += "</ul>";
+    html +=
+      "</ul>";
 
   }
 
@@ -1914,15 +2565,21 @@ function mostrarFeedbackEjercicio(
 
     html +=
 
-    `<p>
+    `
+    <p>
+
       <strong>
         ⚠️ Error principal:
       </strong>
+
       <br>
+
       ${
         resultado.errorPrincipal
       }
-    </p>`;
+
+    </p>
+    `;
 
   }
 
@@ -1933,7 +2590,8 @@ function mostrarFeedbackEjercicio(
 
     html +=
 
-    `<div class="improvement">
+    `
+    <div class="improvement">
 
       <strong>
         💡 Versión más fuerte:
@@ -1945,29 +2603,39 @@ function mostrarFeedbackEjercicio(
         }
       </p>
 
-    </div>`;
+    </div>
+    `;
 
   }
 
 
-  if (resultado.consejo) {
+  if (
+    resultado.consejo
+  ) {
 
     html +=
 
-    `<p>
+    `
+    <p>
+
       <strong>
         🎯 Consejo:
       </strong>
+
       <br>
+
       ${
         resultado.consejo
       }
-    </p>`;
+
+    </p>
+    `;
 
   }
 
 
   const ultimo =
+
     ejercicioActual + 1 >=
     (
       entrenamientoActual
@@ -1977,17 +2645,21 @@ function mostrarFeedbackEjercicio(
 
   html +=
 
-  `<button
-    onclick="siguienteEjercicio()"
-  >
-    ${
-      ultimo
-        ? "Ver Reto Final →"
-        : "Siguiente ejercicio →"
-    }
-  </button>
+  `
+    <button
+      onclick="siguienteEjercicio()"
+    >
 
-  </div>`;
+      ${
+        ultimo
+          ? "Ver Reto Final →"
+          : "Siguiente ejercicio →"
+      }
+
+    </button>
+
+  </div>
+  `;
 
 
   contenedor.innerHTML =
@@ -1995,14 +2667,18 @@ function mostrarFeedbackEjercicio(
 
 
   contenedor.scrollIntoView({
-    behavior: "smooth"
+
+    behavior:
+      "smooth"
+
   });
 
 }
 
 
+
 /* =========================
-   SIGUIENTE
+   SIGUIENTE EJERCICIO
 ========================= */
 
 function siguienteEjercicio() {
@@ -2012,6 +2688,7 @@ function siguienteEjercicio() {
   mostrarEjercicioActual();
 
 }
+
 
 
 /* =========================
@@ -2036,11 +2713,13 @@ function manejarEnterEjercicio(
 }
 
 
+
 /* =========================
-   RESUMEN + RETO FINAL
+   RESUMEN ENTRENAMIENTO
 ========================= */
 
 function mostrarResumenEntrenamiento() {
+
 
   const contenedor =
     document.getElementById(
@@ -2048,31 +2727,43 @@ function mostrarResumenEntrenamiento() {
     );
 
 
-  let promedio = 0;
+  let promedio =
+    0;
 
 
   if (
     resultadosEjercicios.length
   ) {
 
+
     const suma =
       resultadosEjercicios
         .reduce(
-          (total, resultado) =>
+
+          (
+            total,
+            resultado
+          ) =>
+
             total +
             Number(
-              resultado.puntaje || 0
+              resultado.puntaje ||
+              0
             ),
+
           0
+
         );
 
 
     promedio =
       Math.round(
+
         (
           suma /
           resultadosEjercicios.length
         ) * 10
+
       ) / 10;
 
   }
@@ -2080,34 +2771,44 @@ function mostrarResumenEntrenamiento() {
 
   let html =
 
-  `<div class="success-message">
+  `
+  <div class="success-message">
 
     <h3>
       🎉 Entrenamiento completado
     </h3>
 
+
     <p>
+
       Completaste
       ${
         resultadosEjercicios.length
       }
       ejercicios.
+
     </p>
 
+
     <p>
+
       <strong>
         Promedio:
       </strong>
+
       ${promedio}/100
+
     </p>
 
-  </div>`;
+  </div>
+  `;
 
 
   if (
     entrenamientoActual
       .retoFinal
   ) {
+
 
     const reto =
       entrenamientoActual
@@ -2116,57 +2817,85 @@ function mostrarResumenEntrenamiento() {
 
     html +=
 
-    `<div class="challenge">
+    `
+    <div class="challenge">
 
       <h2>
         🏆 Reto Final
       </h2>
 
+
       <h3>
+
         ${
-          reto.titulo || ""
+          reto.titulo ||
+          ""
         }
+
       </h3>
 
+
       <p>
+
         <strong>
           Situación:
         </strong>
+
         <br>
+
         ${
-          reto.situacion || ""
+          reto.situacion ||
+          ""
         }
+
       </p>
 
+
       <p>
+
         <strong>
           Instrucción:
         </strong>
+
         <br>
+
         ${
-          reto.instruccion || ""
+          reto.instruccion ||
+          ""
         }
+
       </p>
 
+
       <p>
+
         <strong>
           Criterio de éxito:
         </strong>
+
         <br>
+
         ${
-          reto.criterioExito || ""
+          reto.criterioExito ||
+          ""
         }
+
       </p>
 
-      <label style="color:white;">
+
+      <label
+        style="color:white;"
+      >
         Tu respuesta
       </label>
+
 
       <textarea
         id="respuestaRetoFinal"
         placeholder="Escribe tu respuesta..."
         onkeydown="manejarEnterReto(event)"
       ></textarea>
+
 
       <button
         id="btnRetoFinal"
@@ -2175,11 +2904,19 @@ function mostrarResumenEntrenamiento() {
         🏆 Evaluar Reto Final
       </button>
 
-      <div id="mensajeRetoFinal"></div>
 
-      <div id="resultadoRetoFinal"></div>
+      <div
+        id="mensajeRetoFinal"
+      ></div>
 
-    </div>`;
+
+      <div
+        id="resultadoRetoFinal"
+      ></div>
+
+
+    </div>
+    `;
 
   }
 
@@ -2189,10 +2926,14 @@ function mostrarResumenEntrenamiento() {
 
 
   contenedor.scrollIntoView({
-    behavior: "smooth"
+
+    behavior:
+      "smooth"
+
   });
 
 }
+
 
 
 /* =========================
@@ -2201,8 +2942,11 @@ function mostrarResumenEntrenamiento() {
 
 async function evaluarRetoFinal() {
 
+
   if (!sessionId) {
+
     return;
+
   }
 
 
@@ -2222,11 +2966,17 @@ async function evaluarRetoFinal() {
       "mensajeRetoFinal"
     ).innerHTML =
 
-    `<div class="mensaje">
-      Escribe una respuesta antes de evaluar.
-    </div>`;
+    `
+    <div class="mensaje">
+
+      Escribe una respuesta
+      antes de evaluar.
+
+    </div>
+    `;
 
     return;
+
   }
 
 
@@ -2250,39 +3000,53 @@ async function evaluarRetoFinal() {
 
   mensaje.innerHTML =
 
-  `<div class="mensaje">
+  `
+  <div class="mensaje">
+
     Analizando tu desempeño final...
-  </div>`;
+
+  </div>
+  `;
 
 
   try {
+
 
     const respuestaAPI =
       await fetch(
 
         API_URL +
-        "?accion=retoFinal&sessionId=" +
-        encodeURIComponent(sessionId),
+
+        "?accion=retoFinal" +
+
+        "&sessionId=" +
+
+        encodeURIComponent(
+          sessionId
+        ),
 
         {
 
-          method: "POST",
+          method:
+            "POST",
 
           headers: {
+
             "Content-Type":
-            "application/json"
+              "application/json"
+
           },
 
           body:
-          JSON.stringify({
+            JSON.stringify({
 
-            respuesta:
-              respuesta,
+              respuesta:
+                respuesta,
 
-            idioma:
-              idiomaActual
+              idioma:
+                idiomaActual
 
-          })
+            })
 
         }
 
@@ -2293,7 +3057,9 @@ async function evaluarRetoFinal() {
       await respuestaAPI.json();
 
 
-    if (!respuestaAPI.ok) {
+    if (
+      !respuestaAPI.ok
+    ) {
 
       throw new Error(
         datos.error ||
@@ -2320,18 +3086,28 @@ async function evaluarRetoFinal() {
     await cargarEvolucion();
 
 
-    mensaje.innerHTML = "";
+    mensaje.innerHTML =
+      "";
 
 
-  } catch (error) {
+  } catch (
+    error
+  ) {
+
 
     mensaje.innerHTML =
 
-    `<div class="mensaje">
-      Error: ${error.message}
-    </div>`;
+    `
+    <div class="mensaje">
+
+      Error:
+      ${error.message}
+
+    </div>
+    `;
 
   } finally {
+
 
     btn.disabled = false;
 
@@ -2343,13 +3119,15 @@ async function evaluarRetoFinal() {
 }
 
 
+
 /* =========================
-   RESULTADO RETO
+   MOSTRAR RESULTADO RETO
 ========================= */
 
 function mostrarResultadoRetoFinal(
   resultado
 ) {
+
 
   const contenedor =
     document.getElementById(
@@ -2358,7 +3136,9 @@ function mostrarResultadoRetoFinal(
 
 
   if (!resultado) {
+
     return;
+
   }
 
 
@@ -2368,17 +3148,23 @@ function mostrarResultadoRetoFinal(
 
   let html =
 
-  `<div class="challenge-result">
+  `
+  <div class="challenge-result">
 
     <h3>
       📊 Resultado final
     </h3>
 
+
     <div class="score">
+
       ${
-        resultado.puntaje || 0
+        resultado.puntaje ||
+        0
       }/100
+
     </div>
+
 
     <div class="${
       superado
@@ -2387,37 +3173,49 @@ function mostrarResultadoRetoFinal(
     }">
 
       <strong>
+
         ${
           superado
             ? "🏆 ¡RETO SUPERADO!"
             : "💪 Todavía no superado"
         }
+
       </strong>
 
+
       <p>
+
         ${
           superado
             ? "Alcanzaste 70/100 o más."
             : "Necesitas 70/100 para superarlo."
         }
+
       </p>
 
-    </div>`;
+    </div>
+  `;
 
 
-  if (resultado.evaluacion) {
+  if (
+    resultado.evaluacion
+  ) {
 
     html +=
 
-    `<h3>
+    `
+    <h3>
       Evaluación
     </h3>
 
     <p>
+
       ${
         resultado.evaluacion
       }
-    </p>`;
+
+    </p>
+    `;
 
   }
 
@@ -2428,24 +3226,29 @@ function mostrarResultadoRetoFinal(
 
     html +=
 
-    `<h3>
+    `
+    <h3>
       ✅ Qué hiciste bien
     </h3>
 
-    <ul>`;
+    <ul>
+    `;
 
 
     resultado
       .queHizoBien
-      .forEach(item => {
+      .forEach(
+        item => {
 
-        html +=
-          `<li>${item}</li>`;
+          html +=
+            `<li>${item}</li>`;
 
-      });
+        }
+      );
 
 
-    html += "</ul>";
+    html +=
+      "</ul>";
 
   }
 
@@ -2456,24 +3259,29 @@ function mostrarResultadoRetoFinal(
 
     html +=
 
-    `<h3>
+    `
+    <h3>
       📈 Qué debes mejorar
     </h3>
 
-    <ul>`;
+    <ul>
+    `;
 
 
     resultado
       .queDebeMejorar
-      .forEach(item => {
+      .forEach(
+        item => {
 
-        html +=
-          `<li>${item}</li>`;
+          html +=
+            `<li>${item}</li>`;
 
-      });
+        }
+      );
 
 
-    html += "</ul>";
+    html +=
+      "</ul>";
 
   }
 
@@ -2484,15 +3292,19 @@ function mostrarResultadoRetoFinal(
 
     html +=
 
-    `<h3>
+    `
+    <h3>
       ⚠️ Error principal
     </h3>
 
     <p>
+
       ${
         resultado.errorPrincipal
       }
-    </p>`;
+
+    </p>
+    `;
 
   }
 
@@ -2503,41 +3315,54 @@ function mostrarResultadoRetoFinal(
 
     html +=
 
-    `<div class="improvement">
+    `
+    <div class="improvement">
 
       <strong>
         💡 Versión más fuerte:
       </strong>
 
       <p>
+
         ${
           resultado.mejorVersion
         }
+
       </p>
 
-    </div>`;
+    </div>
+    `;
 
   }
 
 
-  if (resultado.consejo) {
+  if (
+    resultado.consejo
+  ) {
 
     html +=
 
-    `<p>
+    `
+    <p>
+
       <strong>
         🎯 Consejo:
       </strong>
+
       <br>
+
       ${
         resultado.consejo
       }
-    </p>`;
+
+    </p>
+    `;
 
   }
 
 
-  html += "</div>";
+  html +=
+    "</div>";
 
 
   contenedor.innerHTML =
@@ -2545,10 +3370,14 @@ function mostrarResultadoRetoFinal(
 
 
   contenedor.scrollIntoView({
-    behavior: "smooth"
+
+    behavior:
+      "smooth"
+
   });
 
 }
+
 
 
 /* =========================
@@ -2573,6 +3402,7 @@ function manejarEnterReto(
 }
 
 
+
 /* =========================
    GUARDAR RETO
 ========================= */
@@ -2581,22 +3411,27 @@ function guardarRetoFinal(
   resultado
 ) {
 
+
   const retos =
     JSON.parse(
+
       localStorage.getItem(
         "retosFinales"
       ) || "[]"
+
     );
 
 
   retos.push({
 
     fecha:
-      new Date().toISOString(),
+      new Date()
+        .toISOString(),
 
     puntaje:
       Number(
-        resultado?.puntaje || 0
+        resultado?.puntaje ||
+        0
       ),
 
     superado:
@@ -2606,11 +3441,17 @@ function guardarRetoFinal(
 
 
   localStorage.setItem(
+
     "retosFinales",
-    JSON.stringify(retos)
+
+    JSON.stringify(
+      retos
+    )
+
   );
 
 }
+
 
 
 /* =========================
@@ -2619,19 +3460,29 @@ function guardarRetoFinal(
 
 async function cargarEvolucion() {
 
+
   if (!sessionId) {
+
     return;
+
   }
 
 
   try {
 
+
     const respuesta =
       await fetch(
 
         API_URL +
-        "?accion=evolucion&sessionId=" +
-        encodeURIComponent(sessionId)
+
+        "?accion=evolucion" +
+
+        "&sessionId=" +
+
+        encodeURIComponent(
+          sessionId
+        )
 
       );
 
@@ -2640,8 +3491,12 @@ async function cargarEvolucion() {
       await respuesta.json();
 
 
-    if (!respuesta.ok) {
+    if (
+      !respuesta.ok
+    ) {
+
       return;
+
     }
 
 
@@ -2650,7 +3505,10 @@ async function cargarEvolucion() {
     );
 
 
-  } catch (error) {
+  } catch (
+    error
+  ) {
+
 
     console.log(
       "No se pudo cargar evolución:",
@@ -2662,6 +3520,7 @@ async function cargarEvolucion() {
 }
 
 
+
 /* =========================
    MOSTRAR EVOLUCIÓN
 ========================= */
@@ -2669,6 +3528,7 @@ async function cargarEvolucion() {
 function mostrarEvolucion(
   evolucion
 ) {
+
 
   const contenedor =
     document.getElementById(
@@ -2678,20 +3538,33 @@ function mostrarEvolucion(
 
   if (
     !evolucion ||
-    !Object.keys(evolucion).length
+    !Object.keys(
+      evolucion
+    ).length
   ) {
+
 
     contenedor.innerHTML =
 
-    `<div class="mensaje">
-      Todavía no hay suficiente historial para mostrar evolución.
-    </div>`;
+    `
+    <div class="mensaje">
+
+      Todavía no hay suficiente
+      historial para mostrar evolución.
+
+    </div>
+    `;
+
 
     document.getElementById(
       "evolucion"
-    ).classList.remove("hidden");
+    ).classList.remove(
+      "hidden"
+    );
+
 
     return;
+
   }
 
 
@@ -2721,50 +3594,71 @@ function mostrarEvolucion(
   };
 
 
-  let html = "";
+  let html =
+    "";
 
 
   for (
-    const clave in evolucion
+    const clave
+    in evolucion
   ) {
+
 
     const valores =
       evolucion[clave];
 
 
     if (
-      !Array.isArray(valores) ||
+      !Array.isArray(
+        valores
+      ) ||
       !valores.length
     ) {
+
       continue;
+
     }
 
 
     const numeros =
       valores.map(
+
         item =>
           Number(
-            item.puntaje || 0
+            item.puntaje ||
+            0
           )
+
       );
 
 
     html +=
 
-    `<div class="evolution-item">
+    `
+    <div class="evolution-item">
 
       <strong>
+
         ${
           nombres[clave] ||
           clave
         }
+
       </strong>
 
+
       <div class="evolution-values">
-        ${numeros.join(" → ")}
+
+        ${
+          numeros.join(
+            " → "
+          )
+        }
+
       </div>
 
-    </div>`;
+    </div>
+    `;
 
   }
 
@@ -2772,9 +3666,15 @@ function mostrarEvolucion(
   if (!html) {
 
     html =
-      `<div class="mensaje">
-        Todavía no hay evolución registrada.
-      </div>`;
+
+    `
+    <div class="mensaje">
+
+      Todavía no hay evolución
+      registrada.
+
+    </div>
+    `;
 
   }
 
@@ -2792,30 +3692,41 @@ function mostrarEvolucion(
 }
 
 
+
 /* =========================
    GUARDAR RESULTADO
 ========================= */
 
 function historialResultadosGuardar(
+
   puntaje,
+
   evaluacion
+
 ) {
+
 
   const resultados =
     JSON.parse(
+
       localStorage.getItem(
         "resultados"
       ) || "[]"
+
     );
 
 
   resultados.push({
 
     fecha:
-      new Date().toISOString(),
+      new Date()
+        .toISOString(),
 
     puntaje:
-      Number(puntaje || 0),
+      Number(
+        puntaje ||
+        0
+      ),
 
     evaluacion:
       evaluacion
@@ -2824,23 +3735,37 @@ function historialResultadosGuardar(
 
 
   localStorage.setItem(
+
     "resultados",
-    JSON.stringify(resultados)
+
+    JSON.stringify(
+      resultados
+    )
+
   );
 
 
   localStorage.setItem(
+
     "historial",
-    JSON.stringify(historial)
+
+    JSON.stringify(
+      historial
+    )
+
   );
 
 
   localStorage.setItem(
+
     "contador",
+
     contador
+
   );
 
 }
+
 
 
 /* =========================
@@ -2849,23 +3774,31 @@ function historialResultadosGuardar(
 
 function actualizarEstadisticas() {
 
+
   const resultados =
     JSON.parse(
+
       localStorage.getItem(
         "resultados"
       ) || "[]"
+
     );
 
 
   const retos =
     JSON.parse(
+
       localStorage.getItem(
         "retosFinales"
       ) || "[]"
+
     );
 
 
-  if (!resultados.length) {
+  if (
+    !resultados.length
+  ) {
+
 
     document.getElementById(
       "estadisticas"
@@ -2875,6 +3808,7 @@ function actualizarEstadisticas() {
     <strong>
       Negociaciones:
     </strong>
+
     0
 
     <br>
@@ -2882,6 +3816,7 @@ function actualizarEstadisticas() {
     <strong>
       Promedio:
     </strong>
+
     0/100
 
     <br>
@@ -2889,38 +3824,52 @@ function actualizarEstadisticas() {
     <strong>
       Retos finales:
     </strong>
-    ${retos.length}
 
+    ${retos.length}
     `;
 
+
     return;
+
   }
 
 
   const suma =
     resultados.reduce(
-      (total, resultado) =>
+
+      (
+        total,
+        resultado
+      ) =>
+
         total +
         Number(
-          resultado.puntaje || 0
+          resultado.puntaje ||
+          0
         ),
+
       0
+
     );
 
 
   const promedio =
     Math.round(
+
       (
         suma /
         resultados.length
       ) * 10
+
     ) / 10;
 
 
   const superados =
     retos.filter(
+
       reto =>
         reto.superado
+
     ).length;
 
 
@@ -2929,10 +3878,14 @@ function actualizarEstadisticas() {
       .slice(-6)
       .reverse()
       .map(
+
         resultado =>
           resultado.puntaje
+
       )
-      .join(", ");
+      .join(
+        ", "
+      );
 
 
   document.getElementById(
@@ -2943,6 +3896,7 @@ function actualizarEstadisticas() {
   <strong>
     Negociaciones:
   </strong>
+
   ${resultados.length}
 
   <br>
@@ -2950,6 +3904,7 @@ function actualizarEstadisticas() {
   <strong>
     Promedio:
   </strong>
+
   ${promedio}/100
 
   <br>
@@ -2957,6 +3912,7 @@ function actualizarEstadisticas() {
   <strong>
     Últimos resultados:
   </strong>
+
   ${ultimos}
 
   <br>
@@ -2964,6 +3920,7 @@ function actualizarEstadisticas() {
   <strong>
     Retos finales:
   </strong>
+
   ${retos.length}
 
   <br>
@@ -2971,10 +3928,12 @@ function actualizarEstadisticas() {
   <strong>
     Retos superados:
   </strong>
+
   ${superados}
   `;
 
 }
+
 
 
 /* =========================
@@ -2983,14 +3942,19 @@ function actualizarEstadisticas() {
 
 function reiniciar() {
 
+
   const confirmar =
     confirm(
+
       "¿Seguro que quieres borrar todo tu progreso?"
+
     );
 
 
   if (!confirmar) {
+
     return;
+
   }
 
 
