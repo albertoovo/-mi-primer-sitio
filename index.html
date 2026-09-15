@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -256,9 +257,87 @@ button:disabled {
   color: #666;
 }
 
+/* =========================
+   XP / NIVEL
+========================= */
+
+.progress-header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.level-number {
+  font-size: 42px;
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.rank-name {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.xp-text {
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.xp-bar-container {
+  width: 100%;
+  height: 18px;
+  background: #e5e5e5;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.xp-bar {
+  height: 100%;
+  width: 0%;
+  background: #3E63C7;
+  transition: width 0.5s ease;
+}
+
+.xp-reward {
+  background: #eef2ff;
+  padding: 15px;
+  border-radius: 10px;
+  margin-top: 15px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.level-up {
+  background: #111;
+  color: white;
+  padding: 18px;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 15px;
+}
+
+.xp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.xp-stat {
+  background: #f7f7f7;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.xp-stat strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
 @media (max-width: 600px) {
 
-  .skill-grid {
+  .skill-grid,
+  .xp-grid {
     grid-template-columns: 1fr;
   }
 
@@ -425,6 +504,8 @@ button:disabled {
 
 <div id="evaluacion"></div>
 
+<div id="xpRecompensaResultado"></div>
+
 <button
   id="btnEntrenamiento"
   class="training-button hidden"
@@ -472,7 +553,39 @@ button:disabled {
 
 <h2>🏆 Mi progreso</h2>
 
+<div class="progress-header">
+
+  <div class="level-number" id="nivelActual">
+    Nivel 1
+  </div>
+
+  <div class="rank-name" id="rangoActual">
+    Principiante
+  </div>
+
+  <div class="xp-text" id="xpActual">
+    0 XP
+  </div>
+
+  <div class="xp-bar-container">
+    <div
+      class="xp-bar"
+      id="barraXP"
+    ></div>
+  </div>
+
+  <div
+    class="small"
+    id="xpSiguiente"
+  >
+    100 XP para el siguiente nivel
+  </div>
+
+</div>
+
 <div id="estadisticas"></div>
+
+<div id="recompensasXP"></div>
 
 <button
   class="danger"
@@ -516,6 +629,350 @@ let resultadosEjercicios = [];
 
 
 /* =========================
+   XP / PROGRESO
+========================= */
+
+let xp = Number(
+  localStorage.getItem("xp") || 0
+);
+
+let nivelAnterior =
+  Number(
+    localStorage.getItem("nivel") || 1
+  );
+
+let negociacionesXP =
+  Number(
+    localStorage.getItem("negociacionesXP") || 0
+  );
+
+let ejerciciosXP =
+  Number(
+    localStorage.getItem("ejerciciosXP") || 0
+  );
+
+let retosXP =
+  Number(
+    localStorage.getItem("retosXP") || 0
+  );
+
+let xpSesiones =
+  JSON.parse(
+    localStorage.getItem("xpSesiones") || "[]"
+  );
+
+
+/* =========================
+   CONFIGURACIÓN XP
+========================= */
+
+const XP_POR_NEGOCIACION = 50;
+
+const XP_POR_EJERCICIO = 15;
+
+const XP_RETO_SUPERADO = 100;
+
+const XP_RETO_NO_SUPERADO = 40;
+
+
+/* =========================
+   RANGOS
+========================= */
+
+function obtenerNivel(xpActual) {
+
+  return Math.floor(
+    xpActual / 100
+  ) + 1;
+
+}
+
+
+function obtenerXPInicioNivel(nivel) {
+
+  return (
+    (nivel - 1) * 100
+  );
+
+}
+
+
+function obtenerRango(nivel) {
+
+  if (nivel >= 20) {
+    return "Maestro de Negociación";
+  }
+
+  if (nivel >= 15) {
+    return "Estratega";
+  }
+
+  if (nivel >= 10) {
+    return "Experto";
+  }
+
+  if (nivel >= 7) {
+    return "Negociador Avanzado";
+  }
+
+  if (nivel >= 4) {
+    return "Negociador";
+  }
+
+  if (nivel >= 2) {
+    return "Aprendiz";
+  }
+
+  return "Principiante";
+
+}
+
+
+function obtenerXPParaSiguienteNivel(
+  nivel
+) {
+
+  return nivel * 100;
+
+}
+
+
+/* =========================
+   GUARDAR XP
+========================= */
+
+function guardarXP() {
+
+  localStorage.setItem(
+    "xp",
+    xp
+  );
+
+  localStorage.setItem(
+    "nivel",
+    obtenerNivel(xp)
+  );
+
+  localStorage.setItem(
+    "negociacionesXP",
+    negociacionesXP
+  );
+
+  localStorage.setItem(
+    "ejerciciosXP",
+    ejerciciosXP
+  );
+
+  localStorage.setItem(
+    "retosXP",
+    retosXP
+  );
+
+  localStorage.setItem(
+    "xpSesiones",
+    JSON.stringify(xpSesiones)
+  );
+
+}
+
+
+/* =========================
+   AGREGAR XP
+========================= */
+
+function agregarXP(
+  cantidad,
+  motivo,
+  identificador = null
+) {
+
+  if (
+    identificador &&
+    xpSesiones.includes(identificador)
+  ) {
+
+    return false;
+
+  }
+
+  const nivelAntes =
+    obtenerNivel(xp);
+
+  xp += Number(cantidad || 0);
+
+  if (identificador) {
+
+    xpSesiones.push(
+      identificador
+    );
+
+  }
+
+  const nivelDespues =
+    obtenerNivel(xp);
+
+  if (motivo === "negociacion") {
+    negociacionesXP++;
+  }
+
+  if (motivo === "ejercicio") {
+    ejerciciosXP++;
+  }
+
+  if (motivo === "reto") {
+    retosXP++;
+  }
+
+  guardarXP();
+
+  actualizarProgreso();
+
+  if (
+    nivelDespues > nivelAntes
+  ) {
+
+    mostrarSubidaNivel(
+      nivelDespues
+    );
+
+  }
+
+  return true;
+
+}
+
+
+/* =========================
+   SUBIDA DE NIVEL
+========================= */
+
+function mostrarSubidaNivel(
+  nivel
+) {
+
+  const contenedor =
+    document.getElementById(
+      "recompensasXP"
+    );
+
+  contenedor.innerHTML = `
+
+    <div class="level-up">
+
+      🎉 <strong>¡SUBISTE DE NIVEL!</strong>
+
+      <br><br>
+
+      Ahora eres:
+
+      <br>
+
+      <strong>
+        Nivel ${nivel}
+      </strong>
+
+      <br>
+
+      ${obtenerRango(nivel)}
+
+    </div>
+
+  `;
+
+}
+
+
+/* =========================
+   ACTUALIZAR PROGRESO
+========================= */
+
+function actualizarProgreso() {
+
+  const nivel =
+    obtenerNivel(xp);
+
+  const rango =
+    obtenerRango(nivel);
+
+  const inicioNivel =
+    obtenerXPInicioNivel(nivel);
+
+  const siguienteNivel =
+    obtenerXPParaSiguienteNivel(nivel);
+
+  const xpDentroNivel =
+    xp - inicioNivel;
+
+  const xpNecesaria =
+    siguienteNivel - inicioNivel;
+
+  let porcentaje =
+    (
+      xpDentroNivel /
+      xpNecesaria
+    ) * 100;
+
+  if (porcentaje < 0) {
+    porcentaje = 0;
+  }
+
+  if (porcentaje > 100) {
+    porcentaje = 100;
+  }
+
+  document.getElementById(
+    "nivelActual"
+  ).textContent =
+    "Nivel " + nivel;
+
+  document.getElementById(
+    "rangoActual"
+  ).textContent =
+    rango;
+
+  document.getElementById(
+    "xpActual"
+  ).textContent =
+    xp + " XP";
+
+  document.getElementById(
+    "barraXP"
+  ).style.width =
+    porcentaje + "%";
+
+  const faltante =
+    siguienteNivel - xp;
+
+  document.getElementById(
+    "xpSiguiente"
+  ).textContent =
+    faltante > 0
+      ? faltante +
+        " XP para el siguiente nivel"
+      : "¡Nivel completado!";
+
+  const nivelGuardado =
+    Number(
+      localStorage.getItem("nivel") || 1
+    );
+
+  if (
+    nivel > nivelGuardado
+  ) {
+
+    localStorage.setItem(
+      "nivel",
+      nivel
+    );
+
+  }
+
+  actualizarEstadisticas();
+
+}
+
+
+/* =========================
    CARGAR PROGRESO
 ========================= */
 
@@ -529,7 +986,7 @@ Number(
   localStorage.getItem("contador") || 0
 );
 
-actualizarEstadisticas();
+actualizarProgreso();
 
 
 /* =========================
@@ -603,17 +1060,21 @@ async function iniciarNegociacion() {
       .value
       .trim();
 
-  idiomaActual = obtenerIdioma();
+  idiomaActual =
+    obtenerIdioma();
 
   if (!objetivo || !articulo) {
 
-    document.getElementById("mensajeInicio").innerHTML = `
+    document.getElementById(
+      "mensajeInicio"
+    ).innerHTML = `
       <div class="mensaje">
         Escribe el objetivo y lo que estás negociando.
       </div>
     `;
 
     return;
+
   }
 
   const btn =
@@ -629,11 +1090,6 @@ async function iniciarNegociacion() {
   ).innerHTML = "";
 
   try {
-
-    /*
-      AHORA SÍ ENVIAMOS EL IDIOMA
-      DESDE EL INICIO.
-    */
 
     const url =
       API_URL +
@@ -825,6 +1281,7 @@ async function enviarRespuesta() {
     `;
 
     return;
+
   }
 
   if (!sessionId) {
@@ -838,6 +1295,7 @@ async function enviarRespuesta() {
     `;
 
     return;
+
   }
 
   agregarUsuario(texto);
@@ -1096,7 +1554,39 @@ function mostrarResultado(
     evaluacion
   );
 
-  actualizarEstadisticas();
+  /*
+    XP POR COMPLETAR NEGOCIACIÓN
+
+    Se utiliza sessionId para impedir
+    que una misma negociación dé XP
+    dos veces.
+  */
+
+  const xpGanado =
+    agregarXP(
+      XP_POR_NEGOCIACION,
+      "negociacion",
+      "negociacion_" + sessionId
+    );
+
+  if (xpGanado) {
+
+    document.getElementById(
+      "xpRecompensaResultado"
+    ).innerHTML = `
+
+      <div class="xp-reward">
+
+        ⭐ +${XP_POR_NEGOCIACION} XP
+        por completar la negociación
+
+      </div>
+
+    `;
+
+  }
+
+  actualizarProgreso();
 
 }
 
@@ -1675,8 +2165,32 @@ async function evaluarEjercicio() {
       resultado
     );
 
+    /*
+      XP POR EJERCICIO
+
+      Cada ejercicio evaluado
+      correctamente otorga 15 XP.
+    */
+
+    const identificador =
+      "ejercicio_" +
+      sessionId +
+      "_" +
+      Number(
+        ejercicio.numero ||
+        ejercicioActual + 1
+      );
+
+    const xpGanado =
+      agregarXP(
+        XP_POR_EJERCICIO,
+        "ejercicio",
+        identificador
+      );
+
     mostrarFeedbackEjercicio(
-      resultado
+      resultado,
+      xpGanado
     );
 
   } catch (error) {
@@ -1704,7 +2218,8 @@ async function evaluarEjercicio() {
 ========================= */
 
 function mostrarFeedbackEjercicio(
-  resultado
+  resultado,
+  xpGanado = false
 ) {
 
   const contenedor =
@@ -1720,6 +2235,19 @@ function mostrarFeedbackEjercicio(
       <div class="score">
         ${resultado.puntaje || 0}/100
       </div>
+  `;
+
+  if (xpGanado) {
+
+    html += `
+      <div class="xp-reward">
+        ⭐ +${XP_POR_EJERCICIO} XP
+      </div>
+    `;
+
+  }
+
+  html += `
 
       <p>
 
@@ -2154,8 +2682,32 @@ async function evaluarRetoFinal() {
       resultado
     );
 
+    /*
+      XP DEL RETO FINAL
+
+      Superado:
+      +100 XP
+
+      No superado:
+      +40 XP
+    */
+
+    const xpReto =
+      resultado?.superado
+        ? XP_RETO_SUPERADO
+        : XP_RETO_NO_SUPERADO;
+
+    const xpGanado =
+      agregarXP(
+        xpReto,
+        "reto",
+        "retoFinal_" + sessionId
+      );
+
     mostrarResultadoRetoFinal(
-      resultado
+      resultado,
+      xpGanado,
+      xpReto
     );
 
     await cargarEvolucion();
@@ -2187,7 +2739,9 @@ async function evaluarRetoFinal() {
 ========================= */
 
 function mostrarResultadoRetoFinal(
-  resultado
+  resultado,
+  xpGanado = false,
+  xpCantidad = 0
 ) {
 
   const contenedor =
@@ -2212,7 +2766,29 @@ function mostrarResultadoRetoFinal(
       <div class="score">
         ${resultado.puntaje || 0}/100
       </div>
+  `;
 
+  if (xpGanado) {
+
+    html += `
+      <div class="xp-reward">
+
+        ⭐ +${xpCantidad} XP
+
+        <br>
+
+        ${
+          superado
+            ? "Reto final superado"
+            : "Reto final completado"
+        }
+
+      </div>
+    `;
+
+  }
+
+  html += `
       <div class="${
         superado
           ? "challenge-success"
@@ -2649,11 +3225,69 @@ function actualizarEstadisticas() {
       ) || "[]"
     );
 
+  const nivel =
+    obtenerNivel(xp);
+
+  const rango =
+    obtenerRango(nivel);
+
+  let html = `
+
+    <div class="xp-grid">
+
+      <div class="xp-stat">
+
+        <strong>
+          ⭐ XP total
+        </strong>
+
+        ${xp} XP
+
+      </div>
+
+      <div class="xp-stat">
+
+        <strong>
+          🆙 Nivel
+        </strong>
+
+        ${nivel}
+
+      </div>
+
+      <div class="xp-stat">
+
+        <strong>
+          🏆 Rango
+        </strong>
+
+        ${rango}
+
+      </div>
+
+      <div class="xp-stat">
+
+        <strong>
+          🎯 Actividades con XP
+        </strong>
+
+        ${
+          negociacionesXP +
+          ejerciciosXP +
+          retosXP
+        }
+
+      </div>
+
+    </div>
+
+  `;
+
   if (!resultados.length) {
 
-    document.getElementById(
-      "estadisticas"
-    ).innerHTML = `
+    html += `
+
+      <br>
 
       <strong>
         Negociaciones:
@@ -2679,7 +3313,13 @@ function actualizarEstadisticas() {
 
     `;
 
+    document.getElementById(
+      "estadisticas"
+    ).innerHTML =
+      html;
+
     return;
+
   }
 
   const suma =
@@ -2719,9 +3359,9 @@ function actualizarEstadisticas() {
       )
       .join(", ");
 
-  document.getElementById(
-    "estadisticas"
-  ).innerHTML = `
+  html += `
+
+    <br>
 
     <strong>
       Negociaciones:
@@ -2763,6 +3403,11 @@ function actualizarEstadisticas() {
 
   `;
 
+  document.getElementById(
+    "estadisticas"
+  ).innerHTML =
+    html;
+
 }
 
 
@@ -2801,6 +3446,30 @@ function reiniciar() {
     "retosFinales"
   );
 
+  localStorage.removeItem(
+    "xp"
+  );
+
+  localStorage.removeItem(
+    "nivel"
+  );
+
+  localStorage.removeItem(
+    "negociacionesXP"
+  );
+
+  localStorage.removeItem(
+    "ejerciciosXP"
+  );
+
+  localStorage.removeItem(
+    "retosXP"
+  );
+
+  localStorage.removeItem(
+    "xpSesiones"
+  );
+
   historial = [];
 
   contador = 0;
@@ -2813,7 +3482,19 @@ function reiniciar() {
 
   resultadosEjercicios = [];
 
-  actualizarEstadisticas();
+  xp = 0;
+
+  nivelAnterior = 1;
+
+  negociacionesXP = 0;
+
+  ejerciciosXP = 0;
+
+  retosXP = 0;
+
+  xpSesiones = [];
+
+  actualizarProgreso();
 
   document.getElementById(
     "chat"
@@ -2839,9 +3520,19 @@ function reiniciar() {
     "evolucion"
   ).classList.add("hidden");
 
+  document.getElementById(
+    "recompensasXP"
+  ).innerHTML = "";
+
 }
+
+
+/* =========================
+   FIN
+========================= */
 
 </script>
 
 </body>
 </html>
+```
