@@ -21,11 +21,100 @@ button:hover{opacity:.9}button:disabled{background:#999;cursor:not-allowed}.seco
 .chat-label{font-size:12px;font-weight:bold;color:#666;margin-bottom:5px}.score{font-size:42px;font-weight:bold;text-align:center;margin:20px 0}.skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:20px}.skill{background:#f5f5f5;padding:15px;border-radius:10px}.skill strong{display:block;margin-bottom:5px}.debil{border:3px solid #3E63C7;background:#eef2ff}.skill-bar{height:8px;background:#ddd;border-radius:99px;overflow:hidden;margin-top:8px}.skill-fill{height:100%;background:#3E63C7;border-radius:99px}
 ul{padding-left:20px}.training-exercise{background:#f7f7f7;padding:18px;border-radius:12px;margin-top:15px;border-left:5px solid #3E63C7}.training-exercise h3{text-align:left;margin-top:0}.challenge{background:#111;color:#fff;padding:20px;border-radius:12px;margin-top:20px}.challenge h3{text-align:left}.challenge textarea{color:#222}.progress-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.progress-item{background:#f5f5f5;border-radius:12px;padding:16px;text-align:center}.progress-value{font-size:28px;font-weight:bold}.xpbar{height:12px;background:#ddd;border-radius:99px;overflow:hidden;margin:10px 0}.xpfill{height:100%;background:#3E63C7}.badge{display:inline-block;padding:6px 10px;border-radius:99px;background:#eef2ff;color:#2947a3;font-weight:bold;font-size:13px}.topline{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}.small{font-size:14px;color:#666}.hidden{display:none}.divider{height:1px;background:#eee;margin:22px 0}.feedback-area textarea{min-height:80px}.inline-buttons{display:grid;grid-template-columns:1fr 1fr;gap:10px}.inline-buttons button{margin-top:10px}
 @media(max-width:600px){body{padding:20px 12px}.skill-grid,.progress-grid,.inline-buttons{grid-template-columns:1fr}.oponente,.usuario{max-width:95%}.card{padding:20px}}
+
+/* ================================
+   AI BUSINESS OS — SHELL
+   ================================ */
+body{transition:.2s ease}
+.os-topbar{display:none}
+.mode-selector{max-width:1100px;margin:0 auto}
+.mode-hero{text-align:center;margin-bottom:26px}
+.mode-hero h1{font-size:42px;margin:0 0 10px}
+.mode-hero p{font-size:18px;color:#666;margin:0}
+.mode-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.mode-card{background:#fff;border:1px solid #e6e6e6;border-radius:16px;padding:22px;text-align:left;box-shadow:0 3px 12px rgba(0,0,0,.06);cursor:pointer;transition:transform .15s ease,box-shadow .15s ease}
+.mode-card:hover{transform:translateY(-2px);box-shadow:0 6px 18px rgba(0,0,0,.10)}
+.mode-icon{font-size:28px;margin-bottom:12px}
+.mode-card h3{margin:0 0 7px;text-align:left;font-size:18px}
+.mode-card p{margin:0;color:#666;line-height:1.45;font-size:14px}
+.mode-card.soon{opacity:.72}
+.mode-card.soon .mode-badge{background:#eee;color:#666}
+.mode-badge{display:inline-block;margin-top:14px;padding:5px 9px;border-radius:99px;background:#eef2ff;color:#2947a3;font-size:12px;font-weight:bold}
+.os-layout{display:grid;grid-template-columns:230px minmax(0,1fr);min-height:calc(100vh - 80px);gap:24px;max-width:1240px;margin:0 auto}
+.os-sidebar{background:#fff;border:1px solid #e6e6e6;border-radius:16px;padding:16px;height:fit-content;position:sticky;top:20px;box-shadow:0 3px 12px rgba(0,0,0,.05)}
+.os-brand{font-weight:800;font-size:18px;padding:8px 10px 16px}
+.os-brand span{display:block;color:#666;font-size:12px;font-weight:500;margin-top:4px}
+.os-nav{display:flex;flex-direction:column;gap:5px}
+.os-nav button{margin:0;background:transparent;color:#222;text-align:left;padding:11px 12px;font-size:14px}
+.os-nav button:hover{background:#f3f3f3;opacity:1}
+.os-nav button.active{background:#eef2ff;color:#2947a3}
+.os-nav .nav-separator{height:1px;background:#eee;margin:9px 0}
+.os-main{min-width:0}
+.os-main .container{max-width:900px;margin:0;padding:0}
+.os-main-header{background:#fff;border:1px solid #e6e6e6;border-radius:16px;padding:18px 20px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center;gap:15px}
+.os-main-header h2{margin:0;text-align:left;font-size:20px}
+.os-main-header p{margin:4px 0 0;color:#666;font-size:13px}
+.os-home-button{width:auto;margin:0;background:#555;padding:10px 14px;font-size:13px}
+body.os-active{padding:20px}
+body.os-active>.container{display:none}
+body.os-home{padding:40px 20px}
+#academyShell{display:none}
+body.os-active #academyShell{display:block}
+@media(max-width:850px){.mode-grid{grid-template-columns:repeat(2,1fr)}.os-layout{grid-template-columns:1fr}.os-sidebar{position:static}.os-nav{display:grid;grid-template-columns:repeat(2,1fr)}.os-nav button{width:100%}.os-nav .nav-separator{display:none}}
+@media(max-width:600px){.mode-grid{grid-template-columns:1fr}.mode-hero h1{font-size:32px}.os-main-header{align-items:flex-start;flex-direction:column}.os-home-button{width:100%}.os-nav{grid-template-columns:1fr 1fr}body.os-home{padding:25px 12px}body.os-active{padding:12px}}
 </style>
 </head>
 
-<body>
-<div class="container">
+<body class="os-home">
+
+<div id="modeSelector" class="mode-selector">
+  <div class="mode-hero">
+    <h1>AI Business OS</h1>
+    <p>Una sola plataforma para aprender, crear, automatizar y hacer crecer tus proyectos con IA.</p>
+    <div id="modeNotice" class="mensaje hidden" style="max-width:900px;margin:18px auto 0"></div>
+  </div>
+
+  <div class="mode-grid">
+    <div class="mode-card" onclick="abrirModo('chat')"><div class="mode-icon">💬</div><h3>Chat</h3><p>Habla con la IA para resolver dudas, tomar decisiones y trabajar contigo.</p><span class="mode-badge">Disponible próximamente</span></div>
+    <div class="mode-card" onclick="abrirModo('academy')"><div class="mode-icon">🎓</div><h3>Academy</h3><p>Aprende habilidades prácticas de IA y negocios mediante ejercicios y retos.</p><span class="mode-badge">Disponible ahora</span></div>
+    <div class="mode-card" onclick="abrirModo('business')"><div class="mode-icon">🚀</div><h3>Create Business</h3><p>Convierte una idea en un negocio con investigación, estrategia y ejecución.</p><span class="mode-badge">Próximamente</span></div>
+    <div class="mode-card" onclick="abrirModo('build')"><div class="mode-icon">🛠️</div><h3>Build With Me</h3><p>Construye productos, páginas y proyectos paso a paso junto con la IA.</p><span class="mode-badge">Próximamente</span></div>
+    <div class="mode-card" onclick="abrirModo('agents')"><div class="mode-icon">🤖</div><h3>Agents</h3><p>Crea agentes de IA capaces de ejecutar tareas y flujos de trabajo.</p><span class="mode-badge">Próximamente</span></div>
+    <div class="mode-card" onclick="abrirModo('automate')"><div class="mode-icon">⚡</div><h3>Automate</h3><p>Diseña automatizaciones para ahorrar tiempo y conectar herramientas.</p><span class="mode-badge">Próximamente</span></div>
+    <div class="mode-card" onclick="abrirModo('code')"><div class="mode-icon">💻</div><h3>Code</h3><p>Programa aplicaciones y soluciones con ayuda de modelos de IA.</p><span class="mode-badge">Próximamente</span></div>
+    <div class="mode-card" onclick="abrirModo('research')"><div class="mode-icon">🔎</div><h3>Research</h3><p>Investiga mercados, competidores, productos y oportunidades con IA.</p><span class="mode-badge">Próximamente</span></div>
+    <div class="mode-card" onclick="abrirModo('scale')"><div class="mode-icon">📈</div><h3>Scale / SaaS</h3><p>Organiza crecimiento, métricas, procesos y evolución hacia un SaaS.</p><span class="mode-badge">Próximamente</span></div>
+  </div>
+</div>
+
+<div id="academyShell">
+  <div class="os-layout">
+    <aside class="os-sidebar">
+      <div class="os-brand">AI Business OS<span>Academy</span></div>
+      <nav class="os-nav">
+        <button onclick="volverAModos()">🏠 Inicio</button>
+        <button onclick="abrirModo('chat')">💬 Chat</button>
+        <button class="active" onclick="abrirModo('academy')">🎓 Academy</button>
+        <button onclick="abrirModo('business')">🚀 Create Business</button>
+        <button onclick="abrirModo('build')">🛠️ Build With Me</button>
+        <button onclick="abrirModo('agents')">🤖 Agents</button>
+        <button onclick="abrirModo('automate')">⚡ Automate</button>
+        <button onclick="abrirModo('code')">💻 Code</button>
+        <button onclick="abrirModo('research')">🔎 Research</button>
+        <button onclick="abrirModo('scale')">📈 Scale / SaaS</button>
+        <div class="nav-separator"></div>
+        <button onclick="mostrarProyectos()">📁 Projects</button>
+        <button onclick="mostrarConfiguracionOS()">⚙ Settings</button>
+      </nav>
+    </aside>
+
+    <main class="os-main">
+      <div class="os-main-header">
+        <div><h2 id="osTitulo">🎓 Academy</h2><p id="osDescripcion">Entrena habilidades prácticas con ejercicios, negociación y feedback.</p></div>
+        <button class="os-home-button" onclick="volverAModos()">Cambiar modo</button>
+      </div>
+      <div id="osNotice" class="mensaje hidden"></div>
+      <div class="container">
 
 <h1>Práctica de Negociación</h1>
 <p class="subtitle">Entrena, negocia, recibe feedback y mejora con IA.</p>
@@ -147,6 +236,9 @@ ul{padding-left:20px}.training-exercise{background:#f7f7f7;padding:18px;border-r
 <div id="mensajeFeedback"></div>
 </div>
 
+      </div>
+    </main>
+  </div>
 </div>
 
 <script>
@@ -1616,6 +1708,52 @@ true
 
 }
 
+
+/* ================================
+   AI BUSINESS OS — NAVEGACIÓN
+   ================================ */
+
+const MODOS_OS={
+  chat:{titulo:"💬 Chat",descripcion:"Habla con la IA para resolver dudas, tomar decisiones y trabajar contigo."},
+  academy:{titulo:"🎓 Academy",descripcion:"Entrena habilidades prácticas con ejercicios, negociación y feedback."},
+  business:{titulo:"🚀 Create Business",descripcion:"Convierte una idea en un negocio con investigación, estrategia y ejecución."},
+  build:{titulo:"🛠️ Build With Me",descripcion:"Construye productos y proyectos paso a paso junto con la IA."},
+  agents:{titulo:"🤖 Agents",descripcion:"Crea agentes de IA para ejecutar tareas y flujos de trabajo."},
+  automate:{titulo:"⚡ Automate",descripcion:"Diseña automatizaciones para ahorrar tiempo y conectar herramientas."},
+  code:{titulo:"💻 Code",descripcion:"Programa aplicaciones y soluciones con ayuda de modelos de IA."},
+  research:{titulo:"🔎 Research",descripcion:"Investiga mercados, competidores, productos y oportunidades con IA."},
+  scale:{titulo:"📈 Scale / SaaS",descripcion:"Organiza crecimiento, métricas, procesos y evolución hacia un SaaS."}
+};
+
+function volverAModos(){
+  document.body.className="os-home";
+  document.getElementById("modeSelector").style.display="block";
+  document.getElementById("academyShell").style.display="none";
+}
+
+function abrirModo(modo){
+  if(modo!=="academy"){
+    volverAModos();
+    const notice=document.getElementById("modeNotice");
+    notice.textContent="Este módulo todavía está en construcción. Primero vamos a dejar Academy sólida y conectada; después activaremos cada módulo uno por uno.";
+    notice.classList.remove("hidden");
+    return;
+  }
+
+  document.body.className="os-active";
+  document.getElementById("modeSelector").style.display="none";
+  document.getElementById("academyShell").style.display="block";
+  document.getElementById("osTitulo").textContent=MODOS_OS.academy.titulo;
+  document.getElementById("osDescripcion").textContent=MODOS_OS.academy.descripcion;
+}
+
+function mostrarProyectos(){
+  alert("Projects será el espacio para guardar y organizar tus proyectos. Lo activaremos después de la base de navegación.");
+}
+
+function mostrarConfiguracionOS(){
+  alert("Settings será el espacio para preferencias, proveedores de IA, cuenta y configuración. Lo activaremos en una siguiente etapa.");
+}
 
 /* ================================
    INICIALIZAR
